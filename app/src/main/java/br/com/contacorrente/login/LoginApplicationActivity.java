@@ -1,5 +1,8 @@
 package br.com.contacorrente.login;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -7,15 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
+import br.com.contacorrente.Singleton;
 import br.com.contacorrente.R;
 import br.com.contacorrente.factory.UserFactory;
-import br.com.contacorrente.factory.UserInterfaceFactory;
 import br.com.contacorrente.factory.UserLoginFactory;
 
-public class LoginActivity extends AppCompatActivity implements LoginContract.View {
+public class LoginApplicationActivity extends AppCompatActivity implements LoginContract.View {
 
     private Button btnLogin;
     private EditText etEmail;
@@ -26,12 +26,19 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login_application);
 
         bind();
+
+        if (Singleton.test){
+            etEmail.setText("alecsander.fernandes@evosystems.com.br");
+            etPassword.setText("123456");
+        }
     }
 
     private void bind() {
+
+        Singleton.getInstance();
 
         presenter = new LoginPresenter(this);
 

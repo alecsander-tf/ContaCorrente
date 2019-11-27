@@ -16,6 +16,6 @@ public interface UserService  {
     void getBankStatement(int userId, UserServiceCallback<List<Transference>> callback);
     void checkLogin(String email, String password, UserServiceCallback<Login> callback);
     void getUserById(int userId, UserServiceCallback<User> callback);
-    void getUserByEmail(String email, String password, UserServiceCallback<User> callback);
+    void getUserByEmail(String email, UserServiceCallback<User> callback);
 
 }

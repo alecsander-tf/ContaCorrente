@@ -13,6 +13,9 @@ import br.com.contacorrente.model.Login;
 import br.com.contacorrente.model.Transference;
 import br.com.contacorrente.model.User;
 import br.com.contacorrente.network.endpoint.RetrofitEndpoint;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,7 +30,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void getBankStatement(int userId, final UserServiceCallback<List<Transference>> callback) {
-        Call<List<Transference>> call = mRetrofit.getBankStatement(userId);
+
+        // Cria os dados como form-data, para serem mandados no corpo da requisição e não como parte da URI
+        MultipartBody.Part id_user = MultipartBody.Part.createFormData("id_user", Integer.toString(userId));
+
+        Call<List<Transference>> call = mRetrofit.getBankStatement(id_user);
         call.enqueue(new Callback<List<Transference>>() {
             @Override
             public void onResponse(Call<List<Transference>> call, Response<List<Transference>> response) {
@@ -51,7 +58,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void checkLogin(String email, String password, final UserServiceCallback<Login> callback) {
-        Call<Login> call = mRetrofit.checkLogin(email, password);
+
+        // Cria os dados como form-data, para serem mandados no corpo da requisição e não como parte da URI
+        MultipartBody.Part emailAux = MultipartBody.Part.createFormData("email", email);
+        MultipartBody.Part passwordAux = MultipartBody.Part.createFormData("password", password);
+
+        Call<Login> call = mRetrofit.checkLogin(emailAux, passwordAux);
         call.enqueue(new Callback<Login>() {
             @Override
             public void onResponse(Call<Login> call, Response<Login> response) {
@@ -70,7 +82,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void getUserById(int userId, final UserServiceCallback<User> callback) {
-        Call<User> callUser = mRetrofit.getUserById(userId);
+
+        // Cria os dados como form-data, para serem mandados no corpo da requisição e não como parte da URI
+        MultipartBody.Part id_user = MultipartBody.Part.createFormData("id_user", Integer.toString(userId));
+
+        Call<User> callUser = mRetrofit.getUserById(id_user);
         callUser.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -88,8 +104,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void getUserByEmail(String userEmail, String password, final UserServiceCallback<User> callback) {
-        Call<User> callUser = mRetrofit.getUserByEmail(userEmail);
+    public void getUserByEmail(String userEmail, final UserServiceCallback<User> callback) {
+
+        // Cria os dados como form-data, para serem mandados no corpo da requisição e não como parte da URI
+        MultipartBody.Part email = MultipartBody.Part.createFormData("email", userEmail);
+
+        Call<User> callUser = mRetrofit.getUserByEmail(email);
         callUser.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
