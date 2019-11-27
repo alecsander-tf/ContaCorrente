@@ -42,7 +42,7 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        dl = (DrawerLayout)findViewById(R.id.activity_menu);
+        dl = (DrawerLayout)findViewById(R.id.my_drawer_layout);
         t = new ActionBarDrawerToggle(this, dl, R.string.Open, R.string.Close);
 
         dl.addDrawerListener(t);
