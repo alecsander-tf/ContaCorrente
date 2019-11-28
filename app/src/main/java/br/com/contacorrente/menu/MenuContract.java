@@ -5,13 +5,10 @@ import br.com.contacorrente.model.User;
 public interface MenuContract {
 
     interface View{
-        void showToast(String msg);
-        void loadActivity(Class<?> activity);
-        void showAccountDetails(User user);
+        void showAccountDetails();
     }
 
     interface UserInteractions{
         void loadUserAccount(String email);
     }
-
 }

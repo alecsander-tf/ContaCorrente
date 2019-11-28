@@ -2,6 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group>
+        <item android:id="@+id/menu"
+            android:icon="@drawable/ic_user"
+            android:title="Minha Conta"/>
         <item android:id="@+id/extract"
             android:icon="@drawable/ic_user"
             android:title="Extrato"/>
@@ -12,7 +15,8 @@
     <group>
         <item android:id="@+id/logout"
             android:icon="@drawable/ic_user"
-            android:title="Sair"/>
+            android:title="Sair">
+        </item>
     </group>
 
 </menu>

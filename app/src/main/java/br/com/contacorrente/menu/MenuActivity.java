@@ -5,101 +5,131 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import br.com.contacorrente.R;
 import br.com.contacorrente.Singleton;
-import br.com.contacorrente.login.LoginContract;
-import br.com.contacorrente.model.User;
+import br.com.contacorrente.login.LoginApplicationActivity;
+import br.com.contacorrente.menu.fragment.extract.ExtractFragment;
+import br.com.contacorrente.menu.fragment.myAccount.MyAccountFragment;
 
-public class MenuActivity extends AppCompatActivity implements MenuContract.View{
+public class MenuActivity extends AppCompatActivity implements MenuContract.View {
 
-    TextView tvUserName;
-    TextView tvUserBalance;
-    Button btnExtract;
-    Button btnTransference;
+    Fragment fragment = null;
+    Class fragmentClass;
 
-    private DrawerLayout dl;
-    private ActionBarDrawerToggle t;
-    private NavigationView nv;
+    Toolbar toolbar;
+
+    TextView tvMenuDrawer_Name;
+    TextView tvMenuDrawer_Email;
+    CircularImageView circularImageView;
 
     MenuContract.UserInteractions presenter;
+
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        bind();
+        loadNavigation();
+        bindListener();
+        changeFragment();
+
+        presenter = new MenuPresenter(this);
+        presenter.loadUserAccount(Singleton.user.getEmail());
+    }
+
+    private void bind(){
+
+        //First fragment to be called
+        fragmentClass = MyAccountFragment.class;
+
+        drawerLayout = findViewById(R.id.my_drawer_layout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
+        toolbar = findViewById(R.id.toolbar);
+        navigationView = findViewById(R.id.navigationView);
+
+        //NavigationDrawer elements
+        circularImageView = navigationView.getHeaderView(0).findViewById(R.id.circularImageView);
+        tvMenuDrawer_Name = navigationView.getHeaderView(0).findViewById(R.id.txtMenuDrawer_Name);
+        tvMenuDrawer_Email = navigationView.getHeaderView(0).findViewById(R.id.txtMenuDrawer_Email);
+    }
+
+    private void loadNavigation() {
         setSupportActionBar(toolbar);
-
-        dl = (DrawerLayout)findViewById(R.id.my_drawer_layout);
-        t = new ActionBarDrawerToggle(this, dl, R.string.Open, R.string.Close);
-
-        dl.addDrawerListener(t);
-        t.syncState();
-
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
-        nv = (NavigationView)findViewById(R.id.nv);
-        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+    private void changeFragment(){
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.frameLayout, fragment).commit();
+    }
+
+    private void bindListener() {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 switch(id)
                 {
-                    case R.id.account:
-                        Toast.makeText(MenuActivity.this, "My Account",Toast.LENGTH_SHORT).show();break;
-                    case R.id.settings:
-                        Toast.makeText(MenuActivity.this, "Settings",Toast.LENGTH_SHORT).show();break;
+                    case R.id.menu:
+                        fragmentClass = MyAccountFragment.class;
+                        break;
+                    case R.id.extract:
+                        fragmentClass = ExtractFragment.class;
+                        break;
+                    case R.id.transference:
+                        break;
+                    case R.id.logout:
+                        Singleton.logout();
+                        startActivity(new Intent(getApplicationContext(), LoginApplicationActivity.class));
+                        break;
                     default:
+                        fragmentClass = ExtractFragment.class;
                         return true;
                 }
 
+                changeFragment();
+                // Highlight the selected item has been done by NavigationView
+                //item.setChecked(true);
+                // Set action bar title
+                setTitle(item.getTitle());
+                // Close the navigation drawer
+                drawerLayout.closeDrawers();
 
                 return true;
-
             }
         });
-
-        bind();
-    }
-
-    private void bind(){
-
-        presenter = new MenuPresenter(this);
-
-        tvUserName = findViewById(R.id.tvUserName);
-        tvUserBalance = findViewById(R.id.tvUserBalance);
-        btnExtract = findViewById(R.id.btnExtract);
-        btnTransference = findViewById(R.id.btnTransference);
-
-        presenter.loadUserAccount(Singleton.user.getEmail());
-
     }
 
     @Override
-    public void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void loadActivity(Class<?> activity) {
-        startActivity(new Intent(this, activity));
-    }
-
-    @Override
-    public void showAccountDetails(User user) {
-        tvUserBalance.setText(user.getBalance());
-        tvUserName.setText(user.getName());
+    public void showAccountDetails() {
+        tvMenuDrawer_Email.setText(Singleton.user.getEmail());
+        tvMenuDrawer_Name.setText(Singleton.user.getName());
     }
 }

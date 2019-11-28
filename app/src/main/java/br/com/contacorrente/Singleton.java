@@ -22,4 +22,9 @@ public class Singleton {
         }
         return singleInstance;
     }
+
+    public static void logout() {
+        singleInstance = null;
+        user = null;
+    }
 }
