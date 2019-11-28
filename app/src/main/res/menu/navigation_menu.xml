@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/account"
-        android:icon="@drawable/ic_user"
-        android:title="My Account"/>
-    <item android:id="@+id/settings"
-        android:icon="@drawable/ic_padlock"
-        android:title="Settings"/>
+    <group>
+        <item android:id="@+id/extract"
+            android:icon="@drawable/ic_user"
+            android:title="Extrato"/>
+        <item android:id="@+id/transference"
+            android:icon="@drawable/ic_padlock"
+            android:title="Transferência"/>
+    </group>
+    <group>
+        <item android:id="@+id/logout"
+            android:icon="@drawable/ic_user"
+            android:title="Sair"/>
+    </group>
 
 </menu>
