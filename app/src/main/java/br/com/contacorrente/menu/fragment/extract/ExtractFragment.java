@@ -7,14 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.contacorrente.R;
-import br.com.contacorrente.model.DetailedTransference;
+import br.com.contacorrente.model.Transference;
 
 public class ExtractFragment extends Fragment implements ExtractContract.View {
 
@@ -41,11 +43,19 @@ public class ExtractFragment extends Fragment implements ExtractContract.View {
 
         recyclerViewFilmes.setHasFixedSize(true);
 
+        presenter.loadUserExtract();
+
         return view;
     }
 
     @Override
-    public void showExtract(List<DetailedTransference> detailedTransferences) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mTransfereceAdapter = new TransferenceAdapter(new ArrayList<Transference>(0));
+    }
 
+    @Override
+    public void showExtract(List<Transference> list) {
+        mTransfereceAdapter.replaceData(list);
     }
 }

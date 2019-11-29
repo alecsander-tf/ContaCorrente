@@ -110,7 +110,6 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
                         startActivity(new Intent(getApplicationContext(), LoginApplicationActivity.class));
                         break;
                     default:
-                        fragmentClass = ExtractFragment.class;
                         return true;
                 }
 

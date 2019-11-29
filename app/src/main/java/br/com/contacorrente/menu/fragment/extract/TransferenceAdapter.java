@@ -17,6 +17,10 @@ public class TransferenceAdapter extends RecyclerView.Adapter<TranferenceViewHol
 
     private List<Transference> transferenceList;
 
+    public TransferenceAdapter(List<Transference> transferenceList) {
+        this.transferenceList = transferenceList;
+    }
+
     @Override
     public TranferenceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
@@ -30,10 +34,20 @@ public class TransferenceAdapter extends RecyclerView.Adapter<TranferenceViewHol
     @Override
     public void onBindViewHolder(@NonNull TranferenceViewHolder holder, int position) {
         Transference transference = transferenceList.get(position);
+
+        if (transference.getUserRelated() != null){
+            holder.tvUserTransference.setText(transference.getUserRelated().getName());
+            holder.tvUserAmount.setText(transference.getValue());
+        }
     }
 
     @Override
     public int getItemCount() {
         return transferenceList.size();
+    }
+
+    public void replaceData(List<Transference> list) {
+        transferenceList = list;
+        notifyDataSetChanged();
     }
 }

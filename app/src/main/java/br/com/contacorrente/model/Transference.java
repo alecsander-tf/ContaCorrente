@@ -19,6 +19,16 @@ public class Transference {
     @SerializedName("data")
     private String data;
 
+    private User userRelated;
+
+    public User getUserRelated() {
+        return userRelated;
+    }
+
+    public void setUserRelated(User userRelated) {
+        this.userRelated = userRelated;
+    }
+
     public String getId() {
         return id;
     }

@@ -86,21 +86,27 @@ public class UserServiceImpl implements UserService{
         // Cria os dados como form-data, para serem mandados no corpo da requisição e não como parte da URI
         MultipartBody.Part id_user = MultipartBody.Part.createFormData("id_user", Integer.toString(userId));
 
-        Call<User> callUser = mRetrofit.getUserById(id_user);
-        callUser.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.code() == 200){
-                    User user = response.body();
-                    callback.onLoaded(user);
-                }
-            }
 
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                callback.onError();
-            }
-        });
+        Call<User> callUser = mRetrofit.getUserById(id_user);
+
+        try{
+            callUser.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.code() == 200){
+                        User user = response.body();
+                        callback.onLoaded(user);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    callback.onError();
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
