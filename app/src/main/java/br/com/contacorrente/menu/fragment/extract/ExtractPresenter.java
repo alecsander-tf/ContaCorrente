@@ -1,5 +1,7 @@
 package br.com.contacorrente.menu.fragment.extract;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +13,8 @@ import br.com.contacorrente.network.UserServiceImpl;
 
 public class ExtractPresenter implements ExtractContract.UserInteractions {
 
-    private List<Transference> transferenceList;
-    private List<User> loadedUserList;
+    static private List<Transference> transferenceList;
+    static private List<User> loadedUserList;
 
     private ExtractContract.View view;
     private UserService mApi;
@@ -56,13 +58,6 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
             idToBeLoad = t.getId_from();
         }
 
-        //Verifica se os detalhes do id que interagiu já estão carregados
-        for (User user : loadedUserList){
-            if (user.getId().equals(idToBeLoad)){
-                return "";
-            }
-        }
-
         return idToBeLoad;
     }
 
@@ -71,23 +66,20 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
 
         for (final Transference t : transferenceList) {
             String idToBeLoaded = verifyIdToBeLoaded(t);
-            if (!idToBeLoaded.equals("")) {
                 mApi.getUserById(Integer.parseInt(idToBeLoaded), new UserService.UserServiceCallback<User>() {
                     @Override
                     public void onLoaded(User user) {
                         t.setUserRelated(user);
                         loadedUserList.add(user);
-                        if (transferenceList.get(transferenceList.size() - 1).getId().equals(t.getId())){
-                            view.showExtract(transferenceList);
-                        }
+                        view.showExtract(transferenceList);
                     }
 
                     @Override
                     public void onError() {
-
+                        Log.d("ERRO", "Erro ao carregar");
                     }
                 });
             }
-        }
+
     }
 }

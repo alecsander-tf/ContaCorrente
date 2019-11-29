@@ -21,6 +21,7 @@ import br.com.contacorrente.Singleton;
 import br.com.contacorrente.login.LoginApplicationActivity;
 import br.com.contacorrente.menu.fragment.extract.ExtractFragment;
 import br.com.contacorrente.menu.fragment.myAccount.MyAccountFragment;
+import br.com.contacorrente.menu.fragment.transference.TransferenceFragment;
 
 public class MenuActivity extends AppCompatActivity implements MenuContract.View {
 
@@ -87,7 +88,8 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frameLayout, fragment).commit();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frameLayout, fragment).commit();
     }
 
     private void bindListener() {
@@ -95,8 +97,7 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                switch(id)
-                {
+                switch(id){
                     case R.id.menu:
                         fragmentClass = MyAccountFragment.class;
                         break;
@@ -104,11 +105,12 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
                         fragmentClass = ExtractFragment.class;
                         break;
                     case R.id.transference:
+                        fragmentClass = TransferenceFragment.class;
                         break;
                     case R.id.logout:
                         Singleton.logout();
                         startActivity(new Intent(getApplicationContext(), LoginApplicationActivity.class));
-                        break;
+                        return true;
                     default:
                         return true;
                 }

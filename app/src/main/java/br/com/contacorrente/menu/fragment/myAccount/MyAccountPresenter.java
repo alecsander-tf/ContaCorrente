@@ -30,4 +30,20 @@ public class MyAccountPresenter implements MyAccountContract.UserInteractions {
             }
         });
     }
+
+    @Override
+    public void loadNewBalance() {
+        mRetrofit.getUserByEmail(Singleton.user.getEmail(), new UserService.UserServiceCallback<User>() {
+            @Override
+            public void onLoaded(User user) {
+                Singleton.user.setBalance(user.getBalance());
+                view.showNewBalance();
+            }
+
+            @Override
+            public void onError() {
+                view.showToast("Não foi possível atualizar seu saldo!");
+            }
+        });
+    }
 }

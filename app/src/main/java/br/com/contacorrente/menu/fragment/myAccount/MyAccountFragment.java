@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
 
     private View view;
 
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
     private TextView tvUserName;
     private TextView tvUserBalance;
     private Button btnExtract;
@@ -29,10 +32,13 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
     MyAccountContract.UserInteractions presenter;
 
     private void bind(){
+        mSwipeRefreshLayout = view.findViewById(R.id.swipeRefreshMyAccount);
         tvUserName = view.findViewById(R.id.tvUserName);
         tvUserBalance = view.findViewById(R.id.tvUserBalance);
         btnExtract = view.findViewById(R.id.btnExtract);
         btnTransference = view.findViewById(R.id.btnTransference);
+
+
     }
 
     public static MyAccountFragment newInstance() {
@@ -49,10 +55,21 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
         view = inflater.inflate(R.layout.fragment_menu, container, false);
 
         bind();
+        bindListener();
+
         presenter = new MyAccountPresenter(this);
         presenter.loadUserAccount(Singleton.user.getEmail());
 
         return view;
+    }
+
+    private void bindListener() {
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.loadNewBalance();
+            }
+        });
     }
 
     @Override
@@ -64,5 +81,11 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
     public void showAccountDetails(User user) {
         tvUserBalance.setText(user.getBalance());
         tvUserName.setText(user.getName());
+    }
+
+    @Override
+    public void showNewBalance() {
+        tvUserBalance.setText(Singleton.user.getBalance());
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 }

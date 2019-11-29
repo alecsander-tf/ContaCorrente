@@ -1,8 +1,11 @@
 package br.com.contacorrente.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Transference {
+public class Transference implements Parcelable {
 
     @SerializedName("id")
     private String id;
@@ -67,5 +70,15 @@ public class Transference {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }

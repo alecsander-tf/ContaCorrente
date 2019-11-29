@@ -3,6 +3,7 @@ package br.com.contacorrente.menu.fragment.extract;
 import android.os.Bundle;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class ExtractFragment extends Fragment implements ExtractContract.View {
 
         RecyclerView recyclerViewFilmes = view.findViewById(R.id.transference_list);
 
-        recyclerViewFilmes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewFilmes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         recyclerViewFilmes.setAdapter(mTransfereceAdapter);
 

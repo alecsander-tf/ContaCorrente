@@ -43,6 +43,9 @@ public class TransferenceAdapter extends RecyclerView.Adapter<TranferenceViewHol
 
     @Override
     public int getItemCount() {
+        if (transferenceList == null || transferenceList.size() == 0){
+            return 0;
+        }
         return transferenceList.size();
     }
 
