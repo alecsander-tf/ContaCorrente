@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import br.com.contacorrente.Singleton;
 import br.com.contacorrente.concludeTransference.ConcludeActivity;
 import br.com.contacorrente.R;
 import br.com.contacorrente.model.Transference;
@@ -33,6 +34,11 @@ public class TransferenceFragment extends Fragment implements TransferenceContra
 
         bind();
         bindListener();
+
+        if (Singleton.test){
+            etUserTo.setText("bruna.silva@evosystems.com.br");
+            etValue.setText("11");
+        }
 
         presenter = new TransferencePresenter(this);
 
@@ -69,6 +75,5 @@ public class TransferenceFragment extends Fragment implements TransferenceContra
         intent.putExtra("userRelated", transference.getUserRelated());
 
         startActivity(intent);
-
     }
 }

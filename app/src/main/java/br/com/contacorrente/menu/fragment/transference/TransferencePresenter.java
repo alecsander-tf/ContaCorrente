@@ -1,5 +1,9 @@
 package br.com.contacorrente.menu.fragment.transference;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import br.com.contacorrente.Singleton;
 import br.com.contacorrente.model.Transference;
 import br.com.contacorrente.model.User;
@@ -31,6 +35,10 @@ public class TransferencePresenter implements TransferenceContract.UserInteracti
                     return;
                 }
 
+                Date c = Calendar.getInstance().getTime();
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+                transference.setData(df.format(c));
                 transference.setUserRelated(user);
                 transference.setValue(value);
                 transference.setId_from(Singleton.user.getId());

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 import br.com.contacorrente.R;
 import br.com.contacorrente.Singleton;
 import br.com.contacorrente.model.Transference;
+import br.com.contacorrente.util.Format;
 
 public class TransferenceAdapter extends RecyclerView.Adapter<TranferenceViewHolder> {
 
@@ -39,14 +41,17 @@ public class TransferenceAdapter extends RecyclerView.Adapter<TranferenceViewHol
 
         if (transference.getUserRelated() != null){
 
+            // Se quem enviou foi a própria conta, aparece vermelho
             if (transference.getId_from().equals(Singleton.user.getId())){
-                holder.tvUserAmount.setBackgroundColor(Color.parseColor("#FF0000"));
+                holder.tvUserAmount.setTextColor(Color.parseColor("#FF0000"));
+                holder.tvUserAmount.setText(Format.currencySendFormat(transference.getValue()));
             }else {
-                holder.tvUserAmount.setBackgroundColor(Color.parseColor("#369B5E"));
+                holder.tvUserAmount.setTextColor(Color.parseColor("#369B5E"));
+                holder.tvUserAmount.setText(Format.currencyFormat(transference.getValue()));
             }
 
             holder.tvUserTransference.setText(transference.getUserRelated().getName());
-            holder.tvUserAmount.setText(transference.getValue());
+
         }
     }
 

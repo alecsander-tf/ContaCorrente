@@ -17,6 +17,7 @@ import android.widget.Toast;
 import br.com.contacorrente.R;
 import br.com.contacorrente.Singleton;
 import br.com.contacorrente.model.User;
+import br.com.contacorrente.util.Format;
 
 public class MyAccountFragment extends Fragment implements MyAccountContract.View {
 
@@ -37,8 +38,6 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
         tvUserBalance = view.findViewById(R.id.tvUserBalance);
         btnExtract = view.findViewById(R.id.btnExtract);
         btnTransference = view.findViewById(R.id.btnTransference);
-
-
     }
 
     public static MyAccountFragment newInstance() {
@@ -79,7 +78,7 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
 
     @Override
     public void showAccountDetails(User user) {
-        tvUserBalance.setText(user.getBalance());
+        tvUserBalance.setText( Format.currencyFormat(user.getBalance()));
         tvUserName.setText(user.getName());
     }
 
