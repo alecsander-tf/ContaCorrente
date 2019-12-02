@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
 
-    <group>
-        <item android:id="@+id/menu"
-            android:icon="@drawable/ic_user"
-            android:title="Minha Conta"/>
-        <item android:id="@+id/extract"
-            android:icon="@drawable/ic_user"
-            android:title="Extrato"/>
-        <item android:id="@+id/transference"
-            android:icon="@drawable/ic_padlock"
-            android:title="Transferência"/>
+            <item android:id="@+id/menu"
+                android:icon="@drawable/ic_user"
+                android:title="Minha Conta" />
+            <item android:id="@+id/extract"
+                android:icon="@drawable/ic_coin"
+                android:title="Extrato"/>
+            <item android:id="@+id/transference"
+                android:icon="@drawable/ic_transfer"
+                android:title="Transferência"/>
     </group>
-    <group>
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
         <item android:id="@+id/logout"
-            android:icon="@drawable/ic_user"
+            android:icon="@drawable/ic_logout"
             android:title="Sair">
         </item>
     </group>

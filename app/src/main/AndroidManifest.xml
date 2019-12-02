@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-        <activity android:name=".concludeTransference.ConcludeActivity"></activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".concludeTransference.ConcludeActivity"></activity>
         <activity
             android:name=".login.LoginApplicationActivity"
             android:screenOrientation="portrait">
@@ -22,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".menu.MenuActivity"
             android:label="@string/title_activity_menu" />
     </application>
