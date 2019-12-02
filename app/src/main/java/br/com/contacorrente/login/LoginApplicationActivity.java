@@ -29,11 +29,24 @@ public class LoginApplicationActivity extends AppCompatActivity implements Login
         setContentView(R.layout.activity_login_application);
 
         bind();
+        bindListener();
 
         if (Singleton.test){
             etEmail.setText("alecsander.fernandes@evosystems.com.br");
             etPassword.setText("123456");
         }
+    }
+
+    private void bindListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = etEmail.getText().toString();
+                String password = etPassword.getText().toString();
+
+                presenter.login(UserFactory.getUser(new UserLoginFactory(email, password)));
+            }
+        });
     }
 
     private void bind() {
@@ -45,21 +58,6 @@ public class LoginApplicationActivity extends AppCompatActivity implements Login
         this.btnLogin = findViewById(R.id.btnLogin_Login);
         this.etEmail = findViewById(R.id.txtLogin_Email);
         this.etPassword = findViewById(R.id.txtLogin_Password);
-
-        btnLogin.setOnClickListener(btnLoginOnClick());
-    }
-
-    private View.OnClickListener btnLoginOnClick() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String email = etEmail.getText().toString();
-                String password = etPassword.getText().toString();
-
-                presenter.login(UserFactory.getUser(new UserLoginFactory(email, password)));
-            }
-        };
     }
 
     @Override

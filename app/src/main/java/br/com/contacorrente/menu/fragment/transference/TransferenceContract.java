@@ -10,7 +10,6 @@ public interface TransferenceContract {
     }
 
     interface UserInteraction{
-        void loadUserId(String email);
         void sendTransference(String userToEmail, String value);
     }
 }

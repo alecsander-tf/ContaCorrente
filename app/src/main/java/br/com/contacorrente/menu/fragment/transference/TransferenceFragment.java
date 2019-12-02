@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import br.com.contacorrente.ConcludeActivity;
+import br.com.contacorrente.concludeTransference.ConcludeActivity;
 import br.com.contacorrente.R;
 import br.com.contacorrente.model.Transference;
 
@@ -66,6 +66,7 @@ public class TransferenceFragment extends Fragment implements TransferenceContra
 
         Intent intent = new Intent(getContext(), ConcludeActivity.class);
         intent.putExtra("transference", transference);
+        intent.putExtra("userRelated", transference.getUserRelated());
 
         startActivity(intent);
 

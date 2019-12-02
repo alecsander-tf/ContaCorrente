@@ -18,20 +18,26 @@
 
     <TextView
         android:id="@+id/txtMenuDrawer_Name"
-        android:layout_gravity="left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="left"
         android:paddingTop="16dp"
         android:text="Chike Mgbemena"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/colorBlack"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="parent" />
 
     <TextView
         android:id="@+id/txtMenuDrawer_Email"
-        android:layout_gravity="left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="left"
         android:paddingTop="16dp"
         android:text="chike.mgbemena@gmail.com"
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="parent" />
 
 </LinearLayout>

@@ -24,6 +24,30 @@ public class Transference implements Parcelable {
 
     private User userRelated;
 
+    public Transference(){
+
+    }
+
+    protected Transference(Parcel in) {
+        id = in.readString();
+        id_from = in.readString();
+        id_to = in.readString();
+        value = in.readString();
+        data = in.readString();
+    }
+
+    public static final Creator<Transference> CREATOR = new Creator<Transference>() {
+        @Override
+        public Transference createFromParcel(Parcel in) {
+            return new Transference(in);
+        }
+
+        @Override
+        public Transference[] newArray(int size) {
+            return new Transference[size];
+        }
+    };
+
     public User getUserRelated() {
         return userRelated;
     }
@@ -79,6 +103,10 @@ public class Transference implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeString(id);
+        dest.writeString(id_from);
+        dest.writeString(id_to);
+        dest.writeString(value);
+        dest.writeString(data);
     }
 }

@@ -1,21 +1,12 @@
 package br.com.contacorrente.network;
 
-import android.util.Log;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
-import br.com.contacorrente.model.Login;
+import br.com.contacorrente.model.Status;
 import br.com.contacorrente.model.Transference;
 import br.com.contacorrente.model.User;
 import br.com.contacorrente.network.endpoint.RetrofitEndpoint;
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,6 +17,33 @@ public class UserServiceImpl implements UserService{
 
     public UserServiceImpl() {
         this.mRetrofit = RetrofitClient.getClient().create(RetrofitEndpoint.class);
+    }
+
+    @Override
+    public void transfer(int userFromId, int userToId, double valueTransference, final UserServiceCallback<Status> callback) {
+
+        MultipartBody.Part id_user_from =
+                MultipartBody.Part.createFormData("id_user_from", Integer.toString(userFromId));
+
+        MultipartBody.Part id_user_to =
+                MultipartBody.Part.createFormData("id_user_to", Integer.toString(userToId));
+
+        MultipartBody.Part value =
+                MultipartBody.Part.createFormData("value", Double.toString(valueTransference));
+
+        Call<Status> call = mRetrofit.transfer(id_user_from, id_user_to, value);
+        call.enqueue(new Callback<Status>() {
+            @Override
+            public void onResponse(Call<Status> call, Response<Status> response) {
+                Status status = response.body();
+                callback.onLoaded(status);
+            }
+
+            @Override
+            public void onFailure(Call<Status> call, Throwable t) {
+                callback.onError();
+            }
+        });
     }
 
     @Override
@@ -57,24 +75,24 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void checkLogin(String email, String password, final UserServiceCallback<Login> callback) {
+    public void checkLogin(String email, String password, final UserServiceCallback<Status> callback) {
 
         // Cria os dados como form-data, para serem mandados no corpo da requisição e não como parte da URI
         MultipartBody.Part emailAux = MultipartBody.Part.createFormData("email", email);
         MultipartBody.Part passwordAux = MultipartBody.Part.createFormData("password", password);
 
-        Call<Login> call = mRetrofit.checkLogin(emailAux, passwordAux);
-        call.enqueue(new Callback<Login>() {
+        Call<Status> call = mRetrofit.checkLogin(emailAux, passwordAux);
+        call.enqueue(new Callback<Status>() {
             @Override
-            public void onResponse(Call<Login> call, Response<Login> response) {
+            public void onResponse(Call<Status> call, Response<Status> response) {
                 if (response.code() == 200){
-                    Login login = response.body();
-                    callback.onLoaded(login);
+                    Status status = response.body();
+                    callback.onLoaded(status);
                 }
             }
 
             @Override
-            public void onFailure(Call<Login> call, Throwable t) {
+            public void onFailure(Call<Status> call, Throwable t) {
                 callback.onError();
             }
         });

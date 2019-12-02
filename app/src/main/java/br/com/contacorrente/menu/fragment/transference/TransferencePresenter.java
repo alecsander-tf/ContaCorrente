@@ -20,16 +20,17 @@ public class TransferencePresenter implements TransferenceContract.UserInteracti
     }
 
     @Override
-    public void loadUserId(String email) {
-
-    }
-
-    @Override
     public void sendTransference(String userToEmail, final String value) {
 
         mApi.getUserByEmail(userToEmail, new UserService.UserServiceCallback<User>() {
             @Override
             public void onLoaded(User user) {
+
+                if (user == null){
+                    view.showToast("Email de destino não encontrado...");
+                    return;
+                }
+
                 transference.setUserRelated(user);
                 transference.setValue(value);
                 transference.setId_from(Singleton.user.getId());
@@ -40,7 +41,7 @@ public class TransferencePresenter implements TransferenceContract.UserInteracti
 
             @Override
             public void onError() {
-
+                view.showToast("Erro ao efetuar transferência");
             }
         });
     }

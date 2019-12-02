@@ -1,8 +1,11 @@
 package br.com.contacorrente.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+public class User implements Parcelable {
 
     @SerializedName("id")
     private String id;
@@ -34,6 +37,27 @@ public class User {
         this.profile = profile;
         this.balance = balance;
     }
+
+    protected User(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        email = in.readString();
+        profile = in.readString();
+        password = in.readString();
+        balance = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public String getBalance() {
         return balance;
@@ -81,5 +105,20 @@ public class User {
 
     public void setProfile(String profile) {
         this.profile = profile;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(email);
+        dest.writeString(profile);
+        dest.writeString(password);
+        dest.writeString(balance);
     }
 }

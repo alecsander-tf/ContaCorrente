@@ -1,6 +1,7 @@
 package br.com.contacorrente.menu.fragment.extract;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import br.com.contacorrente.R;
+import br.com.contacorrente.Singleton;
 import br.com.contacorrente.model.Transference;
 
 public class TransferenceAdapter extends RecyclerView.Adapter<TranferenceViewHolder> {
@@ -36,6 +38,13 @@ public class TransferenceAdapter extends RecyclerView.Adapter<TranferenceViewHol
         Transference transference = transferenceList.get(position);
 
         if (transference.getUserRelated() != null){
+
+            if (transference.getId_from().equals(Singleton.user.getId())){
+                holder.tvUserAmount.setBackgroundColor(Color.parseColor("#FF0000"));
+            }else {
+                holder.tvUserAmount.setBackgroundColor(Color.parseColor("#369B5E"));
+            }
+
             holder.tvUserTransference.setText(transference.getUserRelated().getName());
             holder.tvUserAmount.setText(transference.getValue());
         }
