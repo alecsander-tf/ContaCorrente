@@ -28,6 +28,10 @@ public class TransferenceFragment extends Fragment implements TransferenceContra
     private EditText etValue;
     private Button btnSend;
 
+    public static Fragment newInstance() {
+        return new TransferenceFragment();
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_transference, container, false);

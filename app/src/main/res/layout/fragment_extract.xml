@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="Transações"
+            android:text="Extrato"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorBlack"
             android:textSize="24sp"

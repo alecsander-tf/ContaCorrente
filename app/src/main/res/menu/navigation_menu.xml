@@ -5,6 +5,7 @@
         android:checkableBehavior="single">
 
             <item android:id="@+id/menu"
+                android:checked="true"
                 android:icon="@drawable/ic_user"
                 android:title="Minha Conta" />
             <item android:id="@+id/extract"

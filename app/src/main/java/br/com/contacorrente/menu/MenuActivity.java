@@ -21,9 +21,10 @@ import br.com.contacorrente.Singleton;
 import br.com.contacorrente.login.LoginApplicationActivity;
 import br.com.contacorrente.menu.fragment.extract.ExtractFragment;
 import br.com.contacorrente.menu.fragment.myAccount.MyAccountFragment;
+import br.com.contacorrente.menu.fragment.myAccount.ParentActivityContract;
 import br.com.contacorrente.menu.fragment.transference.TransferenceFragment;
 
-public class MenuActivity extends AppCompatActivity implements MenuContract.View {
+public class MenuActivity extends AppCompatActivity implements MenuContract.View, ParentActivityContract {
 
     Fragment fragment = null;
     Class fragmentClass;
@@ -88,8 +89,7 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.frameLayout, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.frameLayout, fragment).commit();
     }
 
     private void bindListener() {
@@ -132,5 +132,19 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     public void showAccountDetails() {
         tvMenuDrawer_Email.setText(Singleton.user.getEmail());
         tvMenuDrawer_Name.setText(Singleton.user.getName());
+    }
+
+    @Override
+    public void changeFragment(Fragment fragment) {
+        this.fragmentClass = fragment.getClass();
+        if (fragment instanceof ExtractFragment){
+            setTitle("Extrato");
+            navigationView.getMenu().getItem(1).setChecked(true);
+        }else if (fragment instanceof TransferenceFragment){
+            setTitle("Transferência");
+            navigationView.getMenu().getItem(2).setChecked(true);
+        }
+
+        changeFragment();
     }
 }

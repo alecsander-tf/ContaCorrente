@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
@@ -16,12 +17,18 @@ import android.widget.Toast;
 
 import br.com.contacorrente.R;
 import br.com.contacorrente.Singleton;
+import br.com.contacorrente.menu.MenuActivity;
+import br.com.contacorrente.menu.fragment.extract.ExtractFragment;
+import br.com.contacorrente.menu.fragment.transference.TransferenceFragment;
 import br.com.contacorrente.model.User;
 import br.com.contacorrente.util.Format;
 
 public class MyAccountFragment extends Fragment implements MyAccountContract.View {
 
+    private ParentActivityContract parentActivityContract;
+
     private View view;
+    private FragmentManager fragmentManager;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -31,14 +38,6 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
     private Button btnTransference;
 
     MyAccountContract.UserInteractions presenter;
-
-    private void bind(){
-        mSwipeRefreshLayout = view.findViewById(R.id.swipeRefreshMyAccount);
-        tvUserName = view.findViewById(R.id.tvUserName);
-        tvUserBalance = view.findViewById(R.id.tvUserBalance);
-        btnExtract = view.findViewById(R.id.btnExtract);
-        btnTransference = view.findViewById(R.id.btnTransference);
-    }
 
     public static MyAccountFragment newInstance() {
         return new MyAccountFragment();
@@ -52,6 +51,7 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_menu, container, false);
+        fragmentManager = getFragmentManager();
 
         bind();
         bindListener();
@@ -62,11 +62,36 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
         return view;
     }
 
+    private void bind(){
+        mSwipeRefreshLayout = view.findViewById(R.id.swipeRefreshMyAccount);
+        tvUserName = view.findViewById(R.id.tvUserName);
+        tvUserBalance = view.findViewById(R.id.tvUserBalance);
+        btnExtract = view.findViewById(R.id.btnExtract);
+        btnTransference = view.findViewById(R.id.btnTransference);
+    }
+
     private void bindListener() {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 presenter.loadNewBalance();
+            }
+        });
+
+        btnExtract.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                parentActivityContract = (MenuActivity) getActivity();
+                parentActivityContract.changeFragment(ExtractFragment.newInstance());
+            }
+        });
+
+        btnTransference.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parentActivityContract = (MenuActivity) getActivity();
+                parentActivityContract.changeFragment(TransferenceFragment.newInstance());
             }
         });
     }
