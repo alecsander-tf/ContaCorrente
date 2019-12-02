@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -69,6 +70,14 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
         circularImageView = navigationView.getHeaderView(0).findViewById(R.id.circularImageView);
         tvMenuDrawer_Name = navigationView.getHeaderView(0).findViewById(R.id.txtMenuDrawer_Name);
         tvMenuDrawer_Email = navigationView.getHeaderView(0).findViewById(R.id.txtMenuDrawer_Email);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        drawerLayout.openDrawer(Gravity.LEFT);
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void loadNavigation() {
