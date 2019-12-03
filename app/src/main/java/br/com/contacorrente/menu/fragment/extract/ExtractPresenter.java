@@ -16,6 +16,8 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
     static private List<Transference> transferenceList;
     static private List<User> loadedUserList;
 
+    static private int aux;
+
     private ExtractContract.View view;
     private UserService mApi;
 
@@ -64,11 +66,19 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
     @Override
     public void loadUserExtractDetails() {
 
+        aux = transferenceList.size();
+
         for (final Transference t : transferenceList) {
+
             String idToBeLoaded = verifyIdToBeLoaded(t);
                 mApi.getUserById(Integer.parseInt(idToBeLoaded), new UserService.UserServiceCallback<User>() {
+
+
+
                     @Override
                     public void onLoaded(User user) {
+
+                        aux--;
                         t.setUserRelated(user);
                         loadedUserList.add(user);
                         view.showExtract(transferenceList);
