@@ -36,6 +36,7 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
     private TextView tvUserBalance;
     private Button btnExtract;
     private Button btnTransference;
+    private Button btnLogout;
 
     MyAccountContract.UserInteractions presenter;
 
@@ -63,11 +64,15 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
     }
 
     private void bind(){
+
+        parentActivityContract = (MenuActivity) getActivity();
+
         mSwipeRefreshLayout = view.findViewById(R.id.swipeRefreshMyAccount);
         tvUserName = view.findViewById(R.id.tvUserName);
         tvUserBalance = view.findViewById(R.id.tvUserBalance);
         btnExtract = view.findViewById(R.id.btnExtract);
         btnTransference = view.findViewById(R.id.btnTransference);
+        btnLogout = view.findViewById(R.id.btnLogout);
     }
 
     private void bindListener() {
@@ -81,8 +86,6 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
         btnExtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                parentActivityContract = (MenuActivity) getActivity();
                 parentActivityContract.changeFragment(ExtractFragment.newInstance());
             }
         });
@@ -90,8 +93,14 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
         btnTransference.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                parentActivityContract = (MenuActivity) getActivity();
                 parentActivityContract.changeFragment(TransferenceFragment.newInstance());
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parentActivityContract.logout();
             }
         });
     }
@@ -103,13 +112,13 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
 
     @Override
     public void showAccountDetails(User user) {
-        tvUserBalance.setText( Format.currencyFormat(user.getBalance()));
+        tvUserBalance.setText(Format.currencyFormat(user.getBalance()));
         tvUserName.setText(user.getName());
     }
 
     @Override
     public void showNewBalance() {
-        tvUserBalance.setText(Singleton.user.getBalance());
+        tvUserBalance.setText(Format.currencyFormat(Singleton.user.getBalance()));
         mSwipeRefreshLayout.setRefreshing(false);
     }
 }

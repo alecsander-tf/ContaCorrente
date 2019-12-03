@@ -37,6 +37,12 @@ public class LoginApplicationActivity extends AppCompatActivity implements Login
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Singleton.getInstance();
+    }
+
     private void bindListener() {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,8 +56,6 @@ public class LoginApplicationActivity extends AppCompatActivity implements Login
     }
 
     private void bind() {
-
-        Singleton.getInstance();
 
         presenter = new LoginPresenter(this);
 

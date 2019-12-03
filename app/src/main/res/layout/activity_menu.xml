@@ -15,12 +15,11 @@
         android:layout_height="match_parent"
         android:id="@+id/relative">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/HeaderBar"
-        app:theme="@style/CustomAppTheme"/>
+        <include
+            layout="@layout/custom_toolbar"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <FrameLayout
             android:layout_width="match_parent"

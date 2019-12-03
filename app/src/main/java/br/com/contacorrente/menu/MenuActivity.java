@@ -1,6 +1,7 @@
 package br.com.contacorrente.menu;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,13 +10,23 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.graphics.BlendMode;
+import android.graphics.BlendModeColorFilter;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import br.com.contacorrente.R;
 import br.com.contacorrente.Singleton;
@@ -81,10 +92,14 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     }
 
     private void loadNavigation() {
+        //final Drawable upArrow = getResources().getDrawable(R.drawable.ic_menu);
+
+        setTitle("Minha Conta");
         setSupportActionBar(toolbar);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.getNavigationIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
     }
 
     private void changeFragment(){
@@ -117,8 +132,7 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
                         fragmentClass = TransferenceFragment.class;
                         break;
                     case R.id.logout:
-                        Singleton.logout();
-                        startActivity(new Intent(getApplicationContext(), LoginApplicationActivity.class));
+                        logout();
                         return true;
                     default:
                         return true;
@@ -139,6 +153,13 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
 
     @Override
     public void showAccountDetails() {
+
+        Picasso.get()
+                .load(Singleton.user.getProfile())
+                .fit().centerCrop()
+                .placeholder(R.drawable.ic_insert_photo)
+                .into(circularImageView);
+
         tvMenuDrawer_Email.setText(Singleton.user.getEmail());
         tvMenuDrawer_Name.setText(Singleton.user.getName());
     }
@@ -153,7 +174,12 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
             setTitle("Transferência");
             navigationView.getMenu().getItem(2).setChecked(true);
         }
-
         changeFragment();
+    }
+
+    @Override
+    public void logout() {
+        Singleton.logout();
+        finish();
     }
 }

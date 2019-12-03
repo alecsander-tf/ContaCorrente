@@ -1,36 +1,25 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="HeaderBar">
-        <item name="android:background">@color/colorBlack</item>
-        <item name="colorPrimary">@color/colorWhite</item>
-    </style>
-
     <style name="NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimaryDark">@color/colorBlack</item>
         <item name="colorAccent">@color/colorTotalBlack</item>
-        <item name="actionBarTheme">@style/Theme.AppCompat.Light</item>
-        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">true</item>
-        <!--<item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
-        <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>-->
-
-
+        <item name="actionBarTheme">@style/CustomToolbar</item>
     </style>
 
-    <style name="NoActionBar.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="CustomToolbar" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="android:background">@color/colorBlack</item>
+        <item name="android:textColorPrimary">@color/colorWhite</item>
+        <!-- Applies to views in their normal state. -->
+        <item name="colorControlNormal">@color/colorWhite</item>
+        <!-- Applies to views in their activated state (i.e checked or switches) -->
+        <item name="colorControlActivated">@color/colorLightBlack</item>
+        <!-- Applied to framework control highlights (i.e ripples or list selectors) -->
+        <item name="colorControlHighlight">@color/colorLightBlack</item>
+        <!-- Enable these below if you want clicking icons to trigger a ripple effect -->
+        <!--
+        <item name="selectableItemBackground">?android:selectableItemBackground</item>
+        <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
+        -->
     </style>
-
-    <style name="NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
