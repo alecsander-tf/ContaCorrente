@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -41,6 +42,7 @@ public class ExtractFragment extends Fragment implements ExtractContract.View {
 
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setProgress(50);
+
         RecyclerView recyclerViewFilmes = view.findViewById(R.id.transference_list);
         recyclerViewFilmes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerViewFilmes.setAdapter(mTransfereceAdapter);
@@ -59,6 +61,12 @@ public class ExtractFragment extends Fragment implements ExtractContract.View {
 
     @Override
     public void showExtract(List<Transference> list) {
+        progressBar.setProgress(100);
         mTransfereceAdapter.replaceData(list);
+    }
+
+    @Override
+    public void showToast(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
     }
 }

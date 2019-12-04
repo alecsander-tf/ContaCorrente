@@ -5,14 +5,6 @@ import java.util.Currency;
 
 public class Format {
 
-    public static String currencySendFormat(String value){
-        NumberFormat format = NumberFormat.getCurrencyInstance();
-        format.setMaximumFractionDigits(2);
-        format.setCurrency(Currency.getInstance("BRL"));
-
-        return "- " + format.format(Double.valueOf(value));
-    }
-
     public static String currencyFormat(String value){
         NumberFormat format = NumberFormat.getCurrencyInstance();
         format.setMaximumFractionDigits(2);

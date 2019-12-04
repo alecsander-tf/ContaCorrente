@@ -1,7 +1,5 @@
 package br.com.contacorrente.menu.fragment.extract;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +12,9 @@ import br.com.contacorrente.network.UserServiceImpl;
 public class ExtractPresenter implements ExtractContract.UserInteractions {
 
     static private List<Transference> transferenceList;
-    static private List<User> loadedUserList;
 
-    static private int aux;
+    static private int transferenceListSize;
+    static private boolean error;
 
     private ExtractContract.View view;
     private UserService mApi;
@@ -24,7 +22,6 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
     ExtractPresenter(ExtractContract.View view) {
         mApi = new UserServiceImpl();
         this.view = view;
-        loadedUserList = new ArrayList<>();
     }
 
     @Override
@@ -44,52 +41,46 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
     }
 
     /**
-     * Verifica o id que mandou/recebeu algum valor em relação ao usuário logado,
-     * caso os detalhes deste id não esjam carregados, retorna o id para ser carregado
-     * ou nulo se os detalhes já foram carregados.
-     *
-     * */
+     * Retorna o id que interagiu(mandou/recebeu algum valor) com a conta logada
+     **/
     private String verifyIdToBeLoaded(Transference t){
 
-        String idToBeLoad;
-
-        //Verifica qual id interagiu(mandou/recebeu algum valor) com a conta logada
         if (t.getId_from().equals(Singleton.user.getId())){
-            idToBeLoad = t.getId_to();
+            return t.getId_to();
         }else {
-            idToBeLoad = t.getId_from();
+            return t.getId_from();
         }
-
-        return idToBeLoad;
     }
 
     @Override
     public void loadUserExtractDetails() {
 
-        aux = transferenceList.size();
+        transferenceListSize = transferenceList.size();
 
         for (final Transference t : transferenceList) {
-
             String idToBeLoaded = verifyIdToBeLoaded(t);
                 mApi.getUserById(Integer.parseInt(idToBeLoaded), new UserService.UserServiceCallback<User>() {
-
-
-
                     @Override
                     public void onLoaded(User user) {
-
-                        aux--;
                         t.setUserRelated(user);
-                        loadedUserList.add(user);
-                        view.showExtract(transferenceList);
+                        prepareExtract();
                     }
-
                     @Override
                     public void onError() {
-                        Log.d("ERRO", "Erro ao carregar");
+                        error = true;
                     }
                 });
             }
+    }
 
+    private void prepareExtract(){
+        transferenceListSize--;
+        if (error){
+            view.showToast("Erro ao carregar extrato");
+            return;
+        }
+        if (transferenceListSize == 0){
+            view.showExtract(transferenceList);
+        }
     }
 }

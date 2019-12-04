@@ -43,8 +43,11 @@ public class TransferenceAdapter extends RecyclerView.Adapter<TranferenceViewHol
 
             // Se quem enviou foi a própria conta, aparece vermelho
             if (transference.getId_from().equals(Singleton.user.getId())){
+
+                String transferenceValue = "- " + Format.currencyFormat(transference.getValue());
+
                 holder.tvUserAmount.setTextColor(Color.parseColor("#FF0000"));
-                holder.tvUserAmount.setText(Format.currencySendFormat(transference.getValue()));
+                holder.tvUserAmount.setText(transferenceValue);
             }else {
                 holder.tvUserAmount.setTextColor(Color.parseColor("#369B5E"));
                 holder.tvUserAmount.setText(Format.currencyFormat(transference.getValue()));

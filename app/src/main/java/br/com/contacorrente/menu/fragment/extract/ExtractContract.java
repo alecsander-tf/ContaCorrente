@@ -8,7 +8,7 @@ public interface ExtractContract {
 
     interface View {
         void showExtract(List<Transference> transferenceList);
-
+        void showToast(String msg);
     }
 
     interface UserInteractions {

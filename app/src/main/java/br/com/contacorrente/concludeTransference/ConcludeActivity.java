@@ -63,12 +63,12 @@ public class ConcludeActivity extends AppCompatActivity implements ConcludeContr
 
     @Override
     public void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void finishTransference() {
-        Toast.makeText(this, "Sucesso!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Sucesso!", Toast.LENGTH_LONG).show();
         finish();
     }
 }
