@@ -8,7 +8,7 @@ public class Singleton {
 
     private static Singleton singleInstance = null;
 
-    public static boolean test = true;
+    public static boolean test = false;
     public static User user;
 
     private Singleton(){
