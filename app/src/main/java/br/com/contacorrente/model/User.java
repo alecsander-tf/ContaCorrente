@@ -71,10 +71,6 @@ public class User implements Parcelable {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getId() {
         return id;
     }
@@ -95,16 +91,8 @@ public class User implements Parcelable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getProfile() {
         return profile;
-    }
-
-    public void setProfile(String profile) {
-        this.profile = profile;
     }
 
     @Override

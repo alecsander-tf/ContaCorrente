@@ -1,7 +1,6 @@
 package br.com.contacorrente.menu;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,20 +8,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.Intent;
-import android.graphics.BlendMode;
-import android.graphics.BlendModeColorFilter;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.mikhaellopez.circularimageview.CircularImageView;
@@ -30,7 +22,6 @@ import com.squareup.picasso.Picasso;
 
 import br.com.contacorrente.R;
 import br.com.contacorrente.Singleton;
-import br.com.contacorrente.login.LoginApplicationActivity;
 import br.com.contacorrente.menu.fragment.extract.ExtractFragment;
 import br.com.contacorrente.menu.fragment.myAccount.MyAccountFragment;
 import br.com.contacorrente.menu.fragment.myAccount.ParentActivityContract;
@@ -38,16 +29,16 @@ import br.com.contacorrente.menu.fragment.transference.TransferenceFragment;
 
 public class MenuActivity extends AppCompatActivity implements MenuContract.View, ParentActivityContract {
 
-    Fragment fragment = null;
-    Class fragmentClass;
+    private Fragment fragment = null;
+    private Class fragmentClass;
 
-    Toolbar toolbar;
+    private Toolbar toolbar;
 
-    TextView tvMenuDrawer_Name;
-    TextView tvMenuDrawer_Email;
-    CircularImageView circularImageView;
+    private TextView tvMenuDrawer_Name;
+    private TextView tvMenuDrawer_Email;
+    private CircularImageView circularImageView;
 
-    MenuContract.UserInteractions presenter;
+    private MenuContract.UserInteractions presenter;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -61,6 +52,7 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
         bind();
         loadNavigation();
         bindListener();
+
         changeFragment();
 
         presenter = new MenuPresenter(this);
@@ -69,7 +61,7 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
 
     private void bind(){
 
-        //First fragment to be called
+        //Primeira Fragment que será carregada
         fragmentClass = MyAccountFragment.class;
 
         drawerLayout = findViewById(R.id.my_drawer_layout);
@@ -77,7 +69,7 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.navigationView);
 
-        //NavigationDrawer elements
+        //Elementos da NavigationDrawer
         circularImageView = navigationView.getHeaderView(0).findViewById(R.id.circularImageView);
         tvMenuDrawer_Name = navigationView.getHeaderView(0).findViewById(R.id.txtMenuDrawer_Name);
         tvMenuDrawer_Email = navigationView.getHeaderView(0).findViewById(R.id.txtMenuDrawer_Email);
@@ -92,28 +84,17 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     }
 
     private void loadNavigation() {
-        //final Drawable upArrow = getResources().getDrawable(R.drawable.ic_menu);
 
-        setTitle("Minha Conta");
         setSupportActionBar(toolbar);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.getNavigationIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-    }
 
-    private void changeFragment(){
-
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frameLayout, fragment).commit();
+        if (toolbar.getNavigationIcon() != null){
+            toolbar.getNavigationIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        }
     }
 
     private void bindListener() {
@@ -139,11 +120,9 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
                 }
 
                 changeFragment();
-                // Highlight the selected item has been done by NavigationView
-                //item.setChecked(true);
-                // Set action bar title
+                // Muda o título da action bar
                 setTitle(item.getTitle());
-                // Close the navigation drawer
+                // Fecha o navigation drawer
                 drawerLayout.closeDrawers();
 
                 return true;
@@ -165,6 +144,16 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     }
 
     @Override
+    public void showError(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Muda a fragment a partir de um parâmetro.
+     * Este método é chamado a partir de uma classe controladora
+     * @param fragment Fragment que será iniciada
+     */
+    @Override
     public void changeFragment(Fragment fragment) {
         this.fragmentClass = fragment.getClass();
         if (fragment instanceof ExtractFragment){
@@ -175,6 +164,23 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
             navigationView.getMenu().getItem(2).setChecked(true);
         }
         changeFragment();
+    }
+
+    /**
+     * Muda a fragment a partir de uma variável da própria classe
+     * */
+    private void changeFragment(){
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.frameLayout, fragment).commit();
     }
 
     @Override

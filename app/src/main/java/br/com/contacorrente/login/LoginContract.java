@@ -1,7 +1,5 @@
 package br.com.contacorrente.login;
 
-import android.content.Intent;
-
 import br.com.contacorrente.model.User;
 
 public interface LoginContract {

@@ -1,5 +1,7 @@
 package br.com.contacorrente.network;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import br.com.contacorrente.model.Status;
@@ -34,13 +36,13 @@ public class UserServiceImpl implements UserService{
         Call<Status> call = mRetrofit.transfer(id_user_from, id_user_to, value);
         call.enqueue(new Callback<Status>() {
             @Override
-            public void onResponse(Call<Status> call, Response<Status> response) {
+            public void onResponse(@NotNull Call<Status> call, @NotNull Response<Status> response) {
                 Status status = response.body();
                 callback.onLoaded(status);
             }
 
             @Override
-            public void onFailure(Call<Status> call, Throwable t) {
+            public void onFailure(@NotNull Call<Status> call, @NotNull Throwable t) {
                 callback.onError();
             }
         });
@@ -55,7 +57,7 @@ public class UserServiceImpl implements UserService{
         Call<List<Transference>> call = mRetrofit.getBankStatement(id_user);
         call.enqueue(new Callback<List<Transference>>() {
             @Override
-            public void onResponse(Call<List<Transference>> call, Response<List<Transference>> response) {
+            public void onResponse(@NotNull Call<List<Transference>> call, @NotNull Response<List<Transference>> response) {
 
                 //Gson gson = new Gson();
                 //Type type = new TypeToken<ArrayList<Transference>>() {
@@ -68,7 +70,7 @@ public class UserServiceImpl implements UserService{
             }
 
             @Override
-            public void onFailure(Call<List<Transference>> call, Throwable t) {
+            public void onFailure(@NotNull Call<List<Transference>> call, @NotNull Throwable t) {
                 callback.onError();
             }
         });
@@ -84,7 +86,7 @@ public class UserServiceImpl implements UserService{
         Call<Status> call = mRetrofit.checkLogin(emailAux, passwordAux);
         call.enqueue(new Callback<Status>() {
             @Override
-            public void onResponse(Call<Status> call, Response<Status> response) {
+            public void onResponse(@NotNull Call<Status> call, @NotNull Response<Status> response) {
                 if (response.code() == 200){
                     Status status = response.body();
                     callback.onLoaded(status);
@@ -92,7 +94,7 @@ public class UserServiceImpl implements UserService{
             }
 
             @Override
-            public void onFailure(Call<Status> call, Throwable t) {
+            public void onFailure(@NotNull Call<Status> call, @NotNull Throwable t) {
                 callback.onError();
             }
         });
@@ -110,7 +112,7 @@ public class UserServiceImpl implements UserService{
         try{
             callUser.enqueue(new Callback<User>() {
                 @Override
-                public void onResponse(Call<User> call, Response<User> response) {
+                public void onResponse(@NotNull Call<User> call, @NotNull Response<User> response) {
                     if (response.code() == 200){
                         User user = response.body();
                         callback.onLoaded(user);
@@ -118,7 +120,7 @@ public class UserServiceImpl implements UserService{
                 }
 
                 @Override
-                public void onFailure(Call<User> call, Throwable t) {
+                public void onFailure(@NotNull Call<User> call, @NotNull Throwable t) {
                     callback.onError();
                 }
             });
@@ -136,7 +138,7 @@ public class UserServiceImpl implements UserService{
         Call<User> callUser = mRetrofit.getUserByEmail(email);
         callUser.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(@NotNull Call<User> call, @NotNull Response<User> response) {
                 if (response.code() == 200){
                     User user = response.body();
                     callback.onLoaded(user);
@@ -144,7 +146,7 @@ public class UserServiceImpl implements UserService{
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(@NotNull Call<User> call, @NotNull Throwable t) {
                 callback.onError();
             }
         });

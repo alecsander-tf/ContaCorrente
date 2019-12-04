@@ -10,11 +10,10 @@ public class MyAccountPresenter implements MyAccountContract.UserInteractions {
     private MyAccountContract.View view;
     private UserService mRetrofit;
 
-    public MyAccountPresenter(MyAccountContract.View view) {
+    MyAccountPresenter(MyAccountContract.View view) {
         this.view = view;
         mRetrofit = new UserServiceImpl();
     }
-
 
     @Override
     public void loadUserAccount(String email) {

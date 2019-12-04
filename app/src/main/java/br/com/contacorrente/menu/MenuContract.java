@@ -1,11 +1,10 @@
 package br.com.contacorrente.menu;
 
-import br.com.contacorrente.model.User;
-
 public interface MenuContract {
 
     interface View{
         void showAccountDetails();
+        void showError(String msg);
     }
 
     interface UserInteractions{

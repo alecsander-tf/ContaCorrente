@@ -1,7 +1,5 @@
 package br.com.contacorrente.menu.fragment.myAccount;
 
-
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -28,7 +26,6 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
     private ParentActivityContract parentActivityContract;
 
     private View view;
-    private FragmentManager fragmentManager;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -38,7 +35,7 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
     private Button btnTransference;
     private Button btnLogout;
 
-    MyAccountContract.UserInteractions presenter;
+    private MyAccountContract.UserInteractions presenter;
 
     public static MyAccountFragment newInstance() {
         return new MyAccountFragment();
@@ -52,7 +49,6 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_menu, container, false);
-        fragmentManager = getFragmentManager();
 
         bind();
         bindListener();

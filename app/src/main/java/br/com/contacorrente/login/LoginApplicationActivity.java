@@ -41,6 +41,9 @@ public class LoginApplicationActivity extends AppCompatActivity implements Login
     protected void onResume() {
         super.onResume();
         Singleton.getInstance();
+
+        etEmail.getText().clear();
+        etPassword.getText().clear();
     }
 
     private void bindListener() {

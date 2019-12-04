@@ -14,23 +14,21 @@ public class Format {
     }
 
     public static String maskValue(String value, String mask){
-        String status = "";
+        StringBuilder status = new StringBuilder();
         int i = 0;
-        // vamos iterar a mascara, para descobrir quais caracteres vamos adicionar e quando...
         for (char m : mask.toCharArray()) {
-            if (m != '#') { // se não for um #, vamos colocar o caracter informado na máscara
-                status += m;
+            if (m != '#') {
+                status.append(m);
                 continue;
             }
-            // Senão colocamos o valor que será formatado
             try {
-                status += value.charAt(i);
+                status.append(value.charAt(i));
             } catch (Exception e) {
                 break;
             }
             i++;
         }
-        return status;
+        return status.toString();
     }
 
 }

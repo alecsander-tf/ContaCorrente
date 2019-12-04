@@ -15,9 +15,9 @@ public class TransferencePresenter implements TransferenceContract.UserInteracti
     private TransferenceContract.View view;
     private UserServiceImpl mApi;
 
-    Transference transference;
+    private Transference transference;
 
-    public TransferencePresenter(TransferenceContract.View view) {
+    TransferencePresenter(TransferenceContract.View view) {
         mApi = new UserServiceImpl();
         this.view = view;
         this.transference = new Transference();

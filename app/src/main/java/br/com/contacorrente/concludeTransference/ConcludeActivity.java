@@ -17,11 +17,11 @@ public class ConcludeActivity extends AppCompatActivity implements ConcludeContr
 
     private Transference transference;
     private TextView date;
-    TextView userToName;
-    TextView value;
-    Button btnConclude;
+    private TextView userToName;
+    private TextView value;
+    private Button btnConclude;
 
-    ConcludeContract.UserInteraction presenter;
+    private ConcludeContract.UserInteraction presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,10 @@ public class ConcludeActivity extends AppCompatActivity implements ConcludeContr
         setContentView(R.layout.activity_conclude);
 
         transference = getIntent().getParcelableExtra("transference");
-        transference.setUserRelated((User) getIntent().getParcelableExtra("userRelated"));
+
+        if (transference != null) {
+            transference.setUserRelated((User) getIntent().getParcelableExtra("userRelated"));
+        }
 
         bind();
         bindListener();

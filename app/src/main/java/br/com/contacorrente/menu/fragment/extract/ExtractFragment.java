@@ -41,7 +41,6 @@ public class ExtractFragment extends Fragment implements ExtractContract.View {
         presenter = new ExtractPresenter(this);
 
         progressBar = view.findViewById(R.id.progressBar);
-        progressBar.setProgress(50);
 
         RecyclerView recyclerViewFilmes = view.findViewById(R.id.transference_list);
         recyclerViewFilmes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -62,6 +61,7 @@ public class ExtractFragment extends Fragment implements ExtractContract.View {
     @Override
     public void showExtract(List<Transference> list) {
         progressBar.setProgress(100);
+        progressBar.setVisibility(View.GONE);
         mTransfereceAdapter.replaceData(list);
     }
 

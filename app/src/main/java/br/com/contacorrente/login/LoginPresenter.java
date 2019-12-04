@@ -9,11 +9,10 @@ import br.com.contacorrente.network.UserServiceImpl;
 
 public class LoginPresenter implements LoginContract.UserInteraction{
 
-    //private Singleton singleton = Singleton.getInstance();
     private UserService api;
     private LoginContract.View view;
 
-    public LoginPresenter(LoginContract.View view) {
+    LoginPresenter(LoginContract.View view) {
         this.view = view;
         this.api = new UserServiceImpl();
     }
@@ -30,7 +29,6 @@ public class LoginPresenter implements LoginContract.UserInteraction{
                     view.showToast("Usuário ou senha inválidos");
                 }
             }
-
             @Override
             public void onError() {
                 view.showToast("Não foi possível logar");

@@ -33,6 +33,13 @@ public class TransferenceFragment extends Fragment implements TransferenceContra
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        etUserTo.getText().clear();
+        etValue.getText().clear();
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_transference, container, false);
 

@@ -10,7 +10,7 @@ public class ConcludePresenter implements ConcludeContract.UserInteraction {
     private UserService mApi;
     private ConcludeContract.View view;
 
-    public ConcludePresenter(ConcludeContract.View view) {
+    ConcludePresenter(ConcludeContract.View view) {
         this.view = view;
         mApi = new UserServiceImpl();
     }
@@ -31,14 +31,11 @@ public class ConcludePresenter implements ConcludeContract.UserInteraction {
                         }else {
                             view.showToast(status.getError());
                         }
-
                     }
-
                     @Override
                     public void onError() {
                         view.showToast("Erro ao concluir transferência");
                     }
                 });
-
     }
 }

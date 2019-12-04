@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="16dp"
@@ -13,7 +12,7 @@
         android:id="@+id/tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00/00/00"
+        android:text="@string/date"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorBlack"
         android:textSize="24sp"
@@ -23,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Para"
+        android:text="@string/to"
         android:textColor="@color/colorBlack"
         android:textSize="18sp" />
 
@@ -32,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="laura@gmail.com"
+        android:text="@string/user_to_email"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorBlack"
         android:textSize="24sp"
@@ -42,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Valor total"
+        android:text="@string/total_value"
         android:textColor="@color/colorBlack"
         android:textSize="18sp" />
 
@@ -51,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="R$5.000,00"
+        android:text="@string/value_money"
         android:textColor="@color/colorBlack"
         android:textSize="40sp"
         android:textStyle="bold" />
@@ -69,7 +68,7 @@
             android:layout_gravity="center_horizontal|center"
             android:layout_marginTop="16dp"
             android:background="@drawable/shape_button"
-            android:text="Confirmar"
+            android:text="@string/next"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
             android:textSize="18sp" />

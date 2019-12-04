@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -21,12 +21,13 @@ public class TransferenceAdapter extends RecyclerView.Adapter<TranferenceViewHol
 
     private List<Transference> transferenceList;
 
-    public TransferenceAdapter(List<Transference> transferenceList) {
+    TransferenceAdapter(List<Transference> transferenceList) {
         this.transferenceList = transferenceList;
     }
 
+    @NotNull
     @Override
-    public TranferenceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TranferenceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -36,12 +37,12 @@ public class TransferenceAdapter extends RecyclerView.Adapter<TranferenceViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TranferenceViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull TranferenceViewHolder holder, int position) {
         Transference transference = transferenceList.get(position);
 
         if (transference.getUserRelated() != null){
 
-            // Se quem enviou foi a própria conta, aparece vermelho
+            // Se o valor saiu conta, o campo de texto fica em vermelho
             if (transference.getId_from().equals(Singleton.user.getId())){
 
                 String transferenceValue = "- " + Format.currencyFormat(transference.getValue());
@@ -54,7 +55,6 @@ public class TransferenceAdapter extends RecyclerView.Adapter<TranferenceViewHol
             }
 
             holder.tvUserTransference.setText(transference.getUserRelated().getName());
-
         }
     }
 
@@ -66,7 +66,7 @@ public class TransferenceAdapter extends RecyclerView.Adapter<TranferenceViewHol
         return transferenceList.size();
     }
 
-    public void replaceData(List<Transference> list) {
+    void replaceData(List<Transference> list) {
         transferenceList = list;
         notifyDataSetChanged();
     }

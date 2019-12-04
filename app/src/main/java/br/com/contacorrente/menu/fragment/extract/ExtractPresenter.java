@@ -13,7 +13,7 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
 
     static private List<Transference> transferenceList;
 
-    static private int transferenceListSize;
+    static private int loadedTransferences;
     static private boolean error;
 
     private ExtractContract.View view;
@@ -55,8 +55,6 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
     @Override
     public void loadUserExtractDetails() {
 
-        transferenceListSize = transferenceList.size();
-
         for (final Transference t : transferenceList) {
             String idToBeLoaded = verifyIdToBeLoaded(t);
                 mApi.getUserById(Integer.parseInt(idToBeLoaded), new UserService.UserServiceCallback<User>() {
@@ -73,13 +71,16 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
             }
     }
 
+    /**
+     * Retorna a lista para a view somente depois de todas as transferências estiverem carregadas
+     * */
     private void prepareExtract(){
-        transferenceListSize--;
+        loadedTransferences++;
         if (error){
             view.showToast("Erro ao carregar extrato");
             return;
         }
-        if (transferenceListSize == 0){
+        if (loadedTransferences == transferenceList.size()){
             view.showExtract(transferenceList);
         }
     }

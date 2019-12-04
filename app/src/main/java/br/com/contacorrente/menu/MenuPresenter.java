@@ -7,10 +7,10 @@ import br.com.contacorrente.network.UserServiceImpl;
 
 public class MenuPresenter implements MenuContract.UserInteractions {
 
-    UserService mApi;
-    MenuContract.View view;
+    private UserService mApi;
+    private MenuContract.View view;
 
-    public MenuPresenter(MenuContract.View view){
+    MenuPresenter(MenuContract.View view){
         this.view = view;
         mApi = new UserServiceImpl();
     }
@@ -26,7 +26,7 @@ public class MenuPresenter implements MenuContract.UserInteractions {
 
             @Override
             public void onError() {
-
+                view.showError("Não foi possível carregar os seus dados!");
             }
         });
     }

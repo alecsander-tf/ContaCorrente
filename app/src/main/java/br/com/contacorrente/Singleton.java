@@ -15,12 +15,11 @@ public class Singleton {
 
     }
 
-    public static Singleton getInstance() {
+    public static void getInstance() {
         if (singleInstance == null){
             user = UserFactory.getUser(new UserLoginFactory("", ""));
             singleInstance = new Singleton();
         }
-        return singleInstance;
     }
 
     public static void logout() {
