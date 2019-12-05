@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import br.com.contacorrente.R;
@@ -86,8 +88,6 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     private void loadNavigation() {
 
         setSupportActionBar(toolbar);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
 
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -95,6 +95,11 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
         if (toolbar.getNavigationIcon() != null){
             toolbar.getNavigationIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         }
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+
     }
 
     private void bindListener() {
@@ -135,9 +140,23 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
 
         Picasso.get()
                 .load(Singleton.user.getProfile())
-                .fit().centerCrop()
+                .fit()
+                .centerCrop()
                 .placeholder(R.drawable.ic_insert_photo)
-                .into(circularImageView);
+                .into(circularImageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        System.out.println("Sucesso");
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+        Log.d("ESPAÇO", " ");
+        Picasso.get().setLoggingEnabled(true);
 
         tvMenuDrawer_Email.setText(Singleton.user.getEmail());
         tvMenuDrawer_Name.setText(Singleton.user.getName());
