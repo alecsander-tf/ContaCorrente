@@ -13,7 +13,7 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
 
     static private List<Transference> transferenceList;
 
-    static private int loadedTransferences;
+    private int loadedTransferences;
     static private boolean error;
 
     private ExtractContract.View view;
