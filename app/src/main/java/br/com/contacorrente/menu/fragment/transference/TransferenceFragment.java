@@ -18,7 +18,7 @@ import br.com.contacorrente.concludeTransference.ConcludeActivity;
 import br.com.contacorrente.R;
 import br.com.contacorrente.model.Transference;
 
-public class TransferenceFragment extends Fragment implements TransferenceContract.View{
+public class TransferenceFragment extends Fragment implements TransferenceContract.View {
 
     private View view;
 
@@ -28,7 +28,7 @@ public class TransferenceFragment extends Fragment implements TransferenceContra
     private EditText etValue;
     private Button btnSend;
 
-    public static Fragment newInstance() {
+    public static TransferenceFragment newInstance() {
         return new TransferenceFragment();
     }
 
