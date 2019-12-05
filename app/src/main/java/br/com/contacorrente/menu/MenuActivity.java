@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -24,13 +23,9 @@ import br.com.contacorrente.R;
 import br.com.contacorrente.Singleton;
 import br.com.contacorrente.menu.fragment.extract.ExtractFragment;
 import br.com.contacorrente.menu.fragment.myAccount.MyAccountFragment;
-import br.com.contacorrente.menu.fragment.myAccount.ParentActivityContract;
 import br.com.contacorrente.menu.fragment.transference.TransferenceFragment;
 
 public class MenuActivity extends AppCompatActivity implements MenuContract.View, ParentActivityContract {
-
-    private Fragment fragment = null;
-    private Class fragmentClass;
 
     private Toolbar toolbar;
 
@@ -53,16 +48,14 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
         loadNavigation();
         bindListener();
 
-        changeFragment();
-
         presenter = new MenuPresenter(this);
         presenter.loadUserAccount(Singleton.user.getEmail());
+
+        //Primeira Fragment que será carregada
+        changeFragment(MyAccountFragment.newInstance(), "Minha Conta", 0);
     }
 
     private void bind(){
-
-        //Primeira Fragment que será carregada
-        fragmentClass = MyAccountFragment.class;
 
         drawerLayout = findViewById(R.id.my_drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
@@ -102,15 +95,16 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
+
                 switch(id){
                     case R.id.menu:
-                        fragmentClass = MyAccountFragment.class;
+                        changeFragment(MyAccountFragment.newInstance(), item.getTitle().toString(), 0);
                         break;
                     case R.id.extract:
-                        fragmentClass = ExtractFragment.class;
+                        changeFragment(ExtractFragment.newInstance(), item.getTitle().toString(), 1);
                         break;
                     case R.id.transference:
-                        fragmentClass = TransferenceFragment.class;
+                        changeFragment(TransferenceFragment.newInstance(), item.getTitle().toString(), 2);
                         break;
                     case R.id.logout:
                         logout();
@@ -119,9 +113,6 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
                         return true;
                 }
 
-                changeFragment();
-                // Muda o título da action bar
-                setTitle(item.getTitle());
                 // Fecha o navigation drawer
                 drawerLayout.closeDrawers();
 
@@ -149,38 +140,15 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     }
 
     /**
-     * Muda a fragment a partir de um parâmetro.
-     * Este método é chamado a partir de uma classe controladora
+     * Muda a fragment a partir de um parâmetro, altera título da toolbar e da destaque a opção no menu drawer.
      * @param fragment Fragment que será iniciada
      */
     @Override
-    public void changeFragment(Fragment fragment) {
-        this.fragmentClass = fragment.getClass();
-        if (fragment instanceof ExtractFragment){
-            setTitle("Extrato");
-            navigationView.getMenu().getItem(1).setChecked(true);
-        }else if (fragment instanceof TransferenceFragment){
-            setTitle("Transferência");
-            navigationView.getMenu().getItem(2).setChecked(true);
-        }
-        changeFragment();
-    }
+    public void changeFragment(Fragment fragment, String fragmentTitle, int menuDrawerItemIndex) {
 
-    /**
-     * Muda a fragment a partir de uma variável da própria classe
-     * */
-    private void changeFragment(){
-
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frameLayout, fragment).commit();
+        setTitle(fragmentTitle);
+        navigationView.getMenu().getItem(menuDrawerItemIndex).setChecked(true);
+        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, fragment).commit();
     }
 
     @Override
