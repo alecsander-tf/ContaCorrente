@@ -26,6 +26,11 @@ public class TransferencePresenter implements TransferenceContract.UserInteracti
     @Override
     public void sendTransference(String userToEmail, final String value) {
 
+        if (userToEmail.equals(Singleton.user.getEmail())){
+            view.showToast("Não é possível transferir valores para a própria conta!");
+            return;
+        }
+
         mApi.getUserByEmail(userToEmail, new UserService.UserServiceCallback<User>() {
             @Override
             public void onLoaded(User user) {

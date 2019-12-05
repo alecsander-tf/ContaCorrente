@@ -17,6 +17,7 @@ import br.com.contacorrente.Singleton;
 import br.com.contacorrente.menu.MenuActivity;
 import br.com.contacorrente.menu.ParentActivityContract;
 import br.com.contacorrente.menu.fragment.extract.ExtractFragment;
+import br.com.contacorrente.menu.fragment.transference.TransferenceFragment;
 import br.com.contacorrente.model.User;
 import br.com.contacorrente.util.Format;
 
@@ -90,7 +91,7 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
             @Override
             public void onClick(View v) {
                 parentActivityContract
-                        .changeFragment(ExtractFragment.newInstance(),"Transferência", 2);
+                        .changeFragment(TransferenceFragment.newInstance(),"Transferência", 2);
             }
         });
 
