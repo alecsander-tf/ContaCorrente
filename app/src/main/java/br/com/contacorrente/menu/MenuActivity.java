@@ -82,16 +82,15 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
 
         setSupportActionBar(toolbar);
 
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         if (toolbar.getNavigationIcon() != null){
             toolbar.getNavigationIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         }
-
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-
 
     }
 
