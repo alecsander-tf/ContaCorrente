@@ -15,7 +15,7 @@ import java.util.List;
 import br.com.contacorrente.R;
 import br.com.contacorrente.Singleton;
 import br.com.contacorrente.model.Transference;
-import br.com.contacorrente.util.Format;
+import br.com.contacorrente.util.Utility;
 
 public class TransferenceAdapter extends RecyclerView.Adapter<TranferenceViewHolder> {
 
@@ -45,13 +45,13 @@ public class TransferenceAdapter extends RecyclerView.Adapter<TranferenceViewHol
             // Se o valor saiu conta, o campo de texto fica em vermelho
             if (transference.getId_from().equals(Singleton.user.getId())){
 
-                String transferenceValue = "- " + Format.currencyFormat(transference.getValue());
+                String transferenceValue = "- " + Utility.currencyFormat(transference.getValue());
 
                 holder.tvUserAmount.setTextColor(Color.parseColor("#FF0000"));
                 holder.tvUserAmount.setText(transferenceValue);
             }else {
                 holder.tvUserAmount.setTextColor(Color.parseColor("#369B5E"));
-                holder.tvUserAmount.setText(Format.currencyFormat(transference.getValue()));
+                holder.tvUserAmount.setText(Utility.currencyFormat(transference.getValue()));
             }
 
             holder.tvUserTransference.setText(transference.getUserRelated().getName());

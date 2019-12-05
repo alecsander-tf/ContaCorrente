@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,8 +27,11 @@ import br.com.contacorrente.Singleton;
 import br.com.contacorrente.menu.fragment.extract.ExtractFragment;
 import br.com.contacorrente.menu.fragment.myAccount.MyAccountFragment;
 import br.com.contacorrente.menu.fragment.transference.TransferenceFragment;
+import br.com.contacorrente.util.Utility;
 
 public class MenuActivity extends AppCompatActivity implements MenuContract.View, ParentActivityContract {
+
+    private final MenuActivity menuActivity = this;
 
     private Toolbar toolbar;
 
@@ -60,7 +64,21 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     private void bind(){
 
         drawerLayout = findViewById(R.id.my_drawer_layout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close){
+
+            /**
+             * Toda vez que o menu lateral é aberto, esse método é invocado
+             * @param slideOffset muda entre 0(totalmente fechado) e 1(totalmente aberto)
+             * */
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                if (slideOffset != 0){
+                    Utility.hideKeyboard(menuActivity);
+                }
+            }
+        };
+
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.navigationView);
 

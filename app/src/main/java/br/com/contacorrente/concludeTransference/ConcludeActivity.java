@@ -11,7 +11,7 @@ import android.widget.Toast;
 import br.com.contacorrente.R;
 import br.com.contacorrente.model.Transference;
 import br.com.contacorrente.model.User;
-import br.com.contacorrente.util.Format;
+import br.com.contacorrente.util.Utility;
 
 public class ConcludeActivity extends AppCompatActivity implements ConcludeContract.View {
 
@@ -61,7 +61,7 @@ public class ConcludeActivity extends AppCompatActivity implements ConcludeContr
     private void loadTransference(){
         date.setText(transference.getData());
         userToName.setText(transference.getUserRelated().getName());
-        value.setText(Format.currencyFormat(transference.getValue()));
+        value.setText(Utility.currencyFormat(transference.getValue()));
     }
 
     @Override
