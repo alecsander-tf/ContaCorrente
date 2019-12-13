@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -21,9 +22,9 @@ import com.squareup.picasso.Picasso;
 
 import br.com.contacorrente.R;
 import br.com.contacorrente.Singleton;
-import br.com.contacorrente.menu.fragment.extract.ExtractFragment;
+import br.com.contacorrente.menu.extract.ExtractActivity;
 import br.com.contacorrente.menu.fragment.myAccount.MyAccountFragment;
-import br.com.contacorrente.menu.fragment.transference.TransferenceFragment;
+import br.com.contacorrente.menu.transference.TransferenceActivity;
 
 public class MenuActivity extends AppCompatActivity implements MenuContract.View, ParentActivityContract {
 
@@ -101,10 +102,10 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
                         changeFragment(MyAccountFragment.newInstance(), item.getTitle().toString(), 0);
                         break;
                     case R.id.extract:
-                        changeFragment(ExtractFragment.newInstance(), item.getTitle().toString(), 1);
+                        changeActivity(ExtractActivity.class);
                         break;
                     case R.id.transference:
-                        changeFragment(TransferenceFragment.newInstance(), item.getTitle().toString(), 2);
+                        changeActivity(TransferenceActivity.class);
                         break;
                     case R.id.logout:
                         logout();
@@ -139,16 +140,17 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * Muda a fragment a partir de um parâmetro, altera título da toolbar e da destaque a opção no menu drawer.
-     * @param fragment Fragment que será iniciada
-     */
-    @Override
-    public void changeFragment(Fragment fragment, String fragmentTitle, int menuDrawerItemIndex) {
 
+
+    public void changeFragment(Fragment fragment, String fragmentTitle, int menuDrawerItemIndex){
         setTitle(fragmentTitle);
         navigationView.getMenu().getItem(menuDrawerItemIndex).setChecked(true);
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, fragment).commit();
+    }
+
+    @Override
+    public void changeActivity(Class<?> args) {
+        startActivity(new Intent(this, args));
     }
 
     @Override

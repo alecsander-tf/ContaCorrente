@@ -1,4 +1,4 @@
-package br.com.contacorrente.menu.fragment.extract;
+package br.com.contacorrente.menu.extract;
 
 import android.view.View;
 import android.widget.TextView;

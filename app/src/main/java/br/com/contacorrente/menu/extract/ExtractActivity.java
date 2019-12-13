@@ -1,15 +1,14 @@
-package br.com.contacorrente.menu.fragment.extract;
+package br.com.contacorrente.menu.extract;
 
 import android.os.Bundle;
 
-import android.view.LayoutInflater;
+import android.os.PersistableBundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,35 +18,26 @@ import java.util.List;
 import br.com.contacorrente.R;
 import br.com.contacorrente.model.Transference;
 
-public class ExtractFragment extends Fragment implements ExtractContract.View {
+public class ExtractActivity extends AppCompatActivity implements ExtractContract.View {
 
     private TransferenceAdapter mTransfereceAdapter;
     private ProgressBar progressBar;
 
-    private View view;
     private ExtractContract.UserInteractions presenter;
 
-    public static ExtractFragment newInstance() {
-        return new ExtractFragment();
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        view = inflater.inflate(R.layout.fragment_extract, container, false);
-
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
         presenter = new ExtractPresenter(this);
 
-        progressBar = view.findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.progressBar);
 
-        RecyclerView recyclerViewFilmes = view.findViewById(R.id.transference_list);
-        recyclerViewFilmes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        RecyclerView recyclerViewFilmes = findViewById(R.id.transference_list);
+        recyclerViewFilmes.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerViewFilmes.setAdapter(mTransfereceAdapter);
         recyclerViewFilmes.setHasFixedSize(true);
 
         presenter.loadUserExtract();
-
-        return view;
     }
 
     @Override
@@ -65,6 +55,6 @@ public class ExtractFragment extends Fragment implements ExtractContract.View {
 
     @Override
     public void showToast(String msg) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 }

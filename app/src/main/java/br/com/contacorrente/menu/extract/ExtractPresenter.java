@@ -1,4 +1,4 @@
-package br.com.contacorrente.menu.fragment.extract;
+package br.com.contacorrente.menu.extract;
 
 import java.util.ArrayList;
 import java.util.List;
