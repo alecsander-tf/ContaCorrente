@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,8 @@ public class LoginApplicationActivity extends AppCompatActivity implements Login
     private EditText etEmail;
     private EditText etPassword;
 
+    private long mLastClickTime = 0;
+
     private LoginContract.UserInteraction presenter;
 
     @Override
@@ -31,10 +34,6 @@ public class LoginApplicationActivity extends AppCompatActivity implements Login
         bind();
         bindListener();
 
-        if (Singleton.test){
-            etEmail.setText("alecsander.fernandes@evosystems.com.br");
-            etPassword.setText("123456");
-        }
     }
 
     @Override
@@ -50,6 +49,12 @@ public class LoginApplicationActivity extends AppCompatActivity implements Login
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
+
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
 

@@ -1,5 +1,7 @@
 package br.com.contacorrente.util;
 
+import android.os.SystemClock;
+
 import java.text.NumberFormat;
 import java.util.Currency;
 
@@ -31,4 +33,8 @@ public class Format {
         return status.toString();
     }
 
+    public static void blockMultipleClicks(){
+
+
+    }
 }

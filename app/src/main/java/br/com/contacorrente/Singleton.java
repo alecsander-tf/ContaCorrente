@@ -8,7 +8,6 @@ public class Singleton {
 
     private static Singleton singleInstance = null;
 
-    public static boolean test = true;
     public static User user;
 
     private Singleton(){
@@ -23,7 +22,11 @@ public class Singleton {
     }
 
     public static void logout() {
-        singleInstance = null;
-        user = null;
+        if (user != null){
+            if (user.getId() != null){
+                singleInstance = null;
+                user = null;
+            }
+        }
     }
 }
