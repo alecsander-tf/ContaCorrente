@@ -73,8 +73,10 @@ public class LoginApplicationActivity extends AppCompatActivity implements Login
     }
 
     @Override
-    public void loadActivity(Class<?> intent) {
-        startActivity(new Intent(this, intent));
+    public void loadActivity(Class<?> args) {
+        Intent intent = new Intent(this, args);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     @Override

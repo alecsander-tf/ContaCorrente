@@ -150,7 +150,9 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
 
     @Override
     public void changeActivity(Class<?> args) {
-        startActivity(new Intent(this, args));
+        Intent intent = new Intent(this, args);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     @Override

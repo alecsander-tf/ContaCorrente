@@ -77,7 +77,7 @@ public class TransferenceActivity extends AppCompatActivity implements Transfere
         Intent intent = new Intent(this, ConcludeActivity.class);
         intent.putExtra("transference", transference);
         intent.putExtra("userRelated", transference.getUserRelated());
-
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 }
