@@ -16,10 +16,10 @@ import br.com.contacorrente.R;
 import br.com.contacorrente.Singleton;
 import br.com.contacorrente.menu.MenuActivity;
 import br.com.contacorrente.menu.ParentActivityContract;
-import br.com.contacorrente.menu.fragment.extract.ExtractFragment;
-import br.com.contacorrente.menu.fragment.transference.TransferenceFragment;
+import br.com.contacorrente.menu.extract.ExtractActivity;
+import br.com.contacorrente.menu.transference.TransferenceActivity;
 import br.com.contacorrente.model.User;
-import br.com.contacorrente.util.Utility;
+import br.com.contacorrente.util.Format;
 
 public class MyAccountFragment extends Fragment implements MyAccountContract.View {
 
@@ -68,6 +68,7 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
         tvUserBalance = view.findViewById(R.id.tvUserBalance);
         btnExtract = view.findViewById(R.id.btnExtract);
         btnTransference = view.findViewById(R.id.btnTransference);
+
         btnLogout = view.findViewById(R.id.btnLogout);
     }
 
@@ -82,16 +83,14 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
         btnExtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                parentActivityContract
-                        .changeFragment(ExtractFragment.newInstance(),"Extrato", 1);
+                parentActivityContract.changeActivity(ExtractActivity.class);
             }
         });
 
         btnTransference.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                parentActivityContract
-                        .changeFragment(TransferenceFragment.newInstance(),"Transferência", 2);
+                parentActivityContract.changeActivity(TransferenceActivity.class);
             }
         });
 
@@ -110,13 +109,13 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
 
     @Override
     public void showAccountDetails(User user) {
-        tvUserBalance.setText(Utility.currencyFormat(user.getBalance()));
+        tvUserBalance.setText(Format.currencyFormat(user.getBalance()));
         tvUserName.setText(user.getName());
     }
 
     @Override
     public void showNewBalance() {
-        tvUserBalance.setText(Utility.currencyFormat(Singleton.user.getBalance()));
+        tvUserBalance.setText(Format.currencyFormat(Singleton.user.getBalance()));
         mSwipeRefreshLayout.setRefreshing(false);
     }
 }

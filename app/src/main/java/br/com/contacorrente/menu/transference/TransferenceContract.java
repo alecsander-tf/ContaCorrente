@@ -1,4 +1,4 @@
-package br.com.contacorrente.menu.fragment.transference;
+package br.com.contacorrente.menu.transference;
 
 import br.com.contacorrente.model.Transference;
 

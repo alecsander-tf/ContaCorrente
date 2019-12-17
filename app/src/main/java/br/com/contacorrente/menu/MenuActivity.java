@@ -7,31 +7,26 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.mikhaellopez.circularimageview.CircularImageView;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import br.com.contacorrente.R;
 import br.com.contacorrente.Singleton;
-import br.com.contacorrente.menu.fragment.extract.ExtractFragment;
+import br.com.contacorrente.menu.extract.ExtractActivity;
 import br.com.contacorrente.menu.fragment.myAccount.MyAccountFragment;
-import br.com.contacorrente.menu.fragment.transference.TransferenceFragment;
-import br.com.contacorrente.util.Utility;
+import br.com.contacorrente.menu.transference.TransferenceActivity;
 
 public class MenuActivity extends AppCompatActivity implements MenuContract.View, ParentActivityContract {
-
-    private final MenuActivity menuActivity = this;
 
     private Toolbar toolbar;
 
@@ -64,21 +59,7 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     private void bind(){
 
         drawerLayout = findViewById(R.id.my_drawer_layout);
-
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close){
-
-            /**
-             * Toda vez que o menu lateral é aberto, esse método é invocado
-             * @param slideOffset muda entre 0(totalmente fechado) e 1(totalmente aberto)
-             * */
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                if (slideOffset != 0){
-                    Utility.hideKeyboard(menuActivity);
-                }
-            }
-        };
-
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.navigationView);
 
@@ -99,7 +80,6 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     private void loadNavigation() {
 
         setSupportActionBar(toolbar);
-
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
@@ -109,7 +89,6 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
         if (toolbar.getNavigationIcon() != null){
             toolbar.getNavigationIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         }
-
     }
 
     private void bindListener() {
@@ -123,10 +102,10 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
                         changeFragment(MyAccountFragment.newInstance(), item.getTitle().toString(), 0);
                         break;
                     case R.id.extract:
-                        changeFragment(ExtractFragment.newInstance(), item.getTitle().toString(), 1);
+                        changeActivity(ExtractActivity.class);
                         break;
                     case R.id.transference:
-                        changeFragment(TransferenceFragment.newInstance(), item.getTitle().toString(), 2);
+                        changeActivity(TransferenceActivity.class);
                         break;
                     case R.id.logout:
                         logout();
@@ -148,23 +127,9 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
 
         Picasso.get()
                 .load(Singleton.user.getProfile())
-                .fit()
-                .centerCrop()
+                .fit().centerCrop()
                 .placeholder(R.drawable.ic_insert_photo)
-                .into(circularImageView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        System.out.println("Sucesso");
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-
-        Log.d("ESPAÇO", " ");
-        Picasso.get().setLoggingEnabled(true);
+                .into(circularImageView);
 
         tvMenuDrawer_Email.setText(Singleton.user.getEmail());
         tvMenuDrawer_Name.setText(Singleton.user.getName());
@@ -175,16 +140,17 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * Muda a fragment a partir de um parâmetro, altera título da toolbar e da destaque a opção no menu drawer.
-     * @param fragment Fragment que será iniciada
-     */
-    @Override
-    public void changeFragment(Fragment fragment, String fragmentTitle, int menuDrawerItemIndex) {
 
+
+    public void changeFragment(Fragment fragment, String fragmentTitle, int menuDrawerItemIndex){
         setTitle(fragmentTitle);
         navigationView.getMenu().getItem(menuDrawerItemIndex).setChecked(true);
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, fragment).commit();
+    }
+
+    @Override
+    public void changeActivity(Class<?> args) {
+        startActivity(new Intent(this, args));
     }
 
     @Override
