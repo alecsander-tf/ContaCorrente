@@ -1,11 +1,10 @@
 package br.com.contacorrente.util;
 
-import android.os.SystemClock;
 
 import java.text.NumberFormat;
 import java.util.Currency;
 
-public class Format {
+public class Utility {
 
     public static String currencyFormat(String value){
         NumberFormat format = NumberFormat.getCurrencyInstance();

@@ -67,7 +67,6 @@
             android:gravity="center|bottom">
 
             <Button
-                android:layout_marginTop="32dp"
                 android:id="@+id/btnTransference_Send"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

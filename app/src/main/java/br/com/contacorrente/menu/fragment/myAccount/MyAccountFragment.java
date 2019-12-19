@@ -19,7 +19,7 @@ import br.com.contacorrente.menu.ParentActivityContract;
 import br.com.contacorrente.menu.extract.ExtractActivity;
 import br.com.contacorrente.menu.transference.TransferenceActivity;
 import br.com.contacorrente.model.User;
-import br.com.contacorrente.util.Format;
+import br.com.contacorrente.util.Utility;
 
 public class MyAccountFragment extends Fragment implements MyAccountContract.View {
 
@@ -109,13 +109,13 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
 
     @Override
     public void showAccountDetails(User user) {
-        tvUserBalance.setText(Format.currencyFormat(user.getBalance()));
+        tvUserBalance.setText(Utility.currencyFormat(user.getBalance()));
         tvUserName.setText(user.getName());
     }
 
     @Override
     public void showNewBalance() {
-        tvUserBalance.setText(Format.currencyFormat(Singleton.user.getBalance()));
+        tvUserBalance.setText(Utility.currencyFormat(Singleton.user.getBalance()));
         mSwipeRefreshLayout.setRefreshing(false);
     }
 }
