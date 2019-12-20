@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 
 import br.com.contacorrente.R;
 import br.com.contacorrente.Singleton;
+import br.com.contacorrente.login.LoginApplicationActivity;
 import br.com.contacorrente.menu.extract.ExtractActivity;
 import br.com.contacorrente.menu.fragment.myAccount.MyAccountFragment;
 import br.com.contacorrente.menu.transference.TransferenceActivity;
@@ -158,6 +159,7 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     @Override
     public void logout() {
         Singleton.logout();
+        changeActivity(LoginApplicationActivity.class);
         finish();
     }
 }

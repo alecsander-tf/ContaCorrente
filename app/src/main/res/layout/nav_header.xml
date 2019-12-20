@@ -14,7 +14,7 @@
         android:id="@+id/circularImageView"
         android:layout_height="100dp"
         android:layout_gravity="start"
-        android:src="@drawable/image_user"/>
+        android:src="@drawable/ic_user"/>
 
     <TextView
         android:id="@+id/txtMenuDrawer_Name"
