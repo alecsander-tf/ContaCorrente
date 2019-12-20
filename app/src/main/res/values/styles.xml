@@ -4,6 +4,7 @@
         <item name="colorPrimaryDark">@color/colorBlack</item>
         <item name="colorAccent">@color/colorTotalBlack</item>
         <item name="actionBarTheme">@style/CustomToolbar</item>
+        <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
     <style name="CustomToolbar" parent="Theme.AppCompat.DayNight.DarkActionBar">
