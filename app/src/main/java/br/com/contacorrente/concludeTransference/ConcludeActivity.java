@@ -1,6 +1,7 @@
 package br.com.contacorrente.concludeTransference;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,9 +12,11 @@ import android.widget.Toast;
 import br.com.contacorrente.R;
 import br.com.contacorrente.model.Transference;
 import br.com.contacorrente.model.User;
-import br.com.contacorrente.util.Format;
+import br.com.contacorrente.util.Utility;
 
 public class ConcludeActivity extends AppCompatActivity implements ConcludeContract.View {
+
+    private Toolbar toolbar;
 
     private Transference transference;
     private TextView date;
@@ -34,14 +37,25 @@ public class ConcludeActivity extends AppCompatActivity implements ConcludeContr
             transference.setUserRelated((User) getIntent().getParcelableExtra("userRelated"));
         }
 
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Confirmação");
+
         bind();
         bindListener();
         loadTransference();
+
+        presenter = new ConcludePresenter(this);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     private void bind(){
-
-        presenter = new ConcludePresenter(this);
 
         date = findViewById(R.id.tvDate);
         userToName = findViewById(R.id.tvUserName);
@@ -61,7 +75,7 @@ public class ConcludeActivity extends AppCompatActivity implements ConcludeContr
     private void loadTransference(){
         date.setText(transference.getData());
         userToName.setText(transference.getUserRelated().getName());
-        value.setText(Format.currencyFormat(transference.getValue()));
+        value.setText(Utility.currencyFormat(transference.getValue()));
     }
 
     @Override
