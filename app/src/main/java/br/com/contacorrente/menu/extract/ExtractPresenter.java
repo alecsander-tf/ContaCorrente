@@ -61,7 +61,7 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
                     @Override
                     public void onLoaded(User user) {
                         t.setUserRelated(user);
-                        prepareExtract();
+                        view.addItemToExtract(t);
                     }
                     @Override
                     public void onError() {
@@ -69,19 +69,5 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
                     }
                 });
             }
-    }
-
-    /**
-     * Retorna a lista para a view somente depois de todas as transferências estiverem carregadas
-     * */
-    private void prepareExtract(){
-        loadedTransferences++;
-        if (error){
-            view.showToast("Erro ao carregar extrato");
-            return;
-        }
-        if (loadedTransferences == transferenceList.size()){
-            view.showExtract(transferenceList);
-        }
     }
 }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,6 +21,7 @@ import br.com.contacorrente.model.Transference;
 
 public class ExtractActivity extends AppCompatActivity implements ExtractContract.View {
 
+    private RecyclerView recyclerViewFilmes;
     private TransferenceAdapter mTransferenceAdapter;
     private ProgressBar progressBar;
 
@@ -43,7 +45,6 @@ public class ExtractActivity extends AppCompatActivity implements ExtractContrac
         RecyclerView recyclerViewFilmes = findViewById(R.id.transference_list);
         recyclerViewFilmes.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerViewFilmes.setAdapter(mTransferenceAdapter);
-        recyclerViewFilmes.setHasFixedSize(true);
     }
 
     private void bindToolbar() {
@@ -52,11 +53,10 @@ public class ExtractActivity extends AppCompatActivity implements ExtractContrac
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @Override
-    public void showExtract(List<Transference> list) {
+    public void addItemToExtract(Transference transference){
         progressBar.setProgress(100);
         progressBar.setVisibility(View.GONE);
-        mTransferenceAdapter.replaceData(list);
+        mTransferenceAdapter.addItem(transference);
     }
 
     @Override

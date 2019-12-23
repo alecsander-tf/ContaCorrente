@@ -66,8 +66,8 @@ public class TransferenceAdapter extends RecyclerView.Adapter<TranferenceViewHol
         return transferenceList.size();
     }
 
-    void replaceData(List<Transference> list) {
-        transferenceList = list;
-        notifyDataSetChanged();
+    void addItem(Transference transference) {
+        transferenceList.add(transference);
+        notifyItemInserted(transferenceList.indexOf(transference));
     }
 }
