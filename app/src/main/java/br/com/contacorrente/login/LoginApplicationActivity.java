@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import br.com.contacorrente.Singleton;
@@ -41,11 +43,14 @@ public class LoginApplicationActivity extends AppCompatActivity implements Login
         super.onResume();
         Singleton.getInstance();
 
+        hideLogging();
+
         etEmail.getText().clear();
         etPassword.getText().clear();
     }
 
     private void bindListener() {
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +75,18 @@ public class LoginApplicationActivity extends AppCompatActivity implements Login
         this.btnLogin = findViewById(R.id.btnLogin_Login);
         this.etEmail = findViewById(R.id.txtLogin_Email);
         this.etPassword = findViewById(R.id.txtLogin_Password);
+    }
+
+    @Override
+    public void showLogging() {
+        findViewById(R.id.layoutLogging).setVisibility(View.VISIBLE);
+        findViewById(R.id.layoutLogin).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideLogging() {
+        findViewById(R.id.layoutLogging).setVisibility(View.GONE);
+        findViewById(R.id.layoutLogin).setVisibility(View.VISIBLE);
     }
 
     @Override

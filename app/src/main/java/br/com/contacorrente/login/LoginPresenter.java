@@ -24,6 +24,7 @@ public class LoginPresenter implements LoginContract.UserInteraction{
 
     @Override
     public void login(final User user) {
+        view.showLogging();
         api.checkLogin(user.getEmail(), user.getPassword(), new UserService.UserServiceCallback<Status>() {
             @Override
             public void onLoaded(Status status) {
@@ -31,14 +32,15 @@ public class LoginPresenter implements LoginContract.UserInteraction{
                     Singleton.user.setEmail(user.getEmail());
 
                     addUserLogged(user.getEmail(), user.getPassword());
-
                     view.loadActivity(MenuActivity.class);
                 }else {
                     view.showToast("Usuário ou senha inválidos");
                 }
+                view.hideLogging();
             }
             @Override
             public void onError() {
+                view.hideLogging();
                 view.showToast("Não foi possível logar");
             }
         });
