@@ -6,8 +6,6 @@ import br.com.contacorrente.factory.UserFactory;
 import br.com.contacorrente.factory.UserLoginFactory;
 import br.com.contacorrente.model.User;
 
-import static android.content.Context.MODE_PRIVATE;
-
 public class Singleton {
 
     private static Singleton singleInstance = null;

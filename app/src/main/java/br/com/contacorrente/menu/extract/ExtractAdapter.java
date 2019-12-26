@@ -17,27 +17,27 @@ import br.com.contacorrente.Singleton;
 import br.com.contacorrente.model.Transference;
 import br.com.contacorrente.util.Utility;
 
-public class TransferenceAdapter extends RecyclerView.Adapter<TranferenceViewHolder> {
+public class ExtractAdapter extends RecyclerView.Adapter<ExtractViewHolder> {
 
     private List<Transference> transferenceList;
 
-    TransferenceAdapter(List<Transference> transferenceList) {
+    ExtractAdapter(List<Transference> transferenceList) {
         this.transferenceList = transferenceList;
     }
 
     @NotNull
     @Override
-    public TranferenceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ExtractViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View noteView = inflater.inflate(R.layout.transference_item, parent, false);
 
-        return new TranferenceViewHolder(noteView);
+        return new ExtractViewHolder(noteView);
     }
 
     @Override
-    public void onBindViewHolder(@NotNull TranferenceViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull ExtractViewHolder holder, int position) {
         Transference transference = transferenceList.get(position);
 
         if (transference.getUserRelated() != null){

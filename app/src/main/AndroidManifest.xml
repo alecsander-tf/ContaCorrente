@@ -31,7 +31,12 @@
         <activity
             android:name=".menu.extract.ExtractActivity"
             android:parentActivityName=".menu.MenuActivity"
-            android:label="Extrato"/>
+            android:label="Extrato">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".menu.transference.TransferenceActivity"
             android:parentActivityName=".menu.MenuActivity"
@@ -39,10 +44,6 @@
         <activity
             android:name=".splashScreeen.SplashScreen"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

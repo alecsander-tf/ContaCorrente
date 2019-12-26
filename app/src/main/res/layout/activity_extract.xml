@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -37,6 +38,63 @@
             android:textColor="@color/colorBlack"
             android:textSize="24sp"
             android:textStyle="bold" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+                <RadioGroup
+                    android:id="@+id/radioGroupFilter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:padding="16dp">
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/toggleBtnTodos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_filter_active"
+                        android:textColor="@color/colorWhite"
+                        android:text="Todos"
+                        android:checked="true"
+                        android:onClick="onToggle"
+                        android:layout_weight="1"/>
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/toggleBtnSemana"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_filter_inactive"
+                        android:gravity="center"
+                        android:onClick="onToggle"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"/>
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+
+                    <androidx.appcompat.widget.AppCompatToggleButton
+                        android:id="@+id/toggleBtnMes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onToggle"
+                        android:background="@drawable/custom_filter_inactive"
+                        android:layout_weight="1"/>
+
+                </RadioGroup>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:paddingStart="16dp"
