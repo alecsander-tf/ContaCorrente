@@ -8,7 +8,6 @@
     tools:context=".menu.extract.ExtractActivity"
     android:background="@color/colorWhite">
 
-
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="50dp"
@@ -54,13 +53,19 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:padding="16dp">
 
-                    <androidx.appcompat.widget.AppCompatToggleButton
+                    <RadioButton
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:textAlignment="center"
                         android:id="@+id/toggleBtnTodos"
                         android:layout_width="wrap_content"
+                        android:background="@drawable/radio_background"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/custom_filter_active"
-                        android:textColor="@color/colorWhite"
+                        android:button="@android:color/transparent"
                         android:text="Todos"
+                        android:textColor="@drawable/radio_background"
                         android:checked="true"
                         android:onClick="onToggle"
                         android:layout_weight="1"/>
@@ -70,11 +75,19 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
 
-                    <androidx.appcompat.widget.AppCompatToggleButton
+                    <RadioButton
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:textColor="@drawable/radio_background"
+                        android:textAlignment="center"
+                        android:text="Esta semana"
                         android:id="@+id/toggleBtnSemana"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/custom_filter_inactive"
+                        android:button="@android:color/transparent"
+                        android:background="@drawable/radio_background"
                         android:gravity="center"
                         android:onClick="onToggle"
                         android:layout_gravity="center"
@@ -85,12 +98,20 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
 
-                    <androidx.appcompat.widget.AppCompatToggleButton
+                    <RadioButton
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:textAlignment="center"
+                        android:textColor="@drawable/radio_background"
+                        android:text="Este mês"
+                        android:background="@drawable/radio_background"
                         android:id="@+id/toggleBtnMes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="onToggle"
-                        android:background="@drawable/custom_filter_inactive"
+                        android:button="@android:color/transparent"
                         android:layout_weight="1"/>
 
                 </RadioGroup>

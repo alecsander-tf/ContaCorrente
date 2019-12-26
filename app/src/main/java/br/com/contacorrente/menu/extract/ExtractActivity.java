@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -52,9 +53,9 @@ public class ExtractActivity extends AppCompatActivity implements ExtractContrac
     public void onToggle(View view) {
         ((RadioGroup)view.getParent()).check(view.getId());
 
-        if (view instanceof ToggleButton){
+        if (view instanceof RadioButton){
 
-            boolean checked = ((ToggleButton) view).isChecked();
+            boolean checked = ((RadioButton) view).isChecked();
 
             switch (view.getId()){
                 case R.id.toggleBtnTodos:
