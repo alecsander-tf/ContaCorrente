@@ -17,7 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 import br.com.contacorrente.R;
 import br.com.contacorrente.Singleton;
@@ -25,10 +27,10 @@ import br.com.contacorrente.model.Transference;
 
 public class ExtractActivity extends AppCompatActivity implements ExtractContract.View {
 
+    private ExtractContract.UserInteractions presenter;
+
     private ExtractAdapter mExtractAdapter;
     private ProgressBar progressBar;
-
-    private RadioGroup radioGroup;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,7 +45,7 @@ public class ExtractActivity extends AppCompatActivity implements ExtractContrac
         bindListener();
         bindToolbar();
 
-        ExtractContract.UserInteractions presenter = new ExtractPresenter(this);
+        presenter = new ExtractPresenter(this);
         presenter.loadUserExtract();
     }
 
@@ -55,14 +57,12 @@ public class ExtractActivity extends AppCompatActivity implements ExtractContrac
 
         if (view instanceof RadioButton){
 
-            boolean checked = ((RadioButton) view).isChecked();
-
             switch (view.getId()){
                 case R.id.toggleBtnTodos:
 
                     break;
                 case R.id.toggleBtnSemana:
-
+                    presenter.loadUserExtract(new java.util.Date());
                     break;
                 case R.id.toggleBtnMes:
 
@@ -70,7 +70,6 @@ public class ExtractActivity extends AppCompatActivity implements ExtractContrac
 
             }
         }
-        // app specific stuff ..
     }
 
     private void bind() {
@@ -82,7 +81,6 @@ public class ExtractActivity extends AppCompatActivity implements ExtractContrac
         recyclerViewFilmes.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerViewFilmes.setAdapter(mExtractAdapter);
 
-        radioGroup = findViewById(R.id.radioGroupFilter);
     }
 
     private void bindToolbar() {

@@ -1,6 +1,10 @@
 package br.com.contacorrente.menu.extract;
 
+import android.provider.ContactsContract;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import br.com.contacorrente.Singleton;
@@ -22,6 +26,32 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
     ExtractPresenter(ExtractContract.View view) {
         mApi = new UserServiceImpl();
         this.view = view;
+    }
+
+    @Override
+    public void loadUserExtract(final Date date) {
+        mApi.getBankStatement(Integer.parseInt(Singleton.user.getId()), new UserService.UserServiceCallback<List<Transference>>() {
+            @Override
+            public void onLoaded(List<Transference> transferences) {
+                transferenceList = transferences;
+
+                Date dt = new Date();
+
+                for (Transference t: transferences) {
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(date);
+                    c.add(Calendar.MONTH, -1);
+                    dt = c.getTime();
+                }
+
+                loadUserExtractDetails();
+            }
+
+            @Override
+            public void onError() {
+                transferenceList = new ArrayList<>();
+            }
+        });
     }
 
     @Override
