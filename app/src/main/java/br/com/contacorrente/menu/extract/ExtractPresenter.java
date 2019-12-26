@@ -42,6 +42,8 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
                     c.setTime(date);
                     c.add(Calendar.MONTH, -1);
                     dt = c.getTime();
+                    String substring = t.getData().substring(0, t.getData().indexOf(" "));
+                    String substring1 = substring;
                 }
 
                 loadUserExtractDetails();
