@@ -12,12 +12,13 @@ import br.com.contacorrente.model.Transference;
 import br.com.contacorrente.model.User;
 import br.com.contacorrente.network.UserService;
 import br.com.contacorrente.network.UserServiceImpl;
+import br.com.contacorrente.util.Utility;
 
 public class ExtractPresenter implements ExtractContract.UserInteractions {
 
     static private List<Transference> transferenceList;
 
-    private int loadedTransferences;
+    private int loadedTransferences = 0;
     static private boolean error;
 
     private ExtractContract.View view;
@@ -29,22 +30,60 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
     }
 
     @Override
-    public void loadUserExtract(final Date date) {
+    public void loadUserExtractWeek() {
         mApi.getBankStatement(Integer.parseInt(Singleton.user.getId()), new UserService.UserServiceCallback<List<Transference>>() {
             @Override
             public void onLoaded(List<Transference> transferences) {
-                transferenceList = transferences;
 
-                Date dt = new Date();
+                transferenceList = transferences;
+                List<Transference> newTransference = new ArrayList<>();
 
                 for (Transference t: transferences) {
-                    Calendar c = Calendar.getInstance();
-                    c.setTime(date);
-                    c.add(Calendar.MONTH, -1);
-                    dt = c.getTime();
-                    String substring = t.getData().substring(0, t.getData().indexOf(" "));
-                    String substring1 = substring;
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(Calendar.DAY_OF_WEEK, cal.getActualMinimum(Calendar.DAY_OF_WEEK));
+                    cal.getTime();
+
+                    Date date1 = Utility.convertDate(t.getData().substring(0, t.getData().indexOf(" ")));
+                    if (cal.getTime().compareTo(date1) == -1){
+                        newTransference.add(t);
+                    }
                 }
+
+                transferenceList = newTransference;
+
+                loadUserExtractDetails();
+            }
+
+            @Override
+            public void onError() {
+                transferenceList = new ArrayList<>();
+            }
+        });
+    }
+
+    @Override
+    public void loadUserExtractMonth() {
+        mApi.getBankStatement(Integer.parseInt(Singleton.user.getId()), new UserService.UserServiceCallback<List<Transference>>() {
+            @Override
+            public void onLoaded(List<Transference> transferences) {
+
+                transferenceList = transferences;
+                List<Transference> newTransference = new ArrayList<>();
+
+                for (Transference t: transferences) {
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+                    cal.getTime();
+
+                    Date date1 = Utility.convertDate(t.getData().substring(0, t.getData().indexOf(" ")));
+                    if (cal.getTime().compareTo(date1) == -1){
+                        newTransference.add(t);
+                    }
+                }
+
+                transferenceList = newTransference;
 
                 loadUserExtractDetails();
             }
@@ -86,14 +125,15 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
 
     @Override
     public void loadUserExtractDetails() {
-
+        loadedTransferences = 0;
         for (final Transference t : transferenceList) {
             String idToBeLoaded = verifyIdToBeLoaded(t);
                 mApi.getUserById(Integer.parseInt(idToBeLoaded), new UserService.UserServiceCallback<User>() {
                     @Override
                     public void onLoaded(User user) {
                         t.setUserRelated(user);
-                        view.addItemToExtract(t);
+                        prepareExtract();
+                        //view.addItemToExtract(t);
                     }
                     @Override
                     public void onError() {
@@ -101,5 +141,19 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
                     }
                 });
             }
+    }
+
+    /**
+     * Retorna a lista para a view somente depois de todas as transferências estiverem carregadas
+     * */
+    private void prepareExtract(){
+        loadedTransferences++;
+        if (error){
+            view.showToast("Erro ao carregar extrato");
+            return;
+        }
+        if (loadedTransferences == transferenceList.size()){
+            view.showExtract(transferenceList);
+        }
     }
 }

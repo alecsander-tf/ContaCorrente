@@ -11,11 +11,11 @@ public class Utility {
 
     public static Date convertDate(String date){
 
-        Date date1= null;
+        Date date1 = null;
 
         try {
 
-            date1 = new SimpleDateFormat("dd/MM/yyyy").parse(date);
+            date1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 
         } catch (ParseException e) {
             e.printStackTrace();

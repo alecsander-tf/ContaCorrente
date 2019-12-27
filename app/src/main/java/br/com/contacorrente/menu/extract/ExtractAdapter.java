@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import br.com.contacorrente.R;
@@ -53,7 +56,8 @@ public class ExtractAdapter extends RecyclerView.Adapter<ExtractViewHolder> {
                 holder.tvUserAmount.setTextColor(Color.parseColor("#369B5E"));
                 holder.tvUserAmount.setText(Utility.currencyFormat(transference.getValue()));
             }
-
+            String data = transference.getData();
+            holder.tvTransferenceDate.setText(data.substring(0, data.indexOf(" ")));
             holder.tvUserTransference.setText(transference.getUserRelated().getName());
         }
     }
@@ -69,5 +73,14 @@ public class ExtractAdapter extends RecyclerView.Adapter<ExtractViewHolder> {
     void addItem(Transference transference) {
         transferenceList.add(transference);
         notifyItemInserted(transferenceList.indexOf(transference));
+    }
+
+    void newList() {
+        transferenceList.clear();
+    }
+
+    public void replaceData(List<Transference> transferenceList) {
+        this.transferenceList = transferenceList;
+        notifyDataSetChanged();
     }
 }

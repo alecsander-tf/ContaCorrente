@@ -7,7 +7,6 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,11 +14,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.card.MaterialCardView;
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 import br.com.contacorrente.R;
 import br.com.contacorrente.Singleton;
@@ -29,8 +25,14 @@ public class ExtractActivity extends AppCompatActivity implements ExtractContrac
 
     private ExtractContract.UserInteractions presenter;
 
+    private RadioGroup radioGroup;
+    private RadioButton radioAll;
+    private RadioButton radioWeek;
+    private RadioButton radioMonth;
+
     private ExtractAdapter mExtractAdapter;
     private ProgressBar progressBar;
+    private int checkedRadioButtonId;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,27 +47,37 @@ public class ExtractActivity extends AppCompatActivity implements ExtractContrac
         bindListener();
         bindToolbar();
 
+        checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
+
         presenter = new ExtractPresenter(this);
         presenter.loadUserExtract();
     }
 
     private void bindListener() {
+
     }
 
     public void onToggle(View view) {
-        ((RadioGroup)view.getParent()).check(view.getId());
+
+        if (checkedRadioButtonId == view.getId()){
+            return;
+        }
+
+        checkedRadioButtonId = view.getId();
 
         if (view instanceof RadioButton){
 
+            hideExtract();
+
             switch (view.getId()){
                 case R.id.toggleBtnTodos:
-
+                    presenter.loadUserExtract();
                     break;
                 case R.id.toggleBtnSemana:
-                    presenter.loadUserExtract(new java.util.Date());
+                    presenter.loadUserExtractWeek();
                     break;
                 case R.id.toggleBtnMes:
-
+                    presenter.loadUserExtractMonth();
                     break;
 
             }
@@ -73,8 +85,13 @@ public class ExtractActivity extends AppCompatActivity implements ExtractContrac
     }
 
     private void bind() {
-        progressBar = findViewById(R.id.progressBar);
 
+        radioAll = findViewById(R.id.toggleBtnTodos);
+        radioWeek = findViewById(R.id.toggleBtnSemana);
+        radioMonth = findViewById(R.id.toggleBtnMes);
+
+        progressBar = findViewById(R.id.progressBar);
+        radioGroup = findViewById(R.id.radioGroupFilter);
         mExtractAdapter = new ExtractAdapter(new ArrayList<Transference>(0));
 
         RecyclerView recyclerViewFilmes = findViewById(R.id.transference_list);
@@ -89,10 +106,25 @@ public class ExtractActivity extends AppCompatActivity implements ExtractContrac
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
     public void addItemToExtract(Transference transference){
-        progressBar.setProgress(100);
+        if (progressBar.getVisibility() == View.VISIBLE){
+            mExtractAdapter.newList();
+        }
         progressBar.setVisibility(View.GONE);
         mExtractAdapter.addItem(transference);
+    }
+
+    private void hideExtract(){
+        progressBar.setVisibility(View.VISIBLE);
+        findViewById(R.id.transference_list).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showExtract(List<Transference> transferenceList) {
+        progressBar.setVisibility(View.GONE);
+        findViewById(R.id.transference_list).setVisibility(View.VISIBLE);
+        mExtractAdapter.replaceData(transferenceList);
     }
 
     @Override
