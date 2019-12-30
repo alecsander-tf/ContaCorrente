@@ -10,113 +10,85 @@
     android:background="@color/colorWhite">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:minHeight="58dp"
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
 
         <include
             layout="@layout/custom_toolbar"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
             android:layout_height="wrap_content"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:background="@color/colorWhite"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            android:layout_width="match_parent"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            app:tabTextAppearance="@style/AppTabTextAppearance"
+            app:tabBackground="@drawable/tab_background"
+            app:tabSelectedTextColor="@color/colorWhite"
+            app:tabTextColor="@color/colorBlack"
+            app:tabIndicatorHeight="0dp"
+
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5">
+            android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/tab_spacing_horizontal"
+            android:layout_marginEnd="@dimen/tab_spacing_horizontal">
 
-            <RadioGroup
-                android:id="@+id/radioGroupFilter"
-                android:layout_width="match_parent"
+            <com.google.android.material.tabs.TabItem
+                android:text="Todos"
+                android:background="@drawable/tab_background"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_width="match_parent"/>
 
-                <RadioButton
-                    android:id="@+id/toggleBtnTodos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/radio_background"
-                    android:button="@android:color/transparent"
-                    android:checked="true"
-                    android:onClick="onToggle"
-                    android:paddingStart="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="8dp"
-                    android:text="Todos"
-                    android:textAlignment="center"
-                    android:textColor="@drawable/radio_background" />
+            <com.google.android.material.tabs.TabItem
+                android:text="Esta semana"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
 
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+            <com.google.android.material.tabs.TabItem
+                android:text="Este mês"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
 
-                <RadioButton
-                    android:id="@+id/toggleBtnSemana"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@drawable/radio_background"
-                    android:button="@android:color/transparent"
-                    android:gravity="center"
-                    android:onClick="onToggle"
-                    android:paddingStart="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="8dp"
-                    android:text="Esta semana"
-                    android:textAlignment="center"
-                    android:textColor="@drawable/radio_background" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/toggleBtnMes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/radio_background"
-                    android:button="@android:color/transparent"
-                    android:onClick="onToggle"
-                    android:paddingStart="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="8dp"
-                    android:text="Este mês"
-                    android:textAlignment="center"
-                    android:textColor="@drawable/radio_background" />
-
-            </RadioGroup>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.tabs.TabLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/transference_list"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
 
-        <include
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            layout="@layout/content_extract"/>
-    </androidx.core.widget.NestedScrollView>
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tvNoRecord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Não há registros"
+        android:textSize="16sp"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -11,28 +11,32 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.contacorrente.R;
 import br.com.contacorrente.Singleton;
+import br.com.contacorrente.menu.extract.allExtract.AllExtractFragment;
+import br.com.contacorrente.menu.extract.mouthExtract.WeekExtractFragment;
 import br.com.contacorrente.model.Transference;
 
 public class ExtractActivity extends AppCompatActivity implements ExtractContract.View {
 
     private ExtractContract.UserInteractions presenter;
 
-    private RadioGroup radioGroup;
-    private RadioButton radioAll;
-    private RadioButton radioWeek;
-    private RadioButton radioMonth;
-
     private ExtractAdapter mExtractAdapter;
     private ProgressBar progressBar;
     private int checkedRadioButtonId;
+    private RadioGroup radioGroup;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +55,17 @@ public class ExtractActivity extends AppCompatActivity implements ExtractContrac
 
         presenter = new ExtractPresenter(this);
         presenter.loadUserExtract();
+
+        TabsAdapter adapter = new TabsAdapter( getSupportFragmentManager() );
+        adapter.add( new AllExtractFragment() , "Todos");
+        adapter.add( new WeekExtractFragment() , "Esta semana");
+
+        ViewPager viewPager = findViewById(R.id.viewpager);
+        viewPager.setAdapter(adapter);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
     }
 
     private void bindListener() {
@@ -86,12 +101,7 @@ public class ExtractActivity extends AppCompatActivity implements ExtractContrac
 
     private void bind() {
 
-        radioAll = findViewById(R.id.toggleBtnTodos);
-        radioWeek = findViewById(R.id.toggleBtnSemana);
-        radioMonth = findViewById(R.id.toggleBtnMes);
-
         progressBar = findViewById(R.id.progressBar);
-        radioGroup = findViewById(R.id.radioGroupFilter);
         mExtractAdapter = new ExtractAdapter(new ArrayList<Transference>(0));
 
         RecyclerView recyclerViewFilmes = findViewById(R.id.transference_list);
@@ -115,13 +125,20 @@ public class ExtractActivity extends AppCompatActivity implements ExtractContrac
         mExtractAdapter.addItem(transference);
     }
 
+    @Override
+    public void noRecord() {
+        findViewById(R.id.tvNoRecord).setVisibility(View.VISIBLE);
+    }
+
     private void hideExtract(){
         progressBar.setVisibility(View.VISIBLE);
         findViewById(R.id.transference_list).setVisibility(View.GONE);
+        findViewById(R.id.tvNoRecord).setVisibility(View.GONE);
     }
 
     @Override
     public void showExtract(List<Transference> transferenceList) {
+        findViewById(R.id.tvNoRecord).setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         findViewById(R.id.transference_list).setVisibility(View.VISIBLE);
         mExtractAdapter.replaceData(transferenceList);
@@ -131,4 +148,35 @@ public class ExtractActivity extends AppCompatActivity implements ExtractContrac
     public void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
+
+    class TabsAdapter extends FragmentPagerAdapter {
+
+        private List<Fragment> listFragments = new ArrayList<>();
+        private List<String> listFragmentsTitle =  new ArrayList<>();
+
+        public TabsAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        public void add(Fragment frag, String title){
+            this.listFragments.add(frag);
+            this.listFragmentsTitle.add(title);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return listFragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return listFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position){
+            return listFragmentsTitle.get(position);
+        }
+    }
+
 }

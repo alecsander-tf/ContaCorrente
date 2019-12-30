@@ -11,6 +11,7 @@ public interface ExtractContract {
         void showExtract(List<Transference> transferenceList);
         void showToast(String msg);
         void addItemToExtract(Transference transference);
+        void noRecord();
     }
 
     interface UserInteractions {

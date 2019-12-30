@@ -126,6 +126,13 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
     @Override
     public void loadUserExtractDetails() {
         loadedTransferences = 0;
+
+        if (transferenceList.isEmpty()){
+            view.showExtract(new ArrayList<Transference>());
+            view.noRecord();
+            return;
+        }
+
         for (final Transference t : transferenceList) {
             String idToBeLoaded = verifyIdToBeLoaded(t);
                 mApi.getUserById(Integer.parseInt(idToBeLoaded), new UserService.UserServiceCallback<User>() {
@@ -140,7 +147,7 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
                         error = true;
                     }
                 });
-            }
+        }
     }
 
     /**

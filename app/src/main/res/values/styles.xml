@@ -22,4 +22,18 @@
         -->
     </style>
 
+    <style name="AppTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabBackground">@drawable/radio_background</item>
+        <item name="tabSelectedTextColor">@drawable/radio_background</item>
+        <item name="tabIndicatorColor">@color/colorAccent</item>
+    </style>
+
+    <!-- for text -->
+    <style name="AppTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">12sp</item>
+
+        <item name="tabSelectedTextColor">@color/colorWhite</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
 </resources>
