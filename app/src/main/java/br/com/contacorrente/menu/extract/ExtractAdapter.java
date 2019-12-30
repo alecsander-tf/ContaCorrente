@@ -24,7 +24,7 @@ public class ExtractAdapter extends RecyclerView.Adapter<ExtractViewHolder> {
 
     private List<Transference> transferenceList;
 
-    ExtractAdapter(List<Transference> transferenceList) {
+    public ExtractAdapter(List<Transference> transferenceList) {
         this.transferenceList = transferenceList;
     }
 
@@ -70,12 +70,12 @@ public class ExtractAdapter extends RecyclerView.Adapter<ExtractViewHolder> {
         return transferenceList.size();
     }
 
-    void addItem(Transference transference) {
+    public void addItem(Transference transference) {
         transferenceList.add(transference);
         notifyItemInserted(transferenceList.indexOf(transference));
     }
 
-    void newList() {
+    public void newList() {
         transferenceList.clear();
     }
 

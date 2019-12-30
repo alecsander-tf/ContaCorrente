@@ -17,11 +17,11 @@ import br.com.contacorrente.util.Utility;
 public class ExtractPresenter implements ExtractContract.UserInteractions {
 
     static private List<Transference> transferenceList;
+    private final ExtractContract.View view;
 
     private int loadedTransferences = 0;
     static private boolean error;
 
-    private ExtractContract.View view;
     private UserService mApi;
 
     ExtractPresenter(ExtractContract.View view) {
@@ -60,6 +60,11 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
                 transferenceList = new ArrayList<>();
             }
         });
+    }
+
+    @Override
+    public void updateExtract(ExtractContract.View fragment) {
+        fragment.showExtract(transferenceList);
     }
 
     @Override

@@ -1,10 +1,7 @@
-package br.com.contacorrente.menu.extract.allExtract;
-
+package br.com.contacorrente.menu.extract.weekExtract;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,12 +20,19 @@ import br.com.contacorrente.menu.extract.ExtractAdapter;
 import br.com.contacorrente.menu.extract.ExtractContract;
 import br.com.contacorrente.model.Transference;
 
-public class AllExtractFragment extends Fragment implements ExtractContract.View {
+public class WeekExtractFragment extends Fragment implements ExtractContract.View {
 
     private ExtractAdapter mExtractAdapter;
     private ProgressBar progressBar;
-
     private View view;
+
+    public WeekExtractFragment() {
+    }
+
+    public static WeekExtractFragment newInstance(String param1, String param2) {
+        WeekExtractFragment fragment = new WeekExtractFragment();
+        return fragment;
+    }
 
     private void bind(){
         progressBar = view.findViewById(R.id.progressBar);
@@ -37,13 +41,16 @@ public class AllExtractFragment extends Fragment implements ExtractContract.View
         RecyclerView recyclerViewFilmes = view.findViewById(R.id.transference_list);
         recyclerViewFilmes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerViewFilmes.setAdapter(mExtractAdapter);
-
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_all_extract, container, false);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_week_extract, container, false);
 
         bind();
 
@@ -82,4 +89,5 @@ public class AllExtractFragment extends Fragment implements ExtractContract.View
     public void showToast(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
     }
+
 }

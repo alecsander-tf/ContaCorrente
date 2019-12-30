@@ -1,4 +1,4 @@
-package br.com.contacorrente.menu.extract.allExtract;
+package br.com.contacorrente.menu.extract.monthExtract;
 
 
 import android.os.Bundle;
@@ -17,13 +17,14 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import br.com.contacorrente.R;
 import br.com.contacorrente.menu.extract.ExtractAdapter;
 import br.com.contacorrente.menu.extract.ExtractContract;
 import br.com.contacorrente.model.Transference;
 
-public class AllExtractFragment extends Fragment implements ExtractContract.View {
+public class MonthExtractFragment extends Fragment implements ExtractContract.View {
 
     private ExtractAdapter mExtractAdapter;
     private ProgressBar progressBar;
@@ -37,13 +38,12 @@ public class AllExtractFragment extends Fragment implements ExtractContract.View
         RecyclerView recyclerViewFilmes = view.findViewById(R.id.transference_list);
         recyclerViewFilmes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerViewFilmes.setAdapter(mExtractAdapter);
-
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_all_extract, container, false);
+        view = inflater.inflate(R.layout.fragment_month_extract, container, false);
 
         bind();
 

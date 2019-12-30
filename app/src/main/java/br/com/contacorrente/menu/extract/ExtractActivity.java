@@ -2,23 +2,17 @@ package br.com.contacorrente.menu.extract;
 
 import android.os.Bundle;
 
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,17 +20,20 @@ import java.util.List;
 import br.com.contacorrente.R;
 import br.com.contacorrente.Singleton;
 import br.com.contacorrente.menu.extract.allExtract.AllExtractFragment;
-import br.com.contacorrente.menu.extract.mouthExtract.WeekExtractFragment;
-import br.com.contacorrente.model.Transference;
+import br.com.contacorrente.menu.extract.monthExtract.MonthExtractFragment;
+import br.com.contacorrente.menu.extract.weekExtract.WeekExtractFragment;
 
-public class ExtractActivity extends AppCompatActivity implements ExtractContract.View {
+public class ExtractActivity extends AppCompatActivity {
 
-    private ExtractContract.UserInteractions presenter;
+    private ExtractContract.View view;
+    private ExtractPresenter presenter;
 
-    private ExtractAdapter mExtractAdapter;
-    private ProgressBar progressBar;
-    private int checkedRadioButtonId;
-    private RadioGroup radioGroup;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+
+    private AllExtractFragment allExtractFragment;
+    private WeekExtractFragment weekExtractFragment;
+    private MonthExtractFragment monthExtractFragment;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,67 +44,13 @@ public class ExtractActivity extends AppCompatActivity implements ExtractContrac
         Singleton.user.setEmail("alecsander.fernandes@evosystems.com.br");
         Singleton.user.setId("3");
 
-        bind();
-        bindListener();
         bindToolbar();
+        bind();
+        bindTabLayout();
+        bindListener();
 
-        checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
-
-        presenter = new ExtractPresenter(this);
+        presenter = new ExtractPresenter(view);
         presenter.loadUserExtract();
-
-        TabsAdapter adapter = new TabsAdapter( getSupportFragmentManager() );
-        adapter.add( new AllExtractFragment() , "Todos");
-        adapter.add( new WeekExtractFragment() , "Esta semana");
-
-        ViewPager viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter(adapter);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-
-    }
-
-    private void bindListener() {
-
-    }
-
-    public void onToggle(View view) {
-
-        if (checkedRadioButtonId == view.getId()){
-            return;
-        }
-
-        checkedRadioButtonId = view.getId();
-
-        if (view instanceof RadioButton){
-
-            hideExtract();
-
-            switch (view.getId()){
-                case R.id.toggleBtnTodos:
-                    presenter.loadUserExtract();
-                    break;
-                case R.id.toggleBtnSemana:
-                    presenter.loadUserExtractWeek();
-                    break;
-                case R.id.toggleBtnMes:
-                    presenter.loadUserExtractMonth();
-                    break;
-
-            }
-        }
-    }
-
-    private void bind() {
-
-        progressBar = findViewById(R.id.progressBar);
-        mExtractAdapter = new ExtractAdapter(new ArrayList<Transference>(0));
-
-        RecyclerView recyclerViewFilmes = findViewById(R.id.transference_list);
-        recyclerViewFilmes.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerViewFilmes.setAdapter(mExtractAdapter);
-
     }
 
     private void bindToolbar() {
@@ -116,37 +59,60 @@ public class ExtractActivity extends AppCompatActivity implements ExtractContrac
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @Override
-    public void addItemToExtract(Transference transference){
-        if (progressBar.getVisibility() == View.VISIBLE){
-            mExtractAdapter.newList();
-        }
-        progressBar.setVisibility(View.GONE);
-        mExtractAdapter.addItem(transference);
+    private void bind(){
+        allExtractFragment = new AllExtractFragment();
+        weekExtractFragment = new WeekExtractFragment();
+        monthExtractFragment = new MonthExtractFragment();
+
+        view = allExtractFragment;
     }
 
-    @Override
-    public void noRecord() {
-        findViewById(R.id.tvNoRecord).setVisibility(View.VISIBLE);
+    private void bindTabLayout() {
+        TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager());
+
+        adapter.add(allExtractFragment, "Todos");
+        adapter.add(weekExtractFragment, "Esta semana");
+        adapter.add(monthExtractFragment, "Este mês");
+
+        viewPager = findViewById(R.id.viewpager);
+        viewPager.setAdapter(adapter);
+
+        tabLayout = findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
-    private void hideExtract(){
-        progressBar.setVisibility(View.VISIBLE);
-        findViewById(R.id.transference_list).setVisibility(View.GONE);
-        findViewById(R.id.tvNoRecord).setVisibility(View.GONE);
-    }
+    private void bindListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
 
-    @Override
-    public void showExtract(List<Transference> transferenceList) {
-        findViewById(R.id.tvNoRecord).setVisibility(View.GONE);
-        progressBar.setVisibility(View.GONE);
-        findViewById(R.id.transference_list).setVisibility(View.VISIBLE);
-        mExtractAdapter.replaceData(transferenceList);
-    }
+                switch (tab.getPosition()){
+                    case 0:
+                        view = allExtractFragment;
+                        presenter.updateExtract(allExtractFragment);
+                        break;
+                    case 1:
+                        view = weekExtractFragment;
+                        presenter.updateExtract(weekExtractFragment);
+                        break;
+                    case 2:
+                        view = monthExtractFragment;
+                        presenter.updateExtract(monthExtractFragment);
+                        break;
+                }
+            }
 
-    @Override
-    public void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     class TabsAdapter extends FragmentPagerAdapter {
@@ -154,15 +120,16 @@ public class ExtractActivity extends AppCompatActivity implements ExtractContrac
         private List<Fragment> listFragments = new ArrayList<>();
         private List<String> listFragmentsTitle =  new ArrayList<>();
 
-        public TabsAdapter(FragmentManager fm) {
+        TabsAdapter(FragmentManager fm) {
             super(fm);
         }
 
-        public void add(Fragment frag, String title){
+        void add(Fragment frag, String title){
             this.listFragments.add(frag);
             this.listFragmentsTitle.add(title);
         }
 
+        @NotNull
         @Override
         public Fragment getItem(int position) {
             return listFragments.get(position);
