@@ -1,6 +1,8 @@
 package br.com.contacorrente.util;
 
 
+import android.annotation.SuppressLint;
+
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,6 +11,7 @@ import java.util.Date;
 
 public class Utility {
 
+    @SuppressLint("SimpleDateFormat")
     public static Date convertDate(String date){
 
         Date date1 = null;
@@ -18,10 +21,20 @@ public class Utility {
             date1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 
         } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
+            try {
+                date1 = new SimpleDateFormat("dd/MM/yyyy").parse(date);
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+        }
         return date1;
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    public static String parseDate(Date date){
+
+        return new SimpleDateFormat("dd/MM/yyyy").format(date);
     }
 
     public static String currencyFormat(String value){
@@ -30,28 +43,5 @@ public class Utility {
         format.setCurrency(Currency.getInstance("BRL"));
 
         return format.format(Double.valueOf(value));
-    }
-
-    public static String maskValue(String value, String mask){
-        StringBuilder status = new StringBuilder();
-        int i = 0;
-        for (char m : mask.toCharArray()) {
-            if (m != '#') {
-                status.append(m);
-                continue;
-            }
-            try {
-                status.append(value.charAt(i));
-            } catch (Exception e) {
-                break;
-            }
-            i++;
-        }
-        return status.toString();
-    }
-
-    public static void blockMultipleClicks(){
-
-
     }
 }

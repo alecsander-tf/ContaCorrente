@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import br.com.contacorrente.R;
@@ -51,31 +52,31 @@ public class AllExtractFragment extends Fragment implements ExtractContract.View
     }
 
     @Override
-    public void addItemToExtract(Transference transference){
-        if (progressBar.getVisibility() == View.VISIBLE){
-            mExtractAdapter.newList();
-        }
-        progressBar.setVisibility(View.GONE);
-        mExtractAdapter.addItem(transference);
-    }
-
-    @Override
     public void noRecord() {
         view.findViewById(R.id.tvNoRecord).setVisibility(View.VISIBLE);
     }
 
-    private void hideExtract(){
-        progressBar.setVisibility(View.VISIBLE);
+    public void hideExtract(){
         view.findViewById(R.id.transference_list).setVisibility(View.GONE);
-        view.findViewById(R.id.tvNoRecord).setVisibility(View.GONE);
     }
 
     @Override
-    public void showExtract(List<Transference> transferenceList) {
-        view.findViewById(R.id.tvNoRecord).setVisibility(View.GONE);
+    public void showExtract(){
         progressBar.setVisibility(View.GONE);
+        view.findViewById(R.id.tvNoRecord).setVisibility(View.GONE);
         view.findViewById(R.id.transference_list).setVisibility(View.VISIBLE);
-        mExtractAdapter.replaceData(transferenceList);
+    }
+
+    @Override
+    public void updateExtract(List<Transference> transferenceList) {
+
+        view.findViewById(R.id.transference_list).setVisibility(View.VISIBLE);
+        mExtractAdapter.replaceData(transferenceList, Calendar.DAY_OF_YEAR);
+
+        if (mExtractAdapter.getTransferenceList().isEmpty()){
+            hideExtract();
+            noRecord();
+        }
     }
 
     @Override

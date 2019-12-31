@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.contacorrente.R;
-import br.com.contacorrente.Singleton;
 import br.com.contacorrente.menu.extract.allExtract.AllExtractFragment;
 import br.com.contacorrente.menu.extract.monthExtract.MonthExtractFragment;
 import br.com.contacorrente.menu.extract.weekExtract.WeekExtractFragment;
@@ -39,10 +38,6 @@ public class ExtractActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_extract);
-
-        Singleton.getInstance();
-        Singleton.user.setEmail("alecsander.fernandes@evosystems.com.br");
-        Singleton.user.setId("3");
 
         bindToolbar();
         bind();

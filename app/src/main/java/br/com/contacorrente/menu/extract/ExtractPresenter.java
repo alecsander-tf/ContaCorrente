@@ -1,10 +1,6 @@
 package br.com.contacorrente.menu.extract;
 
-import android.provider.ContactsContract;
-
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import br.com.contacorrente.Singleton;
@@ -12,7 +8,6 @@ import br.com.contacorrente.model.Transference;
 import br.com.contacorrente.model.User;
 import br.com.contacorrente.network.UserService;
 import br.com.contacorrente.network.UserServiceImpl;
-import br.com.contacorrente.util.Utility;
 
 public class ExtractPresenter implements ExtractContract.UserInteractions {
 
@@ -30,74 +25,9 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
     }
 
     @Override
-    public void loadUserExtractWeek() {
-        mApi.getBankStatement(Integer.parseInt(Singleton.user.getId()), new UserService.UserServiceCallback<List<Transference>>() {
-            @Override
-            public void onLoaded(List<Transference> transferences) {
-
-                transferenceList = transferences;
-                List<Transference> newTransference = new ArrayList<>();
-
-                for (Transference t: transferences) {
-
-                    Calendar cal = Calendar.getInstance();
-                    cal.set(Calendar.DAY_OF_WEEK, cal.getActualMinimum(Calendar.DAY_OF_WEEK));
-                    cal.getTime();
-
-                    Date date1 = Utility.convertDate(t.getData().substring(0, t.getData().indexOf(" ")));
-                    if (cal.getTime().compareTo(date1) == -1){
-                        newTransference.add(t);
-                    }
-                }
-
-                transferenceList = newTransference;
-
-                loadUserExtractDetails();
-            }
-
-            @Override
-            public void onError() {
-                transferenceList = new ArrayList<>();
-            }
-        });
-    }
-
-    @Override
     public void updateExtract(ExtractContract.View fragment) {
-        fragment.showExtract(transferenceList);
-    }
-
-    @Override
-    public void loadUserExtractMonth() {
-        mApi.getBankStatement(Integer.parseInt(Singleton.user.getId()), new UserService.UserServiceCallback<List<Transference>>() {
-            @Override
-            public void onLoaded(List<Transference> transferences) {
-
-                transferenceList = transferences;
-                List<Transference> newTransference = new ArrayList<>();
-
-                for (Transference t: transferences) {
-
-                    Calendar cal = Calendar.getInstance();
-                    cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
-                    cal.getTime();
-
-                    Date date1 = Utility.convertDate(t.getData().substring(0, t.getData().indexOf(" ")));
-                    if (cal.getTime().compareTo(date1) == -1){
-                        newTransference.add(t);
-                    }
-                }
-
-                transferenceList = newTransference;
-
-                loadUserExtractDetails();
-            }
-
-            @Override
-            public void onError() {
-                transferenceList = new ArrayList<>();
-            }
-        });
+        fragment.showExtract();
+        fragment.updateExtract(transferenceList);
     }
 
     @Override
@@ -132,12 +62,6 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
     public void loadUserExtractDetails() {
         loadedTransferences = 0;
 
-        if (transferenceList.isEmpty()){
-            view.showExtract(new ArrayList<Transference>());
-            view.noRecord();
-            return;
-        }
-
         for (final Transference t : transferenceList) {
             String idToBeLoaded = verifyIdToBeLoaded(t);
                 mApi.getUserById(Integer.parseInt(idToBeLoaded), new UserService.UserServiceCallback<User>() {
@@ -165,7 +89,8 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
             return;
         }
         if (loadedTransferences == transferenceList.size()){
-            view.showExtract(transferenceList);
+            view.showExtract();
+            view.updateExtract(transferenceList);
         }
     }
 }
