@@ -14,8 +14,7 @@
         android:minHeight="58dp"
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="0dp">
+        android:layout_height="wrap_content">
 
         <include
             layout="@layout/custom_toolbar"
@@ -26,22 +25,11 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
-            app:tabTextAppearance="@style/AppTabTextAppearance"
-            app:tabBackground="@drawable/tab_background"
-            app:tabSelectedTextColor="@color/colorWhite"
-            app:tabTextColor="@color/colorBlack"
-            app:tabIndicatorHeight="0dp"
-
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginStart="@dimen/tab_spacing_horizontal"
-            android:layout_marginEnd="@dimen/tab_spacing_horizontal"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_width="match_parent">
 
             <com.google.android.material.tabs.TabItem
                 android:text="Todos"
-                android:background="@drawable/tab_background"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"/>
 
