@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import br.com.contacorrente.Singleton;
+import br.com.contacorrente.model.Status;
 import br.com.contacorrente.model.Transference;
 import br.com.contacorrente.model.User;
 import br.com.contacorrente.network.UserService;
@@ -57,5 +58,29 @@ public class TransferencePresenter implements TransferenceContract.UserInteracti
                 view.showToast("Erro ao efetuar transferência");
             }
         });
+    }
+
+    @Override
+    public void concludeTransference(Transference transference) {
+
+        String id_to = transference.getId_to();
+        String id_from = transference.getId_from();
+        String value = transference.getValue();
+
+        mApi.transfer(Integer.parseInt(id_from), Integer.parseInt(id_to), Double.parseDouble(value),
+                new UserService.UserServiceCallback<Status>() {
+                    @Override
+                    public void onLoaded(Status status) {
+                        if (status.isStatus()){
+                            view.finishTransference();
+                        }else {
+                            view.showToast(status.getError());
+                        }
+                    }
+                    @Override
+                    public void onError() {
+                        view.showToast("Erro ao concluir transferência");
+                    }
+                });
     }
 }
