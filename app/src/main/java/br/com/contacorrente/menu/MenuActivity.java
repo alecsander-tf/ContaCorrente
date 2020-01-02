@@ -124,6 +124,12 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        navigationView.setCheckedItem(R.id.menu);
+    }
+
+    @Override
     public void showAccountDetails() {
 
         Picasso.get()
