@@ -66,10 +66,9 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
         mSwipeRefreshLayout = view.findViewById(R.id.swipeRefreshMyAccount);
         tvUserName = view.findViewById(R.id.tvUserName);
         tvUserBalance = view.findViewById(R.id.tvUserBalance);
-        btnExtract = view.findViewById(R.id.btnExtract);
-        btnTransference = view.findViewById(R.id.btnTransference);
-
-        btnLogout = view.findViewById(R.id.btnLogout);
+        btnExtract = getActivity().findViewById(R.id.btnExtract);
+        btnTransference = getActivity().findViewById(R.id.btnTransference);
+        btnLogout = getActivity().findViewById(R.id.btnLogout);
     }
 
     private void bindListener() {

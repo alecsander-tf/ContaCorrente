@@ -10,7 +10,7 @@
     android:id="@+id/my_drawer_layout"
     tools:context=".menu.MenuActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,14 +22,82 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <FrameLayout
+        <View
+            android:id="@+id/view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/frameLayout">
+            android:layout_height="4dp"
+            android:background="@drawable/toolbar_dropshadow"
+            app:layout_anchor="@+id/toolbar"
+            app:layout_anchorGravity="bottom|center"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/view2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view">
 
         </FrameLayout>
 
-    </LinearLayout>
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@drawable/bottom_toolbar_dropshadow"
+            app:layout_anchor="@+id/toolbar"
+            app:layout_anchorGravity="bottom|center"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout" />
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnExtract"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/extract"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorBlack"
+                app:backgroundTint="#00FFFFFF" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnTransference"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/transfer"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorBlack"
+                app:backgroundTint="#00FFFFFF"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="@string/logout"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorBlack"
+                app:backgroundTint="#00FFFFFF"/>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="304dp"

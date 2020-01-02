@@ -71,7 +71,7 @@ public class AllExtractFragment extends Fragment implements ExtractContract.View
     public void updateExtract(List<Transference> transferenceList) {
 
         view.findViewById(R.id.transference_list).setVisibility(View.VISIBLE);
-        mExtractAdapter.replaceData(transferenceList, Calendar.DAY_OF_YEAR);
+        mExtractAdapter.replaceData(transferenceList, Calendar.ERA);
 
         if (mExtractAdapter.getTransferenceList().isEmpty()){
             hideExtract();

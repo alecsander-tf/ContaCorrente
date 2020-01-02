@@ -8,10 +8,10 @@
     </style>
 
     <style name="CustomToolbar" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <item name="android:background">@color/colorBlack</item>
-        <item name="android:textColorPrimary">@color/colorWhite</item>
+        <item name="android:background">@color/colorWhite</item>
+        <item name="android:textColorPrimary">@color/colorBlack</item>
         <!-- Applies to views in their normal state. -->
-        <item name="colorControlNormal">@color/colorWhite</item>
+        <item name="colorControlNormal">@color/colorBlack</item>
         <!-- Applies to views in their activated state (i.e checked or switches) -->
         <item name="colorControlActivated">@color/colorLightBlack</item>
         <!-- Applied to framework control highlights (i.e ripples or list selectors) -->

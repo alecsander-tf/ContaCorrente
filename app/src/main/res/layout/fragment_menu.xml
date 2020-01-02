@@ -54,6 +54,7 @@
             android:gravity="center|bottom">
 
             <Button
+                android:visibility="gone"
                 android:textColor="@color/colorWhite"
                 android:background="@drawable/shape_button"
                 android:id="@+id/btnExtract"
@@ -65,6 +66,7 @@
                 android:text="@string/extract" />
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/btnTransference"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -77,6 +79,7 @@
                 android:text="@string/transfer" />
 
             <Button
+                android:visibility="gone"
                 android:textColor="@color/colorWhite"
                 android:background="@drawable/shape_button"
                 android:id="@+id/btnLogout"

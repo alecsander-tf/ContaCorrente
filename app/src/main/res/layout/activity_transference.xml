@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/colorWhite"
     tools:context=".menu.transference.TransferenceActivity">
 
@@ -12,6 +12,10 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <View android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/toolbar_dropshadow"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,6 +36,9 @@
                 android:textSize="18sp" />
 
             <EditText
+                android:layout_marginTop="8dp"
+                android:padding="8dp"
+                android:background="@drawable/custom_edittext"
                 android:id="@+id/etTransference_UserTo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -48,6 +55,9 @@
                 android:textSize="18sp" />
 
             <EditText
+                android:layout_marginTop="8dp"
+                android:padding="8dp"
+                android:background="@drawable/custom_edittext"
                 android:id="@+id/etTransference_Value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,9 +75,10 @@
                     android:id="@+id/btnTransference_Send"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:text="@string/next"
                     android:textAllCaps="false"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorValueReceive"
                     android:layout_marginTop="32dp"
                     android:textSize="18sp"
                     android:background="@drawable/shape_button"/>

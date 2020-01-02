@@ -3,6 +3,8 @@ package br.com.contacorrente.menu.transference;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.button.MaterialButton;
+
+import java.text.NumberFormat;
 
 import br.com.contacorrente.R;
 import br.com.contacorrente.model.Transference;
@@ -105,9 +109,54 @@ public class TransferenceActivity extends AppCompatActivity implements Transfere
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.sendTransference(etUserTo.getText().toString(), etValue.getText().toString());
+
+                String replaceable = String.format("[%s,.\\s]", NumberFormat.getCurrencyInstance().getCurrency().getSymbol());
+
+                String value = etValue.getText().toString().replaceAll(replaceable, "");
+                presenter.sendTransference(etUserTo.getText().toString(), value);
             }
         });
+
+        etValue.addTextChangedListener(new TextWatcher() {
+
+            private String current;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!s.toString().equals(current)){
+                    etValue.removeTextChangedListener(this);
+
+                    String replaceable = String.format("[%s,.\\s]", NumberFormat.getCurrencyInstance().getCurrency().getSymbol());
+                    String cleanString = s.toString().replaceAll(replaceable, "");
+
+                    String formatted;
+
+                    if (!cleanString.equals("")) {
+                         formatted = "R$ " + String.format("%,d", Long.parseLong(cleanString));
+                    }else {
+                        formatted = "";
+                    }
+
+                    current = formatted;
+                    etValue.setText(formatted);
+                    etValue.setSelection(formatted.length());
+
+                    etValue.addTextChangedListener(this);
+                }
+            }
+        });
+
     }
 
     @Override

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
@@ -11,7 +12,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,7 +73,7 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        drawerLayout.openDrawer(Gravity.LEFT);
+        drawerLayout.openDrawer(GravityCompat.START);
 
         return super.onOptionsItemSelected(item);
     }
@@ -88,7 +88,7 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         if (toolbar.getNavigationIcon() != null){
-            toolbar.getNavigationIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+            toolbar.getNavigationIcon().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
         }
     }
 
@@ -146,8 +146,6 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     public void showError(String msg) {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
-
-
 
     public void changeFragment(Fragment fragment, String fragmentTitle, int menuDrawerItemIndex){
         setTitle(fragmentTitle);
