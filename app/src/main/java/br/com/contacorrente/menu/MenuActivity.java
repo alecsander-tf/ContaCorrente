@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,8 @@ import br.com.contacorrente.menu.fragment.myAccount.MyAccountFragment;
 import br.com.contacorrente.menu.transference.TransferenceActivity;
 
 public class MenuActivity extends AppCompatActivity implements MenuContract.View, ParentActivityContract {
+
+    private Class<?> activity;
 
     private Toolbar toolbar;
 
@@ -88,7 +91,7 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         if (toolbar.getNavigationIcon() != null){
-            toolbar.getNavigationIcon().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
+            toolbar.getNavigationIcon().setColorFilter(getResources().getColor(R.color.colorText), PorterDuff.Mode.SRC_ATOP);
         }
     }
 
@@ -100,13 +103,19 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
 
                 switch(id){
                     case R.id.menu:
-                        changeFragment(MyAccountFragment.newInstance(), item.getTitle().toString(), 0);
+                        activity = null;
                         break;
                     case R.id.extract:
-                        changeActivity(ExtractActivity.class);
+                        activity = ExtractActivity.class;
+                        //changeActivity(ExtractActivity.class);
                         break;
                     case R.id.transference:
-                        changeActivity(TransferenceActivity.class);
+                        activity = TransferenceActivity.class;
+                        //changeActivity(TransferenceActivity.class);
+                        break;
+                    case R.id.settings:
+                        activity = SettingsActivity.class;
+                        //changeActivity(SettingsActivity.class);
                         break;
                     case R.id.logout:
                         logout();
@@ -115,12 +124,47 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
                         return true;
                 }
 
-                // Fecha o navigation drawer
                 drawerLayout.closeDrawers();
 
                 return true;
             }
         });
+
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                //Called when a drawer's position changes.
+                if (slideOffset == 0 && activity != null){
+                    changeActivity(activity);
+                }
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                //Called when a drawer has settled in a completely open state.
+                //The drawer is interactive at this point.
+                // If you have 2 drawers (left and right) you can distinguish
+                // them by using id of the drawerView. int id = drawerView.getId();
+                // id will be your layout's id: for example R.id.left_drawer
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                // Called when a drawer has settled in a completely closed state.
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+                // Called when the drawer motion state changes. The new state will be one of STATE_IDLE, STATE_DRAGGING or STATE_SETTLING.
+            }
+        });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        this.activity = null;
     }
 
     @Override

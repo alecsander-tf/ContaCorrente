@@ -8,11 +8,12 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_container"
     tools:context=".menu.extract.ExtractActivity"
-    android:background="@color/colorWhite">
+    android:background="@color/colorBackground">
 
     <com.google.android.material.appbar.AppBarLayout
         android:minHeight="58dp"
-        android:background="@color/colorWhite"
+        app:elevation="0dp"
+        android:background="@color/colorBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -44,6 +45,13 @@
                 android:layout_width="match_parent"/>
 
         </com.google.android.material.tabs.TabLayout>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@drawable/toolbar_dropshadow"
+            app:layout_anchor="@+id/toolbar"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

@@ -2,6 +2,8 @@ package br.com.contacorrente;
 
 import android.content.SharedPreferences;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import br.com.contacorrente.factory.UserFactory;
 import br.com.contacorrente.factory.UserLoginFactory;
 import br.com.contacorrente.model.User;
@@ -22,6 +24,14 @@ public class Singleton {
         if (singleInstance == null){
             user = UserFactory.getUser(new UserLoginFactory("", ""));
             singleInstance = new Singleton();
+        }
+    }
+
+    public static void darkMode(boolean status){
+        if (sharedPreferences != null){
+            SharedPreferences.Editor editor = Singleton.sharedPreferences.edit();
+            editor.putBoolean("darkMode", status);
+            editor.apply();
         }
     }
 

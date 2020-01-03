@@ -16,6 +16,15 @@
                 android:title="@string/transfer"/>
     </group>
     <group
+        android:id="@+id/menu_middle"
+        android:checkableBehavior="none">
+        <item android:id="@+id/settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/settings">
+        </item>
+    </group>
+
+    <group
         android:id="@+id/menu_bottom"
         android:checkableBehavior="none">
         <item android:id="@+id/logout"

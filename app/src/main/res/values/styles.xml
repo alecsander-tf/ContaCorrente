@@ -1,17 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">@color/colorBlack</item>
-        <item name="colorAccent">@color/colorTotalBlack</item>
+    <style name="NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="actionBarTheme">@style/CustomToolbar</item>
-        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/colorTotalBlack</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/colorStatusBar</item>
     </style>
 
     <style name="CustomToolbar" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <item name="android:background">@color/colorWhite</item>
-        <item name="android:textColorPrimary">@color/colorBlack</item>
+        <item name="android:background">@color/colorBackground</item>
+        <item name="android:textColorPrimary">@color/colorText</item>
         <!-- Applies to views in their normal state. -->
-        <item name="colorControlNormal">@color/colorBlack</item>
+        <item name="colorControlNormal">@color/colorText</item>
         <!-- Applies to views in their activated state (i.e checked or switches) -->
         <item name="colorControlActivated">@color/colorLightBlack</item>
         <!-- Applied to framework control highlights (i.e ripples or list selectors) -->

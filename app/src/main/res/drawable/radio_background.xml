@@ -2,8 +2,8 @@
     <item
         android:drawable="@drawable/custom_filter_active"
         android:state_checked="true"
-        android:color="@color/colorWhite"/>
+        android:color="@color/colorBackground"/>
     <item
         android:drawable="@drawable/custom_filter_inactive"
-        android:color="@color/colorBlack"/>
+        android:color="@color/colorText"/>
 </selector>

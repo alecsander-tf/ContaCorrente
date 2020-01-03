@@ -61,25 +61,6 @@ public class ExtractAdapter extends RecyclerView.Adapter<ExtractViewHolder> {
         }
     }
 
-    private void filter(int filter){
-
-        List<Transference> newTransference = new ArrayList<>();
-        for (Transference t: transferenceList) {
-
-            Calendar cal = Calendar.getInstance();
-            cal.set(filter, cal.getActualMinimum(filter));
-            cal.getTime();
-
-            Date date1 = Utility.convertDate(t.getData());
-            t.setData(Utility.parseDate(date1));
-            if (cal.getTime().compareTo(date1) < 0){
-                newTransference.add(t);
-            }
-        }
-
-        transferenceList = newTransference;
-    }
-
     @Override
     public int getItemCount() {
         if (transferenceList == null || transferenceList.size() == 0){
@@ -92,10 +73,9 @@ public class ExtractAdapter extends RecyclerView.Adapter<ExtractViewHolder> {
         return transferenceList;
     }
 
-    public void replaceData(List<Transference> transferenceList, int filter) {
+    public void replaceData(List<Transference> transferenceList) {
 
         this.transferenceList = transferenceList;
-        filter(filter);
         notifyDataSetChanged();
     }
 }

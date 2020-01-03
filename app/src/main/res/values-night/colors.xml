@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
-    <color name="colorValueSend">#FF0000</color>
-    <color name="colorValueReceive">#369B5E</color>
+    <color name="colorAccent">#aeaeae</color>
+    <color name="colorShadow">#131313</color>
+    <color name="colorRed">#FF0000</color>
+    <color name="colorGreen">#369B5E</color>
     <color name="colorTotalBlack">#000000</color>
-    <color name="colorWhite">#727272</color>
-    <color name="colorBlack">#212121</color>
-    <color name="colorLightBlack">#313131</color>
+    <color name="colorBackground">#212121</color>
+    <color name="colorText">#FFFFFF</color>
+    <color name="colorStatusBar">#0E0E0E</color>
+    <color name="colorLightBlack">#aeaeae</color>
 </resources>

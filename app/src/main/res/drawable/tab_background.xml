@@ -2,9 +2,9 @@
     <item
         android:drawable="@drawable/custom_filter_active"
         android:state_selected="true"
-        android:color="@color/colorWhite"/>
+        android:color="@color/colorBackground"/>
     <item
         android:drawable="@drawable/custom_filter_inactive"
         android:state_selected="false"
-        android:color="@color/colorWhite"/>
+        android:color="@color/colorBackground"/>
 </selector>

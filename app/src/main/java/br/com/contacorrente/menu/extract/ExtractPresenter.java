@@ -26,7 +26,7 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
 
     @Override
     public void updateExtract(ExtractContract.View fragment) {
-        fragment.showExtract();
+        //fragment.showExtract();
         fragment.updateExtract(transferenceList);
     }
 
@@ -89,7 +89,7 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
             return;
         }
         if (loadedTransferences == transferenceList.size()){
-            view.showExtract();
+            //view.showExtract();
             view.updateExtract(transferenceList);
         }
     }

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite">
+    android:background="@color/colorBackground">
 
     <include
         android:id="@+id/layoutLogging"
@@ -42,6 +42,7 @@
             app:layout_constraintBottom_toTopOf="@+id/imageView2">
 
             <LinearLayout
+                android:background="#FFFFFF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -50,6 +51,7 @@
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="#212121"
                     android:fontFamily="sans-serif-black"
                     android:text="@string/account_access"
                     android:textAlignment="center"
@@ -65,6 +67,9 @@
                     android:id="@+id/txtLogin_Email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="#212121"
+                    android:textColorHint="#aeaeae"
+                    app:backgroundTint="#212121"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="32dp"
@@ -83,8 +88,11 @@
                     android:id="@+id/txtLogin_Password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="#212121"
+                    android:textColorHint="#aeaeae"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="16dp"
+                    app:backgroundTint="#212121"
                     android:layout_marginEnd="32dp"
                     android:drawableStart="@drawable/ic_padlock"
                     android:drawablePadding="20dp"
@@ -105,7 +113,7 @@
                     android:background="@drawable/shape_button"
                     android:text="@string/status"
                     android:textAllCaps="false"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toTopOf="@+id/imageView2"
                     app:layout_constraintEnd_toEndOf="parent"
