@@ -21,4 +21,9 @@
         <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
         -->
     </style>
+
+    <style name="SCBSwitch" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/colorGreen</item>
+    </style>
+
 </resources>

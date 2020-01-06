@@ -2,11 +2,11 @@ package br.com.contacorrente.menu;
 
 import android.os.Bundle;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 
 import br.com.contacorrente.R;
@@ -14,7 +14,7 @@ import br.com.contacorrente.Singleton;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private Switch aSwitch;
+    private SwitchCompat aSwitch;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

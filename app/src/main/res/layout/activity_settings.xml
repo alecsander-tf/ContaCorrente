@@ -20,7 +20,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:text="Tema escuro"
+            android:text="@string/dark_mode"
             android:textSize="18sp"
             android:textColor="@color/colorText"
             android:layout_width="wrap_content"
@@ -33,16 +33,16 @@
 
             <TextView
                 android:layout_weight="1"
-                android:text="Diminui o brilho e melhora a visualização noturna"
+                android:text="@string/dark_mode_description"
                 android:textColor="#7D7D7D"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
 
-            <Switch
+            <androidx.appcompat.widget.SwitchCompat
+                android:theme="@style/SCBSwitch"
                 android:id="@+id/switchDarkMode"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"/>
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 

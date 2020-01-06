@@ -28,4 +28,6 @@
     <string name="my_account">Minha Conta</string>
     <string name="sign_in">Entrando…</string>
     <string name="settings">Configurações</string>
+    <string name="dark_mode">Tema escuro</string>
+    <string name="dark_mode_description">Diminui o brilho e melhora a visualização noturna</string>
 </resources>
