@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_money_bag"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar"
-        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute">
         <activity
             android:name=".login.LoginApplicationActivity"
             android:screenOrientation="portrait"
@@ -25,13 +25,12 @@
             android:name=".menu.extract.ExtractActivity"
             android:label="Extrato"
             android:parentActivityName=".menu.MenuActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".menu.transference.TransferenceActivity"
             android:label="Transferência"
             android:parentActivityName=".menu.MenuActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".splashScreeen.SplashScreen"
             android:screenOrientation="portrait">
@@ -42,8 +41,8 @@
         </activity>
         <activity
             android:name=".menu.SettingsActivity"
-            android:parentActivityName=".menu.MenuActivity"
-            android:label="Configurações"/>
+            android:label="Configurações"
+            android:parentActivityName=".menu.MenuActivity" />
     </application>
 
 </manifest>
