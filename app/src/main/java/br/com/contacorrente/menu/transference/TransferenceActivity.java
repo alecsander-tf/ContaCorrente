@@ -20,12 +20,12 @@ import com.google.android.material.button.MaterialButton;
 import java.text.NumberFormat;
 
 import br.com.contacorrente.R;
+import br.com.contacorrente.Singleton;
 import br.com.contacorrente.model.Transference;
 
 public class TransferenceActivity extends AppCompatActivity implements TransferenceContract.View {
 
     final Context context = this;
-    private Transference transference;
 
     private TransferenceContract.UserInteraction presenter;
 
@@ -76,7 +76,7 @@ public class TransferenceActivity extends AppCompatActivity implements Transfere
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.concludeTransference(transference);
+                presenter.concludeTransference(etUserTo.getText().toString(), Singleton.user.getId(), etValue.getText().toString());
             }
         });
     }
@@ -165,12 +165,10 @@ public class TransferenceActivity extends AppCompatActivity implements Transfere
     }
 
     @Override
-    public void next(Transference transference) {
+    public void next(String userRelatedEmail, String value) {
 
-        this.transference = transference;
-
-        txtConfirmDialogEmail.setText(transference.getUserRelated().getEmail());
-        txtConfirmDialogValue.setText(String.format("R$ %s", transference.getValue()));
+        txtConfirmDialogEmail.setText(userRelatedEmail);
+        txtConfirmDialogValue.setText(String.format("R$ %s", value));
 
         dialog.show();
     }

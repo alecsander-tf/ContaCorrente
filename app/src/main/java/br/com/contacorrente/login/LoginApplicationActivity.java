@@ -13,8 +13,6 @@ import android.widget.Toast;
 
 import br.com.contacorrente.Singleton;
 import br.com.contacorrente.R;
-import br.com.contacorrente.factory.UserFactory;
-import br.com.contacorrente.factory.UserLoginFactory;
 
 public class LoginApplicationActivity extends AppCompatActivity implements LoginContract.View {
 
@@ -58,10 +56,7 @@ public class LoginApplicationActivity extends AppCompatActivity implements Login
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
 
-                String email = etEmail.getText().toString();
-                String password = etPassword.getText().toString();
-
-                presenter.login(UserFactory.getUser(new UserLoginFactory(email, password)));
+                presenter.login(etEmail.getText().toString(), etPassword.getText().toString());
             }
         });
     }

@@ -50,7 +50,7 @@ public class TransferencePresenter implements TransferenceContract.UserInteracti
                 transference.setId_from(Singleton.user.getId());
                 transference.setId_to(user.getId());
 
-                view.next(transference);
+                view.next(user.getEmail(), value);
             }
 
             @Override
@@ -61,13 +61,9 @@ public class TransferencePresenter implements TransferenceContract.UserInteracti
     }
 
     @Override
-    public void concludeTransference(Transference transference) {
+    public void concludeTransference(String idTo, String idFrom, String value) {
 
-        String id_to = transference.getId_to();
-        String id_from = transference.getId_from();
-        String value = transference.getValue();
-
-        mApi.transfer(Integer.parseInt(id_from), Integer.parseInt(id_to), Double.parseDouble(value),
+        mApi.transfer(Integer.parseInt(idFrom), Integer.parseInt(idTo), Double.parseDouble(value),
                 new UserService.UserServiceCallback<Status>() {
                     @Override
                     public void onLoaded(Status status) {

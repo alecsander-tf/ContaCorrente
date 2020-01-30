@@ -107,9 +107,9 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
     }
 
     @Override
-    public void showAccountDetails(User user) {
-        tvUserBalance.setText(Utility.currencyFormat(user.getBalance()));
-        tvUserName.setText(user.getName());
+    public void showAccountDetails(String userName, String userBalance) {
+        tvUserBalance.setText(Utility.currencyFormat(userBalance));
+        tvUserName.setText(userName);
     }
 
     @Override

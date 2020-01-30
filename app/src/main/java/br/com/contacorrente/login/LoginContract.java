@@ -1,7 +1,5 @@
 package br.com.contacorrente.login;
 
-import br.com.contacorrente.model.User;
-
 public interface LoginContract {
 
     interface View{
@@ -12,7 +10,7 @@ public interface LoginContract {
     }
 
     interface UserInteraction{
-        void login(User user);
+        void login(String email, String password);
     }
 
 }
