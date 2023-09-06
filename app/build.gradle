@@ -6,7 +6,6 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "br.com.contacorrente"
         minSdkVersion 18
@@ -21,6 +20,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    namespace 'br.com.contacorrente'
 }
 
 dependencies {
