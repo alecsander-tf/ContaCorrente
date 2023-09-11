@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -8,9 +7,7 @@
         android:icon="@mipmap/ic_launcher_money_bag"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:supportsRtl="true"
-        android:theme="@style/NoActionBar"
-        tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute">
+        android:theme="@style/NoActionBar">
         <activity
             android:name=".login.LoginApplicationActivity"
             android:screenOrientation="fullSensor"
@@ -42,6 +39,9 @@
             android:name=".menu.SettingsActivity"
             android:label="Configurações"
             android:parentActivityName=".menu.MenuActivity" />
+        <activity
+            android:name=".jetpack.login.LoginActivity"
+            android:label="Login" />
     </application>
 
 </manifest>

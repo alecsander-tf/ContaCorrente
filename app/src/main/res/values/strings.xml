@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">Conta Corrente</string>
-    <string name="status">Login</string>
+    <string name="login">Login</string>
+
     <string name="title_activity_menu">Minha Conta</string>
 
     <string name="Close">Close</string>
     <string name="Open">Open</string>
 
+    <string name="user">Usuário</string>
     <string name="password">Senha</string>
     <string name="email">Email</string>
     <string name="account_access">ACESSO A CONTA</string>

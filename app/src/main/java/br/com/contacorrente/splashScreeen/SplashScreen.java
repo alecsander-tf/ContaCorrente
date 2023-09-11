@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import br.com.contacorrente.R;
 import br.com.contacorrente.Singleton;
+import br.com.contacorrente.jetpack.login.LoginActivity;
 
 public class SplashScreen extends AppCompatActivity implements SplashScreenContract.View {
 
@@ -29,7 +30,7 @@ public class SplashScreen extends AppCompatActivity implements SplashScreenContr
 
         verifyDarkMode();
 
-        startActivity(new Intent(this, args));
+        startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
 
