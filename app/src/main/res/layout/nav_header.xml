@@ -14,7 +14,7 @@
         android:id="@+id/circularImageView"
         android:layout_height="100dp"
         android:layout_gravity="start"
-        android:src="@drawable/ic_user"/>
+        android:src="@drawable/ic_client"/>
 
     <TextView
         android:id="@+id/txtMenuDrawer_Name"
@@ -23,7 +23,7 @@
         android:layout_gravity="start"
         android:paddingTop="16dp"
         android:ellipsize="end"
-        android:text="@string/user_name"
+        android:text="@string/client_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorText"
         android:textSize="18sp"
@@ -38,7 +38,7 @@
         android:ellipsize="end"
         android:layout_gravity="start"
         android:paddingTop="16dp"
-        android:text="@string/user_email"
+        android:text="@string/client_email"
         android:textColor="@color/colorText"
         android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="parent" />

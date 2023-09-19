@@ -14,9 +14,9 @@ public interface ExtractContract {
         void showExtract();
     }
 
-    interface UserInteractions {
-        void loadUserExtract();
-        void loadUserExtractDetails();
+    interface ClientInteractions {
+        void loadClientExtract();
+        void loadClientExtractDetails();
         void updateExtract(View fragment);
     }
 

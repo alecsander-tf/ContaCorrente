@@ -1,32 +1,37 @@
 package br.com.contacorrente.menu;
 
 import br.com.contacorrente.Singleton;
-import br.com.contacorrente.model.User;
-import br.com.contacorrente.network.UserService;
-import br.com.contacorrente.network.UserServiceImpl;
+import br.com.contacorrente.model.Client;
+import br.com.contacorrente.network.ClientService;
+import br.com.contacorrente.network.ClientServiceImpl;
 
-public class MenuPresenter implements MenuContract.UserInteractions {
+public class MenuPresenter implements MenuContract.ClientInteractions {
 
-    private UserService mApi;
+    private ClientService mApi;
     private MenuContract.View view;
 
     MenuPresenter(MenuContract.View view){
         this.view = view;
-        mApi = new UserServiceImpl();
+        mApi = new ClientServiceImpl();
     }
 
     @Override
-    public void loadUserAccount(String email) {
-        mApi.getUserByEmail(email, new UserService.UserServiceCallback<User>() {
+    public void loadClientAccount(String email) {
+        mApi.getClientByEmail(email, new ClientService.ClientServiceCallback<Client>() {
             @Override
-            public void onLoaded(User user) {
-                Singleton.user = user;
+            public void onLoaded(Client client) {
+                Singleton.client = client;
                 view.showAccountDetails();
             }
 
             @Override
             public void onError() {
                 view.showError("Não foi possível carregar os seus dados!");
+            }
+
+            @Override
+            public void notFoundError() {
+                view.showError("Cliente não encontrado!");
             }
         });
     }

@@ -1,10 +1,6 @@
 package br.com.contacorrente.menu.fragment.myAccount;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +8,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import br.com.contacorrente.R;
 import br.com.contacorrente.Singleton;
 import br.com.contacorrente.menu.MenuActivity;
 import br.com.contacorrente.menu.ParentActivityContract;
 import br.com.contacorrente.menu.extract.ExtractActivity;
 import br.com.contacorrente.menu.transference.TransferenceActivity;
-import br.com.contacorrente.model.User;
 import br.com.contacorrente.util.Utility;
 
 public class MyAccountFragment extends Fragment implements MyAccountContract.View {
@@ -29,13 +27,13 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private TextView tvUserName;
-    private TextView tvUserBalance;
+    private TextView tvClientName;
+    private TextView tvClientBalance;
     private Button btnExtract;
     private Button btnTransference;
     private Button btnLogout;
 
-    private MyAccountContract.UserInteractions presenter;
+    private MyAccountContract.ClientInteractions presenter;
 
     public static MyAccountFragment newInstance() {
         return new MyAccountFragment();
@@ -54,51 +52,29 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
         bindListener();
 
         presenter = new MyAccountPresenter(this);
-        presenter.loadUserAccount(Singleton.user.getEmail());
+        presenter.loadClientAccount(Singleton.client.getEmail());
 
         return view;
     }
 
-    private void bind(){
+    private void bind() {
 
         parentActivityContract = (MenuActivity) getActivity();
 
         mSwipeRefreshLayout = view.findViewById(R.id.swipeRefreshMyAccount);
-        tvUserName = view.findViewById(R.id.tvUserName);
-        tvUserBalance = view.findViewById(R.id.tvUserBalance);
+        tvClientName = view.findViewById(R.id.tvClientName);
+        tvClientBalance = view.findViewById(R.id.tvClientBalance);
         btnExtract = getActivity().findViewById(R.id.btnExtract);
         btnTransference = getActivity().findViewById(R.id.btnTransference);
         btnLogout = getActivity().findViewById(R.id.btnLogout);
     }
 
     private void bindListener() {
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                presenter.loadNewBalance();
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> presenter.loadNewBalance());
 
-        btnExtract.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                parentActivityContract.changeActivity(ExtractActivity.class);
-            }
-        });
-
-        btnTransference.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                parentActivityContract.changeActivity(TransferenceActivity.class);
-            }
-        });
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                parentActivityContract.logout();
-            }
-        });
+        btnExtract.setOnClickListener(v -> parentActivityContract.changeActivity(ExtractActivity.class));
+        btnTransference.setOnClickListener(v -> parentActivityContract.changeActivity(TransferenceActivity.class));
+        btnLogout.setOnClickListener(v -> parentActivityContract.logout());
     }
 
     @Override
@@ -107,14 +83,15 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
     }
 
     @Override
-    public void showAccountDetails(String userName, String userBalance) {
-        tvUserBalance.setText(Utility.currencyFormat(userBalance));
-        tvUserName.setText(userName);
+    public void showAccountDetails(String clientName, String clientBalance) {
+        tvClientBalance.setText(Utility.currencyFormat(clientBalance));
+        tvClientName.setText(clientName);
     }
 
     @Override
     public void showNewBalance() {
-        tvUserBalance.setText(Utility.currencyFormat(Singleton.user.getBalance()));
+        tvClientBalance.setText(Utility.currencyFormat(Singleton.client.getBalance()));
+        tvClientName.setText(Singleton.client.getName());
         mSwipeRefreshLayout.setRefreshing(false);
     }
 }

@@ -3,37 +3,37 @@ package br.com.contacorrente.login;
 import android.content.SharedPreferences;
 
 import br.com.contacorrente.Singleton;
-import br.com.contacorrente.factory.UserFactory;
-import br.com.contacorrente.factory.UserLoginFactory;
+import br.com.contacorrente.factory.ClientFactory;
+import br.com.contacorrente.factory.ClientLoginFactory;
 import br.com.contacorrente.menu.MenuActivity;
 import br.com.contacorrente.model.Status;
-import br.com.contacorrente.model.User;
-import br.com.contacorrente.network.UserService;
-import br.com.contacorrente.network.UserServiceImpl;
+import br.com.contacorrente.model.Client;
+import br.com.contacorrente.network.ClientService;
+import br.com.contacorrente.network.ClientServiceImpl;
 
-public class LoginPresenter implements LoginContract.UserInteraction{
+public class LoginPresenter implements LoginContract.ClientInteraction{
 
-    private UserService api;
+    private ClientService api;
     private LoginContract.View view;
 
     LoginPresenter(LoginContract.View view) {
         this.view = view;
-        this.api = new UserServiceImpl();
+        this.api = new ClientServiceImpl();
     }
 
     @Override
     public void login(String email, String password) {
 
-        final User user = UserFactory.getUser(new UserLoginFactory(email, password));
+        final Client client = ClientFactory.getClient(new ClientLoginFactory(email, password));
 
         view.showLogging();
-        api.checkLogin(user.getEmail(), user.getPassword(), new UserService.UserServiceCallback<Status>() {
+        api.checkLogin(client.getEmail(), client.getPassword(), new ClientService.ClientServiceCallback<Status>() {
             @Override
             public void onLoaded(Status status) {
                 if (status.isStatus()){
-                    Singleton.user.setEmail(user.getEmail());
+                    Singleton.client.setEmail(client.getEmail());
 
-                    addUserLogged(user.getEmail(), user.getPassword());
+                    addClientLogged(client.getEmail(), client.getPassword());
                     view.loadActivity(MenuActivity.class);
                 }else {
                     view.showToast("Usuário ou senha inválidos");
@@ -45,14 +45,20 @@ public class LoginPresenter implements LoginContract.UserInteraction{
                 view.hideLogging();
                 view.showToast("Não foi possível logar");
             }
+
+            @Override
+            public void notFoundError() {
+                view.hideLogging();
+                view.showToast("Cliente não encontrado!");
+            }
         });
     }
 
-    private void addUserLogged(String userEmail, String userPassword) {
+    private void addClientLogged(String clientEmail, String clientPassword) {
         SharedPreferences.Editor editor = Singleton.sharedPreferences.edit();
-        editor.putBoolean("userLogged", true);
-        editor.putString("userEmail", userEmail);
-        editor.putString("userPassword", userPassword);
+        editor.putBoolean("clientLogged", true);
+        editor.putString("clientEmail", clientEmail);
+        editor.putString("clientPassword", clientPassword);
         editor.apply();
     }
 }

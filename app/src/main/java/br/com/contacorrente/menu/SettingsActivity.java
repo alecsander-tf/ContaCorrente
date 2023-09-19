@@ -32,11 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void bind() {
         aSwitch = findViewById(R.id.switchDarkMode);
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
-            aSwitch.setChecked(true);
-        }else {
-            aSwitch.setChecked(false);
-        }
+        aSwitch.setChecked(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES);
     }
 
     private void bindListener() {

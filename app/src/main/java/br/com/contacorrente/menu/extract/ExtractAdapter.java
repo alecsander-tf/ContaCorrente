@@ -10,9 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import br.com.contacorrente.R;
@@ -43,21 +40,21 @@ public class ExtractAdapter extends RecyclerView.Adapter<ExtractViewHolder> {
     public void onBindViewHolder(@NotNull ExtractViewHolder holder, int position) {
         Transference transference = transferenceList.get(position);
 
-        if (transference.getUserRelated() != null){
+        if (transference.getClientRelated() != null){
 
             // Se o valor saiu conta, o campo de texto fica em vermelho
-            if (transference.getId_from().equals(Singleton.user.getId())){
+            if (transference.getClientIdSender().equals(Singleton.client.getClientId())){
 
                 String transferenceValue = "- " + Utility.currencyFormat(transference.getValue());
 
-                holder.tvUserAmount.setTextColor(Color.parseColor("#FF0000"));
-                holder.tvUserAmount.setText(transferenceValue);
+                holder.tvClientAmount.setTextColor(Color.parseColor("#FF0000"));
+                holder.tvClientAmount.setText(transferenceValue);
             }else {
-                holder.tvUserAmount.setTextColor(Color.parseColor("#369B5E"));
-                holder.tvUserAmount.setText(Utility.currencyFormat(transference.getValue()));
+                holder.tvClientAmount.setTextColor(Color.parseColor("#369B5E"));
+                holder.tvClientAmount.setText(Utility.currencyFormat(transference.getValue()));
             }
             holder.tvTransferenceDate.setText(transference.getData());
-            holder.tvUserTransference.setText(transference.getUserRelated().getName());
+            holder.tvClientTransference.setText(transference.getClientRelated().getName());
         }
     }
 

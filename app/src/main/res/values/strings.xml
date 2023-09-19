@@ -7,7 +7,7 @@
     <string name="Close">Close</string>
     <string name="Open">Open</string>
 
-    <string name="user">Usuário</string>
+    <string name="client">Usuário</string>
     <string name="password">Senha</string>
     <string name="email">Email</string>
     <string name="account_access">ACESSO A CONTA</string>
@@ -16,17 +16,17 @@
     <string name="value_money">Valor do saldo</string>
     <string name="transfer">Transferir</string>
     <string name="logout">Sair</string>
-    <string name="user_name">Nome do usuário</string>
+    <string name="client_name">Nome do usuário</string>
     <string name="para_quem_voc_quer_enviar">Para quem você quer enviar?</string>
     <string name="quanto_voc_deseja_enviar">Quanto você deseja enviar?</string>
     <string name="value">Valor</string>
     <string name="next">Continuar</string>
     <string name="date">Data</string>
     <string name="to">Para</string>
-    <string name="user_to_email">Email do usuário de destino</string>
+    <string name="client_to_email">Email do usuário de destino</string>
     <string name="total_value">Valor total</string>
-    <string name="user_email">Email do usuário</string>
-    <string name="user_to_name">Nome do usuário de destino</string>
+    <string name="client_email">Email do usuário</string>
+    <string name="client_to_name">Nome do usuário de destino</string>
     <string name="my_account">Minha Conta</string>
     <string name="sign_in">Entrando…</string>
     <string name="settings">Configurações</string>

@@ -7,14 +7,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class Transference implements Parcelable {
 
-    @SerializedName("id")
-    private String id;
+    @SerializedName("transferenceId")
+    private Long transferenceId;
 
-    @SerializedName("id_from")
-    private String id_from;
+    @SerializedName("clientIdSender")
+    private Long clientIdSender;
 
-    @SerializedName("id_to")
-    private String id_to;
+    @SerializedName("clientIdReceiver")
+    private Long clientIdReceiver;
 
     @SerializedName("value")
     private String value;
@@ -22,16 +22,16 @@ public class Transference implements Parcelable {
     @SerializedName("data")
     private String data;
 
-    private User userRelated;
+    private Client clientRelated;
 
-    public Transference(){
+    public Transference() {
 
     }
 
     protected Transference(Parcel in) {
-        id = in.readString();
-        id_from = in.readString();
-        id_to = in.readString();
+        transferenceId = in.readLong();
+        clientIdSender = in.readLong();
+        clientIdReceiver = in.readLong();
         value = in.readString();
         data = in.readString();
     }
@@ -48,36 +48,36 @@ public class Transference implements Parcelable {
         }
     };
 
-    public User getUserRelated() {
-        return userRelated;
+    public Client getClientRelated() {
+        return clientRelated;
     }
 
-    public void setUserRelated(User userRelated) {
-        this.userRelated = userRelated;
+    public void setClientRelated(Client clientRelated) {
+        this.clientRelated = clientRelated;
     }
 
-    public String getId() {
-        return id;
+    public Long getTransferenceId() {
+        return transferenceId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setTransferenceId(Long transferenceId) {
+        this.transferenceId = transferenceId;
     }
 
-    public String getId_from() {
-        return id_from;
+    public Long getClientIdSender() {
+        return clientIdSender;
     }
 
-    public void setId_from(String id_from) {
-        this.id_from = id_from;
+    public void setClientIdSender(Long clientIdSender) {
+        this.clientIdSender = clientIdSender;
     }
 
-    public String getId_to() {
-        return id_to;
+    public Long getClientIdReceiver() {
+        return clientIdReceiver;
     }
 
-    public void setId_to(String id_to) {
-        this.id_to = id_to;
+    public void setClientIdReceiver(Long clientIdReceiver) {
+        this.clientIdReceiver = clientIdReceiver;
     }
 
     public String getValue() {
@@ -103,9 +103,9 @@ public class Transference implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(id_from);
-        dest.writeString(id_to);
+        dest.writeLong(transferenceId);
+        dest.writeLong(clientIdSender);
+        dest.writeLong(clientIdReceiver);
         dest.writeString(value);
         dest.writeString(data);
     }

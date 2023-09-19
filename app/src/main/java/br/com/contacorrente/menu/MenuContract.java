@@ -7,7 +7,7 @@ public interface MenuContract {
         void showError(String msg);
     }
 
-    interface UserInteractions{
-        void loadUserAccount(String email);
+    interface ClientInteractions{
+        void loadClientAccount(String email);
     }
 }

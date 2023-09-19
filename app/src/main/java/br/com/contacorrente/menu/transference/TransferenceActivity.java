@@ -5,33 +5,32 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.button.MaterialButton;
 
 import java.text.NumberFormat;
+import java.util.Locale;
 
 import br.com.contacorrente.R;
-import br.com.contacorrente.Singleton;
-import br.com.contacorrente.model.Transference;
 
 public class TransferenceActivity extends AppCompatActivity implements TransferenceContract.View {
 
     final Context context = this;
 
-    private TransferenceContract.UserInteraction presenter;
+    private TransferenceContract.ClientInteraction presenter;
 
     private Toolbar toolbar;
 
-    private EditText etUserTo;
+    private EditText etClientTo;
     private EditText etValue;
     private Button btnSend;
 
@@ -45,8 +44,8 @@ public class TransferenceActivity extends AppCompatActivity implements Transfere
     @Override
     public void onResume() {
         super.onResume();
-        etUserTo.setFocusable(true);
-        etUserTo.getText().clear();
+        etClientTo.setFocusable(true);
+        etClientTo.getText().clear();
         etValue.getText().clear();
     }
 
@@ -66,19 +65,9 @@ public class TransferenceActivity extends AppCompatActivity implements Transfere
     }
 
     private void bindDialogListener() {
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
 
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.concludeTransference(etUserTo.getText().toString(), Singleton.user.getId(), etValue.getText().toString());
-            }
-        });
+        btnConfirm.setOnClickListener(v -> presenter.concludeTransference());
     }
 
     private void bindDialog() {
@@ -95,26 +84,26 @@ public class TransferenceActivity extends AppCompatActivity implements Transfere
 
     private void bindToolbar() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private void bind() {
         toolbar = findViewById(R.id.toolbar);
         btnSend = findViewById(R.id.btnTransference_Send);
-        etUserTo = findViewById(R.id.etTransference_UserTo);
+        etClientTo = findViewById(R.id.etTransference_ClientTo);
         etValue = findViewById(R.id.etTransference_Value);
     }
 
-    private void bindListener(){
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    private void bindListener() {
+        btnSend.setOnClickListener(v -> {
 
-                String replaceable = String.format("[%s,.\\s]", NumberFormat.getCurrencyInstance().getCurrency().getSymbol());
+            String replaceable = String.format("[%s,.\\s]", NumberFormat.getCurrencyInstance().getCurrency().getSymbol());
 
-                String value = etValue.getText().toString().replaceAll(replaceable, "");
-                presenter.sendTransference(etUserTo.getText().toString(), value);
-            }
+            String value = etValue.getText().toString().replaceAll(replaceable, "");
+            presenter.sendTransference(etClientTo.getText().toString(), value);
         });
 
         etValue.addTextChangedListener(new TextWatcher() {
@@ -134,7 +123,7 @@ public class TransferenceActivity extends AppCompatActivity implements Transfere
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().equals(current)){
+                if (!s.toString().equals(current)) {
                     etValue.removeTextChangedListener(this);
 
                     String replaceable = String.format("[%s,.\\s]", NumberFormat.getCurrencyInstance().getCurrency().getSymbol());
@@ -143,8 +132,8 @@ public class TransferenceActivity extends AppCompatActivity implements Transfere
                     String formatted;
 
                     if (!cleanString.equals("")) {
-                         formatted = "R$ " + String.format("%,d", Long.parseLong(cleanString));
-                    }else {
+                        formatted = "R$ " + String.format(Locale.getDefault(), "%,d", Long.parseLong(cleanString));
+                    } else {
                         formatted = "";
                     }
 
@@ -165,9 +154,9 @@ public class TransferenceActivity extends AppCompatActivity implements Transfere
     }
 
     @Override
-    public void next(String userRelatedEmail, String value) {
+    public void next(String clientRelatedEmail, String value) {
 
-        txtConfirmDialogEmail.setText(userRelatedEmail);
+        txtConfirmDialogEmail.setText(clientRelatedEmail);
         txtConfirmDialogValue.setText(String.format("R$ %s", value));
 
         dialog.show();

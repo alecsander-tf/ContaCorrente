@@ -1,47 +1,58 @@
 package br.com.contacorrente.menu.fragment.myAccount;
 
 import br.com.contacorrente.Singleton;
-import br.com.contacorrente.model.User;
-import br.com.contacorrente.network.UserService;
-import br.com.contacorrente.network.UserServiceImpl;
+import br.com.contacorrente.model.Client;
+import br.com.contacorrente.network.ClientService;
+import br.com.contacorrente.network.ClientServiceImpl;
 
-public class MyAccountPresenter implements MyAccountContract.UserInteractions {
+public class MyAccountPresenter implements MyAccountContract.ClientInteractions {
 
-    private MyAccountContract.View view;
-    private UserService mRetrofit;
+    private final MyAccountContract.View view;
+    private final ClientService mRetrofit;
 
     MyAccountPresenter(MyAccountContract.View view) {
         this.view = view;
-        mRetrofit = new UserServiceImpl();
+        mRetrofit = new ClientServiceImpl();
     }
 
     @Override
-    public void loadUserAccount(String email) {
-        mRetrofit.getUserByEmail(email, new UserService.UserServiceCallback<User>() {
+    public void loadClientAccount(String email) {
+        mRetrofit.getClientByEmail(email, new ClientService.ClientServiceCallback<>() {
             @Override
-            public void onLoaded(User user) {
-                Singleton.user = user;
-                view.showAccountDetails(user.getName(), user.getBalance());
+            public void onLoaded(Client client) {
+                Singleton.client = client;
+                view.showAccountDetails(client.getName(), client.getBalance());
             }
+
             @Override
             public void onError() {
                 view.showToast("Usuário não carregado");
+            }
+
+            @Override
+            public void notFoundError() {
+                view.showToast("Cliente não encontrado!");
             }
         });
     }
 
     @Override
     public void loadNewBalance() {
-        mRetrofit.getUserByEmail(Singleton.user.getEmail(), new UserService.UserServiceCallback<User>() {
+        mRetrofit.getClientByEmail(Singleton.client.getEmail(), new ClientService.ClientServiceCallback<>() {
             @Override
-            public void onLoaded(User user) {
-                Singleton.user.setBalance(user.getBalance());
+            public void onLoaded(Client client) {
+                Singleton.client = client;
                 view.showNewBalance();
             }
 
             @Override
             public void onError() {
                 view.showToast("Não foi possível atualizar seu saldo!");
+            }
+
+            @Override
+            public void notFoundError() {
+                view.showToast("Cliente não encontrado!");
             }
         });
     }

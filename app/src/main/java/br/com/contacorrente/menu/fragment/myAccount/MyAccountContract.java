@@ -4,12 +4,12 @@ public interface MyAccountContract {
 
     interface View{
         void showToast(String msg);
-        void showAccountDetails(String userName, String userBalance);
+        void showAccountDetails(String clientName, String clientBalance);
         void showNewBalance();
     }
 
-    interface UserInteractions{
-        void loadUserAccount(String email);
+    interface ClientInteractions{
+        void loadClientAccount(String email);
         void loadNewBalance();
     }
 

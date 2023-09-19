@@ -7,36 +7,38 @@ import java.util.Date;
 import br.com.contacorrente.Singleton;
 import br.com.contacorrente.model.Status;
 import br.com.contacorrente.model.Transference;
-import br.com.contacorrente.model.User;
-import br.com.contacorrente.network.UserService;
-import br.com.contacorrente.network.UserServiceImpl;
+import br.com.contacorrente.model.Client;
+import br.com.contacorrente.network.ClientService;
+import br.com.contacorrente.network.ClientServiceImpl;
+import br.com.contacorrente.network.exception.NotFoundException;
+import timber.log.Timber;
 
-public class TransferencePresenter implements TransferenceContract.UserInteraction {
+public class TransferencePresenter implements TransferenceContract.ClientInteraction {
 
     private TransferenceContract.View view;
-    private UserServiceImpl mApi;
+    private ClientServiceImpl mApi;
 
     private Transference transference;
 
     TransferencePresenter(TransferenceContract.View view) {
-        mApi = new UserServiceImpl();
+        mApi = new ClientServiceImpl();
         this.view = view;
         this.transference = new Transference();
     }
 
     @Override
-    public void sendTransference(String userToEmail, final String value) {
+    public void sendTransference(String clientToEmail, final String value) {
 
-        if (userToEmail.equals(Singleton.user.getEmail())){
+        if (clientToEmail.equals(Singleton.client.getEmail())) {
             view.showToast("Não é possível transferir valores para a própria conta!");
             return;
         }
 
-        mApi.getUserByEmail(userToEmail, new UserService.UserServiceCallback<User>() {
+        mApi.getClientByEmail(clientToEmail, new ClientService.ClientServiceCallback<>() {
             @Override
-            public void onLoaded(User user) {
+            public void onLoaded(Client client) {
 
-                if (user == null){
+                if (client == null) {
                     view.showToast("Email de destino não encontrado...");
                     return;
                 }
@@ -45,38 +47,51 @@ public class TransferencePresenter implements TransferenceContract.UserInteracti
                 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
                 transference.setData(df.format(c));
-                transference.setUserRelated(user);
+                transference.setClientRelated(client);
                 transference.setValue(value);
-                transference.setId_from(Singleton.user.getId());
-                transference.setId_to(user.getId());
+                transference.setClientIdSender(Singleton.client.getClientId());
+                transference.setClientIdReceiver(client.getClientId());
 
-                view.next(user.getEmail(), value);
+                view.next(client.getEmail(), value);
             }
 
             @Override
             public void onError() {
                 view.showToast("Erro ao efetuar transferência");
             }
+
+            @Override
+            public void notFoundError() {
+                Timber.e(new NotFoundException("Cliente não encontrado!"));
+                view.showToast("Cliente não encontrado!");
+            }
         });
     }
 
     @Override
-    public void concludeTransference(String idTo, String idFrom, String value) {
+    public void concludeTransference() {
 
-        mApi.transfer(Integer.parseInt(idFrom), Integer.parseInt(idTo), Double.parseDouble(value),
-                new UserService.UserServiceCallback<Status>() {
+        mApi.transfer(transference.getClientIdSender(), transference.getClientIdReceiver(), Double.parseDouble(transference.getValue()),
+                new ClientService.ClientServiceCallback<>() {
                     @Override
                     public void onLoaded(Status status) {
-                        if (status.isStatus()){
+                        if (status.isStatus()) {
                             view.finishTransference();
-                        }else {
+                        } else {
                             view.showToast(status.getError());
                         }
                     }
+
                     @Override
                     public void onError() {
                         view.showToast("Erro ao concluir transferência");
                     }
-                });
+
+                    @Override
+                    public void notFoundError() {
+                        view.showToast("Cliente não encontrado!");
+                    }
+                }
+        );
     }
 }

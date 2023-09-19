@@ -2,14 +2,17 @@ package br.com.contacorrente.menu.transference;
 
 public interface TransferenceContract {
 
-    interface View{
+    interface View {
         void showToast(String msg);
-        void next(String userRelatedEmail, String value);
+
+        void next(String clientRelatedEmail, String value);
+
         void finishTransference();
     }
 
-    interface UserInteraction{
-        void sendTransference(String userToEmail, String value);
-        void concludeTransference(String idTo, String idFrom, String value);
+    interface ClientInteraction {
+        void sendTransference(String clientToEmail, String value);
+
+        void concludeTransference();
     }
 }

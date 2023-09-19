@@ -13,10 +13,10 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvUserName"
+            android:id="@+id/tvClientName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/user_name"
+            android:text="@string/client_name"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="24sp"
             android:textStyle="bold"/>
@@ -31,7 +31,7 @@
             android:textSize="18sp"/>
 
         <TextView
-            android:id="@+id/tvUserBalance"
+            android:id="@+id/tvClientBalance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"

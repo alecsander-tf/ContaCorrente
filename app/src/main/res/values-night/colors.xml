@@ -7,6 +7,6 @@
     <color name="colorTotalBlack">#000000</color>
     <color name="colorBackground">#212121</color>
     <color name="colorText">#FFFFFF</color>
-    <color name="colorStatusBar">#0E0E0E</color>
+    <color name="loginColorStatusBar">#212121</color>
     <color name="colorLightBlack">#aeaeae</color>
 </resources>

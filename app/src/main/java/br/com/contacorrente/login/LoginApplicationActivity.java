@@ -22,7 +22,7 @@ public class LoginApplicationActivity extends AppCompatActivity implements Login
 
     private long mLastClickTime = 0;
 
-    private LoginContract.UserInteraction presenter;
+    private LoginContract.ClientInteraction presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,17 +47,14 @@ public class LoginApplicationActivity extends AppCompatActivity implements Login
 
     private void bindListener() {
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnLogin.setOnClickListener(v -> {
 
-                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
-                    return;
-                }
-                mLastClickTime = SystemClock.elapsedRealtime();
-
-                presenter.login(etEmail.getText().toString(), etPassword.getText().toString());
+            if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
+                return;
             }
+            mLastClickTime = SystemClock.elapsedRealtime();
+
+            presenter.login(etEmail.getText().toString(), etPassword.getText().toString());
         });
     }
 

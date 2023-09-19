@@ -9,7 +9,7 @@ public interface LoginContract {
         void showToast(String msg);
     }
 
-    interface UserInteraction{
+    interface ClientInteraction{
         void login(String email, String password);
     }
 

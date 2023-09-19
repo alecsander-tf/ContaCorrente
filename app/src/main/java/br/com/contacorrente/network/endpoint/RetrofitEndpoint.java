@@ -4,37 +4,40 @@ import java.util.List;
 
 import br.com.contacorrente.model.Status;
 import br.com.contacorrente.model.Transference;
-import br.com.contacorrente.model.User;
+import br.com.contacorrente.model.Client;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 public interface RetrofitEndpoint {
 
-    @Multipart
-    @POST("./get-user")
-    Call<User> getUserById(@Part MultipartBody.Part id_user);
+    @Headers("Content-Type: application/json")
+    @GET("./client/get-client")
+    Call<Client> getClientById(@Query("id") Long id);
+
+    @Headers("Content-Type: application/json")
+    @GET("./client/get-client")
+    Call<Client> getClientByEmail(@Query("email") String email);
 
     @Multipart
-    @POST("./get-user")
-    Call<User> getUserByEmail(@Part MultipartBody.Part email);
-
-    @Multipart
-    @POST("./check-login")
+    @POST("./client/check-login")
     Call<Status> checkLogin(@Part MultipartBody.Part email, @Part MultipartBody.Part password);
 
-    @Multipart
-    @POST("./get-bank-statement")
-    Call<List<Transference>> getBankStatement(@Part MultipartBody.Part id_user);
+    @GET("./transference/get-bank-statement")
+    Call<List<Transference>> getBankStatement(@Query("clientId") Long clientId);
 
     @Multipart
-    @POST("./transfer")
+    @POST("./transference/transfer")
     Call<Status> transfer(
-            @Part MultipartBody.Part id_user_from,
-            @Part MultipartBody.Part id_user_to,
-            @Part MultipartBody.Part value);
+            @Part MultipartBody.Part clientIdSender,
+            @Part MultipartBody.Part clientIdReceiver,
+            @Part MultipartBody.Part value
+    );
 
 
 }

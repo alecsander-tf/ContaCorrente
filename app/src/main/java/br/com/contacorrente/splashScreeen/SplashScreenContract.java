@@ -9,6 +9,6 @@ public interface SplashScreenContract {
     }
 
     interface Presenter{
-        void verifyUserLogged(Context context);
+        void verifyClientLogged(Context context);
     }
 }

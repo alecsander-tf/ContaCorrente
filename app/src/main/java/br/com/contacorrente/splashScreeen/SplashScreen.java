@@ -22,7 +22,7 @@ public class SplashScreen extends AppCompatActivity implements SplashScreenContr
 
         presenter = new SplashScreenPresenter(this);
 
-        presenter.verifyUserLogged(this);
+        presenter.verifyClientLogged(this);
     }
 
     @Override
@@ -30,12 +30,12 @@ public class SplashScreen extends AppCompatActivity implements SplashScreenContr
 
         verifyDarkMode();
 
-        startActivity(new Intent(this, LoginActivity.class));
+        startActivity(new Intent(this, args));
         finish();
     }
 
     private void verifyDarkMode() {
-        if (Singleton.sharedPreferences.contains("userLogged")){
+        if (Singleton.sharedPreferences.contains("clientLogged")){
             if (Singleton.sharedPreferences.getBoolean("darkMode", false)){
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }else {

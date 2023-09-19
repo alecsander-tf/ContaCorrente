@@ -9,14 +9,14 @@ import br.com.contacorrente.R;
 
 class ExtractViewHolder extends RecyclerView.ViewHolder {
 
-    TextView tvUserTransference;
-    TextView tvUserAmount;
+    TextView tvClientTransference;
+    TextView tvClientAmount;
     TextView tvTransferenceDate;
 
     ExtractViewHolder(View itemView) {
         super(itemView);
         tvTransferenceDate = itemView.findViewById(R.id.tvTransferenceDate);
-        tvUserAmount = itemView.findViewById(R.id.tvUserAmount);
-        tvUserTransference = itemView.findViewById(R.id.tvUserTransference);
+        tvClientAmount = itemView.findViewById(R.id.tvClientAmount);
+        tvClientTransference = itemView.findViewById(R.id.tvClientTransference);
     }
 }

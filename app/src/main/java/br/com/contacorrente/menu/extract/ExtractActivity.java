@@ -45,7 +45,7 @@ public class ExtractActivity extends AppCompatActivity {
         bindListener();
 
         presenter = new ExtractPresenter(view);
-        presenter.loadUserExtract();
+        presenter.loadClientExtract();
     }
 
     private void bindToolbar() {

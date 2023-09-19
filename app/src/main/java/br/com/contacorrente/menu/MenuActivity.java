@@ -1,21 +1,21 @@
 package br.com.contacorrente.menu;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
 import com.mikhaellopez.circularimageview.CircularImageView;
@@ -38,8 +38,6 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     private TextView tvMenuDrawer_Email;
     private CircularImageView circularImageView;
 
-    private MenuContract.UserInteractions presenter;
-
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
@@ -53,14 +51,14 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
         loadNavigation();
         bindListener();
 
-        presenter = new MenuPresenter(this);
-        presenter.loadUserAccount(Singleton.user.getEmail());
+        MenuContract.ClientInteractions presenter = new MenuPresenter(this);
+        presenter.loadClientAccount(Singleton.client.getEmail());
 
         //Primeira Fragment que será carregada
         changeFragment(MyAccountFragment.newInstance(), "Minha Conta", 0);
     }
 
-    private void bind(){
+    private void bind() {
 
         drawerLayout = findViewById(R.id.my_drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
@@ -87,61 +85,51 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        if (toolbar.getNavigationIcon() != null){
-            toolbar.getNavigationIcon().setColorFilter(getResources().getColor(R.color.colorText), PorterDuff.Mode.SRC_ATOP);
+        if (toolbar.getNavigationIcon() != null) {
+            toolbar.getNavigationIcon().setColorFilter(ResourcesCompat.getColor(
+                    getResources(), R.color.colorText, null), PorterDuff.Mode.SRC_ATOP
+            );
         }
     }
 
     private void bindListener() {
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
 
-                switch(id){
-                    case R.id.menu:
-                        activity = null;
-                        break;
-                    case R.id.extract:
-                        activity = ExtractActivity.class;
-                        //changeActivity(ExtractActivity.class);
-                        break;
-                    case R.id.transference:
-                        activity = TransferenceActivity.class;
-                        //changeActivity(TransferenceActivity.class);
-                        break;
-                    case R.id.settings:
-                        activity = SettingsActivity.class;
-                        //changeActivity(SettingsActivity.class);
-                        break;
-                    case R.id.logout:
-                        logout();
-                        return true;
-                    default:
-                        return true;
+            switch (id) {
+                case R.id.menu -> activity = null;
+                case R.id.extract -> activity = ExtractActivity.class;
+                case R.id.transference -> activity = TransferenceActivity.class;
+                case R.id.settings -> activity = SettingsActivity.class;
+                case R.id.logout -> {
+                    logout();
+                    return true;
                 }
-
-                drawerLayout.closeDrawers();
-
-                return true;
+                default -> {
+                    return true;
+                }
             }
+
+            drawerLayout.closeDrawers();
+
+            return true;
         });
 
         drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
 
             @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
                 //Called when a drawer's position changes.
-                if (slideOffset == 0 && activity != null){
+                if (slideOffset == 0 && activity != null) {
                     changeActivity(activity);
                 }
             }
 
             @Override
-            public void onDrawerOpened(View drawerView) {
+            public void onDrawerOpened(@NonNull View drawerView) {
                 //Called when a drawer has settled in a completely open state.
                 //The drawer is interactive at this point.
                 // If you have 2 drawers (left and right) you can distinguish
@@ -150,7 +138,7 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
             }
 
             @Override
-            public void onDrawerClosed(View drawerView) {
+            public void onDrawerClosed(@NonNull View drawerView) {
                 // Called when a drawer has settled in a completely closed state.
             }
 
@@ -177,13 +165,13 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     public void showAccountDetails() {
 
         Picasso.get()
-                .load(Singleton.user.getProfile())
+                .load(Singleton.client.getProfile())
                 .fit().centerCrop()
                 .placeholder(R.drawable.ic_insert_photo)
                 .into(circularImageView);
 
-        tvMenuDrawer_Email.setText(Singleton.user.getEmail());
-        tvMenuDrawer_Name.setText(Singleton.user.getName());
+        tvMenuDrawer_Email.setText(Singleton.client.getEmail());
+        tvMenuDrawer_Name.setText(Singleton.client.getName());
     }
 
     @Override
@@ -191,7 +179,7 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
-    public void changeFragment(Fragment fragment, String fragmentTitle, int menuDrawerItemIndex){
+    public void changeFragment(Fragment fragment, String fragmentTitle, int menuDrawerItemIndex) {
         setTitle(fragmentTitle);
         navigationView.getMenu().getItem(menuDrawerItemIndex).setChecked(true);
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, fragment).commit();

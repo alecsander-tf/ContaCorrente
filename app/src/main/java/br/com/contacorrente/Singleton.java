@@ -2,11 +2,9 @@ package br.com.contacorrente;
 
 import android.content.SharedPreferences;
 
-import androidx.appcompat.app.AppCompatDelegate;
-
-import br.com.contacorrente.factory.UserFactory;
-import br.com.contacorrente.factory.UserLoginFactory;
-import br.com.contacorrente.model.User;
+import br.com.contacorrente.factory.ClientFactory;
+import br.com.contacorrente.factory.ClientLoginFactory;
+import br.com.contacorrente.model.Client;
 
 public class Singleton {
 
@@ -14,7 +12,7 @@ public class Singleton {
 
     public static SharedPreferences sharedPreferences;
 
-    public static User user;
+    public static Client client;
 
     private Singleton(){
 
@@ -22,7 +20,7 @@ public class Singleton {
 
     public static void getInstance() {
         if (singleInstance == null){
-            user = UserFactory.getUser(new UserLoginFactory("", ""));
+            client = ClientFactory.getClient(new ClientLoginFactory("", ""));
             singleInstance = new Singleton();
         }
     }
@@ -36,11 +34,11 @@ public class Singleton {
     }
 
     public static void logout() {
-        if (user != null){
-            if (user.getId() != null){
+        if (client != null){
+            if (client.getClientId() != null){
                 sharedPreferences.edit().clear().apply();
                 singleInstance = null;
-                user = null;
+                client = null;
             }
         }
     }

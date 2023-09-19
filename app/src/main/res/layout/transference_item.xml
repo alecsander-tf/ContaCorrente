@@ -8,17 +8,17 @@
     android:paddingBottom="16dp">
 
     <TextView
-        android:id="@+id/tvUserTransference"
+        android:id="@+id/tvClientTransference"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/user_to_name"
+        android:text="@string/client_to_name"
         android:textColor="@color/colorText"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvUserAmount"
+        android:id="@+id/tvClientAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/value"
@@ -36,7 +36,7 @@
         android:textColor="#7D7D7D"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvUserTransference" />
+        app:layout_constraintTop_toBottomOf="@+id/tvClientTransference" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

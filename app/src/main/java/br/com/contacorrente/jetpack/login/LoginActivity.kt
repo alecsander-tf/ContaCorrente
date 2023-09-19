@@ -1,6 +1,7 @@
 package br.com.contacorrente.jetpack.login
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -36,8 +37,10 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import br.com.contacorrente.R
 import br.com.contacorrente.jetpack.ui.ApplicationMainTheme
+import timber.log.Timber
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,11 +66,19 @@ class LoginActivity : ComponentActivity() {
                                 .padding(16.dp)
                         )
 
-                        UserTextField()
+                        ClientTextField()
                         PasswordTextField()
 
                         Button(
-                            onClick = { /*TODO*/ },
+                            onClick = {
+                                Log.w("Alecs", "Tem permissão?")
+                                Log.w(
+                                    "Alecs", ContextCompat.checkSelfPermission(
+                                        this@LoginActivity,
+                                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                    ).toString()
+                                )
+                            },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(16.dp)
@@ -86,13 +97,13 @@ class LoginActivity : ComponentActivity() {
 }
 
 @Composable
-fun UserTextField() {
+fun ClientTextField() {
     var textValue by remember { mutableStateOf(TextFieldValue()) }
 
     TextFieldWithIcon(
         textValue = textValue,
         icon = Icons.Filled.Person,
-        placeholder = stringResource(id = R.string.user),
+        placeholder = stringResource(id = R.string.client),
         onValueChange = {
             textValue = it
         }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,14 +9,14 @@
     <include
         android:id="@+id/layoutLogging"
         layout="@layout/logging"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:visibility="gone"/>
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutLogin"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/layoutLogin">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/imageView"
@@ -28,33 +27,32 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" >
-        </ImageView>
+            tools:ignore="ContentDescription"></ImageView>
 
         <ScrollView
             android:id="@+id/layoutContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintBottom_toTopOf="@+id/imageView2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/imageView2">
+            app:layout_constraintTop_toBottomOf="@+id/imageView">
 
             <LinearLayout
-                android:background="#FFFFFF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#FFFFFF"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#212121"
-                    android:gravity="center"
                     android:fontFamily="sans-serif-black"
+                    android:gravity="center"
                     android:text="@string/account_access"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="#212121"
                     android:textSize="24sp"
                     android:typeface="monospace"
                     app:layout_constraintBottom_toTopOf="@+id/txtLogin_Email"
@@ -66,43 +64,43 @@
                     android:id="@+id/txtLogin_Email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#212121"
-                    android:textColorHint="#aeaeae"
-                    app:backgroundTint="#212121"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="32dp"
-                    android:drawableStart="@drawable/ic_user"
+                    android:drawableStart="@drawable/ic_client"
                     android:drawablePadding="20dp"
                     android:hint="@string/email"
+                    android:importantForAutofill="no"
                     android:inputType="textEmailAddress"
                     android:padding="20dp"
+                    android:textColor="#212121"
+                    android:textColorHint="#aeaeae"
+                    app:backgroundTint="#212121"
                     app:layout_constraintBottom_toTopOf="@+id/txtLogin_Password"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView"
-                    android:importantForAutofill="no" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
 
                 <EditText
                     android:id="@+id/txtLogin_Password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#212121"
-                    android:textColorHint="#aeaeae"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="16dp"
-                    app:backgroundTint="#212121"
                     android:layout_marginEnd="32dp"
                     android:drawableStart="@drawable/ic_padlock"
                     android:drawablePadding="20dp"
                     android:hint="@string/password"
+                    android:importantForAutofill="no"
                     android:inputType="textPassword"
                     android:padding="20dp"
+                    android:textColor="#212121"
+                    android:textColorHint="#aeaeae"
+                    app:backgroundTint="#212121"
                     app:layout_constraintBottom_toTopOf="@+id/btnLogin_Login"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtLogin_Email"
-                    android:importantForAutofill="no" />
+                    app:layout_constraintTop_toBottomOf="@+id/txtLogin_Email" />
 
                 <Button
                     android:id="@+id/btnLogin_Login"
@@ -110,10 +108,12 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="32dp"
                     android:background="@drawable/shape_button"
+                    android:fontFamily="sans-serif"
                     android:text="@string/login"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
+                    app:backgroundTint="#212121"
                     app:layout_constraintBottom_toTopOf="@+id/imageView2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

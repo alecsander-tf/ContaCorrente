@@ -5,10 +5,10 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class User implements Parcelable {
+public class Client implements Parcelable {
 
-    @SerializedName("id")
-    private String id;
+    @SerializedName("clientId")
+    private Long clientId;
 
     @SerializedName("name")
     private String name;
@@ -25,21 +25,21 @@ public class User implements Parcelable {
     @SerializedName("balance")
     private String balance;
 
-    public User(String email, String password) {
+    public Client(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
-    public User(String id, String name, String email, String profile, String balance) {
-        this.id = id;
+    public Client(Long id, String name, String email, String profile, String balance) {
+        this.clientId = id;
         this.name = name;
         this.email = email;
         this.profile = profile;
         this.balance = balance;
     }
 
-    protected User(Parcel in) {
-        id = in.readString();
+    protected Client(Parcel in) {
+        clientId = in.readLong();
         name = in.readString();
         email = in.readString();
         profile = in.readString();
@@ -47,15 +47,15 @@ public class User implements Parcelable {
         balance = in.readString();
     }
 
-    public static final Creator<User> CREATOR = new Creator<User>() {
+    public static final Creator<Client> CREATOR = new Creator<>() {
         @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
+        public Client createFromParcel(Parcel in) {
+            return new Client(in);
         }
 
         @Override
-        public User[] newArray(int size) {
-            return new User[size];
+        public Client[] newArray(int size) {
+            return new Client[size];
         }
     };
 
@@ -71,12 +71,12 @@ public class User implements Parcelable {
         return password;
     }
 
-    public String getId() {
-        return id;
+    public Long getClientId() {
+        return clientId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
     }
 
     public String getEmail() {
@@ -102,7 +102,7 @@ public class User implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
+        dest.writeLong(clientId);
         dest.writeString(name);
         dest.writeString(email);
         dest.writeString(profile);

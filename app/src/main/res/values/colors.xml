@@ -2,11 +2,11 @@
 <resources>
     <color name="colorAccent">#212121</color>
     <color name="colorShadow">#E5E5E5</color>
-    <color name="colorRed">#FF0000</color>
+    <color name="colorRed">#fffafafa</color>
     <color name="colorGreen">#369B5E</color>
     <color name="colorTotalBlack">#000000</color>
     <color name="colorBackground">#FFFFFF</color>
     <color name="colorText">#212121</color>
-    <color name="colorStatusBar">#aeaeae</color>
+    <color name="loginColorStatusBar">#212121</color>
     <color name="colorLightBlack">#313131</color>
 </resources>
