@@ -64,7 +64,7 @@ public class ExtractPresenter implements ExtractContract.UserInteractions {
 
         for (final Transference t : transferenceList) {
             String idToBeLoaded = verifyIdToBeLoaded(t);
-                mApi.getUserById(Integer.parseInt(idToBeLoaded), new UserService.UserServiceCallback<User>() {
+                mApi.getUserById(Long.parseLong(idToBeLoaded), new UserService.UserServiceCallback<User>() {
                     @Override
                     public void onLoaded(User user) {
                         t.setUserRelated(user);

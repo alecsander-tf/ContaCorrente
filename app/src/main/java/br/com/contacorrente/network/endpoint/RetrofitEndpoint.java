@@ -7,19 +7,19 @@ import br.com.contacorrente.model.Transference;
 import br.com.contacorrente.model.User;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 public interface RetrofitEndpoint {
 
-    @Multipart
-    @POST("./get-user")
-    Call<User> getUserById(@Part MultipartBody.Part id_user);
+    @GET("./get-user")
+    Call<User> getUserById(@Query("id") Long id);
 
-    @Multipart
-    @POST("./get-user")
-    Call<User> getUserByEmail(@Part MultipartBody.Part email);
+    @GET("./get-user")
+    Call<User> getUserByEmail(@Query("email") String email);
 
     @Multipart
     @POST("./check-login")

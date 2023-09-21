@@ -4,10 +4,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".ContaCorrenteApplication"
         android:icon="@mipmap/ic_launcher_money_bag"
         android:label="@string/app_name"
-        android:networkSecurityConfig="@xml/network_security_config"
-        android:theme="@style/NoActionBar">
+        android:theme="@style/NoActionBar"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".login.LoginApplicationActivity"
             android:screenOrientation="fullSensor"
@@ -20,7 +21,7 @@
             android:name=".menu.extract.ExtractActivity"
             android:label="Extrato"
             android:parentActivityName=".menu.MenuActivity"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".menu.transference.TransferenceActivity"
             android:label="Transferência"
@@ -28,20 +29,20 @@
             android:screenOrientation="fullSensor" />
         <activity
             android:name=".splashScreeen.SplashScreen"
-            android:screenOrientation="fullSensor"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".menu.SettingsActivity"
             android:label="Configurações"
             android:parentActivityName=".menu.MenuActivity" />
         <activity
-            android:name=".jetpack.login.LoginActivity"
-            android:label="Login" />
+            android:name=".jetpack.login.ui.LoginActivity"
+            android:exported="true"
+            android:label="Login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
