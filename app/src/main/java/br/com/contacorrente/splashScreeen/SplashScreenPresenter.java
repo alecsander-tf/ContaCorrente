@@ -1,16 +1,15 @@
 package br.com.contacorrente.splashScreeen;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 
 import br.com.contacorrente.Singleton;
-import br.com.contacorrente.jetpack.login.ui.LoginActivity;
-import br.com.contacorrente.login.LoginApplicationActivity;
+import br.com.contacorrente.jetpack.login.LoginActivity;
 import br.com.contacorrente.menu.MenuActivity;
 import br.com.contacorrente.model.Status;
 import br.com.contacorrente.network.UserService;
 import br.com.contacorrente.network.UserServiceImpl;
-
-import static android.content.Context.MODE_PRIVATE;
 
 class SplashScreenPresenter implements SplashScreenContract.Presenter {
 

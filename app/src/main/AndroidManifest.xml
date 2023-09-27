@@ -35,9 +35,8 @@
             android:label="Configurações"
             android:parentActivityName=".menu.MenuActivity" />
         <activity
-            android:name=".jetpack.login.ui.LoginActivity"
-            android:exported="true"
-            android:label="Login">
+            android:name=".jetpack.login.LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
