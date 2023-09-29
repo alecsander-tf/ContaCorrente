@@ -104,8 +104,8 @@ public class MonthExtractFragment extends Fragment implements ExtractContract.Vi
             cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
             cal.getTime();
 
-            Date date1 = Utility.convertDate(t.getData());
-            t.setData(Utility.parseDate(date1));
+            Date date1 = Utility.INSTANCE.convertDate(t.getData());
+            t.setData(Utility.INSTANCE.parseDate(date1));
             if (cal.getTime().compareTo(date1) < 0){
                 newTransference.add(t);
             }

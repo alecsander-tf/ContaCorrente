@@ -1,6 +1,6 @@
 package br.com.contacorrente.base
 
-import br.com.contacorrente.model.StatusKt
+import br.com.contacorrente.model.ErrorStatus
 import com.google.gson.Gson
 
 open class CustomState<out T> {
@@ -28,9 +28,9 @@ inline fun <reified T> CustomState<T>.doIfError(callback: (error: String) -> Uni
     }
 }
 
-inline fun <reified T> CustomState<T>.doIfApiError(callback: (error: StatusKt) -> Unit) {
+inline fun <reified T> CustomState<T>.doIfApiError(callback: (error: ErrorStatus) -> Unit) {
     if (this is CustomState.ApiError) {
-        callback(Gson().fromJson(errorStatusJson, StatusKt::class.java))
+        callback(Gson().fromJson(errorStatusJson, ErrorStatus::class.java))
     }
 }
 

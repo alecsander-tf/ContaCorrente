@@ -72,33 +72,13 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
     }
 
     private void bindListener() {
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                presenter.loadNewBalance();
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> presenter.loadNewBalance());
 
-        btnExtract.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                parentActivityContract.changeActivity(ExtractActivity.class);
-            }
-        });
+        btnExtract.setOnClickListener(v -> parentActivityContract.changeActivity(ExtractActivity.class));
 
-        btnTransference.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                parentActivityContract.changeActivity(TransferenceActivity.class);
-            }
-        });
+        btnTransference.setOnClickListener(v -> parentActivityContract.changeActivity(TransferenceActivity.class));
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                parentActivityContract.logout();
-            }
-        });
+        btnLogout.setOnClickListener(v -> parentActivityContract.logout());
     }
 
     @Override
@@ -108,13 +88,13 @@ public class MyAccountFragment extends Fragment implements MyAccountContract.Vie
 
     @Override
     public void showAccountDetails(String userName, String userBalance) {
-        tvUserBalance.setText(Utility.currencyFormat(userBalance));
+        tvUserBalance.setText(Utility.INSTANCE.currencyFormat(userBalance));
         tvUserName.setText(userName);
     }
 
     @Override
     public void showNewBalance() {
-        tvUserBalance.setText(Utility.currencyFormat(Singleton.user.getBalance()));
+        tvUserBalance.setText(Utility.INSTANCE.currencyFormat(Singleton.user.getBalance()));
         mSwipeRefreshLayout.setRefreshing(false);
     }
 }

@@ -96,38 +96,32 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     }
 
     private void bindListener() {
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
 
-                switch(id){
-                    case R.id.menu:
-                        activity = null;
-                        break;
-                    case R.id.extract:
-                        activity = ExtractActivity.class;
-                        //changeActivity(ExtractActivity.class);
-                        break;
-                    case R.id.transference:
-                        activity = TransferenceActivity.class;
-                        //changeActivity(TransferenceActivity.class);
-                        break;
-                    case R.id.settings:
-                        activity = SettingsActivity.class;
-                        //changeActivity(SettingsActivity.class);
-                        break;
-                    case R.id.logout:
-                        logout();
-                        return true;
-                    default:
-                        return true;
+            switch (id) {
+                case R.id.menu -> activity = null;
+                case R.id.extract -> activity = ExtractActivity.class;
+
+                //changeActivity(ExtractActivity.class);
+                case R.id.transference -> activity = TransferenceActivity.class;
+
+                //changeActivity(TransferenceActivity.class);
+                case R.id.settings -> activity = SettingsActivity.class;
+
+                //changeActivity(SettingsActivity.class);
+                case R.id.logout -> {
+                    logout();
+                    return true;
                 }
-
-                drawerLayout.closeDrawers();
-
-                return true;
+                default -> {
+                    return true;
+                }
             }
+
+            drawerLayout.closeDrawers();
+
+            return true;
         });
 
         drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {

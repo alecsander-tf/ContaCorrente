@@ -30,7 +30,7 @@ public class LoginPresenter implements LoginContract.UserInteraction{
         api.checkLogin(user.getEmail(), user.getPassword(), new UserService.UserServiceCallback<Status>() {
             @Override
             public void onLoaded(Status status) {
-                if (status.isStatus()){
+                if (status.getStatus()){
                     Singleton.user.setEmail(user.getEmail());
 
                     addUserLogged(user.getEmail(), user.getPassword());

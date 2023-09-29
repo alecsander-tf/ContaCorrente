@@ -5,7 +5,8 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 
 import br.com.contacorrente.Singleton;
-import br.com.contacorrente.jetpack.login.LoginActivity;
+
+import br.com.contacorrente.login.LoginApplicationActivity;
 import br.com.contacorrente.menu.MenuActivity;
 import br.com.contacorrente.model.Status;
 import br.com.contacorrente.network.UserService;
@@ -30,24 +31,24 @@ class SplashScreenPresenter implements SplashScreenContract.Presenter {
             final String userEmail = Singleton.sharedPreferences.getString("userEmail", "");
             final String userPassword = Singleton.sharedPreferences.getString("userPassword", "");
 
-            api.checkLogin(userEmail, userPassword, new UserService.UserServiceCallback<Status>() {
+            api.checkLogin(userEmail, userPassword, new UserService.UserServiceCallback<>() {
                 @Override
                 public void onLoaded(Status status) {
-                    if (status.isStatus()) {
+                    if (status.getStatus()) {
                         Singleton.user.setEmail(userEmail);
                         view.loadActivity(MenuActivity.class);
                     } else {
-                        view.loadActivity(LoginActivity.class);
+                        view.loadActivity(LoginApplicationActivity.class);
                     }
                 }
 
                 @Override
                 public void onError() {
-                    view.loadActivity(LoginActivity.class);
+                    view.loadActivity(LoginApplicationActivity.class);
                 }
             });
         } else {
-            view.loadActivity(LoginActivity.class);
+            view.loadActivity(LoginApplicationActivity.class);
         }
     }
 }

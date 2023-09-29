@@ -1,6 +1,5 @@
 package br.com.contacorrente.jetpack.login.ui
 
-import android.widget.Toast
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -25,7 +24,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -33,20 +31,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.contacorrente.R
 import org.koin.androidx.compose.koinViewModel
+import timber.log.Timber
 
 @Composable
-fun LoginScreen(loginViewModel: LoginViewModel = koinViewModel()) {
-
-    val context = LocalContext.current
+fun LoginScreen(
+    loginViewModel: LoginViewModel = koinViewModel(),
+    onNavigateToMenu: (userEmail: String) -> Unit
+) {
 
     val loginUiState by loginViewModel.uiState.collectAsState()
 
-    LaunchedEffect(Unit) {
-        loginViewModel
-            .toastMessage
-            .collect { message ->
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-            }
+    if (loginUiState.isLoggedIn) {
+        LaunchedEffect(Unit) {
+            onNavigateToMenu(loginViewModel.userEmail)
+        }
     }
 
     Surface(
@@ -57,22 +55,17 @@ fun LoginScreen(loginViewModel: LoginViewModel = koinViewModel()) {
             email = loginViewModel.userEmail,
             password = loginViewModel.userPassword,
             onUserEmailChanged = {
-                loginViewModel.updateEmail(it)
+                loginViewModel.userEmail = it
             },
             onUserPasswordChanged = {
-                loginViewModel.updatePassword(it)
+                loginViewModel.userPassword = it
             },
             loginButtonClick = {
                 loginViewModel.login()
             },
             loginUiState
         )
-
-
-
     }
-
-
 }
 
 @Composable

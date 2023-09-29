@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
                 MultipartBody.Part.createFormData("value", Double.toString(valueTransference));
 
         Call<Status> call = mRetrofit.transfer(id_user_from, id_user_to, value);
-        call.enqueue(new Callback<Status>() {
+        call.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<Status> call, @NotNull Response<Status> response) {
                 Status status = response.body();

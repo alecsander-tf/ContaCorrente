@@ -2,7 +2,7 @@ package br.com.contacorrente.model
 
 import com.google.gson.annotations.SerializedName
 
-data class StatusKt(
+data class ErrorStatus(
     @SerializedName("timestamp") val timestamp: String,
     @SerializedName("status") val status: String,
     @SerializedName("error") val error: String,
