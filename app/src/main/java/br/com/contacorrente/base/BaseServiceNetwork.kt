@@ -36,7 +36,7 @@ abstract class BaseServiceNetwork : CoroutineScope {
 
         CoroutineScope(coroutineContext).launch {
 
-            channel.trySend(CustomState.Loading)
+            channel.send(CustomState.Loading)
 
             this@customEnqueue.enqueue(object : Callback<T> {
                 override fun onResponse(call: Call<T>, response: Response<T>) {

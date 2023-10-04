@@ -1,6 +1,42 @@
 package br.com.contacorrente.jetpack.routes
 
-sealed class AppDestination(val route: String) {
-    data object Login: AppDestination("login")
-    data object Menu: AppDestination("menu")
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AttachMoney
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Login
+import androidx.compose.material.icons.filled.Wallet
+import androidx.compose.material.icons.outlined.AttachMoney
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Login
+import androidx.compose.material.icons.outlined.Wallet
+import androidx.compose.ui.graphics.vector.ImageVector
+
+sealed class AppDestination(
+    val route: String,
+    val activeIcon: ImageVector,
+    val inactiveIcon: ImageVector
+) {
+    data object Login : AppDestination(
+        route = "login",
+        activeIcon = Icons.Filled.Login,
+        inactiveIcon = Icons.Outlined.Login,
+    )
+
+    data object Home : AppDestination(
+        route = "home",
+        activeIcon = Icons.Filled.Home,
+        inactiveIcon = Icons.Outlined.Home
+    )
+
+    data object Extract : AppDestination(
+        route = "extract",
+        activeIcon = Icons.Filled.Wallet,
+        inactiveIcon = Icons.Outlined.Wallet
+    )
+
+    data object Transference : AppDestination(
+        route = "transference",
+        activeIcon = Icons.Filled.AttachMoney,
+        inactiveIcon = Icons.Outlined.AttachMoney
+    )
 }

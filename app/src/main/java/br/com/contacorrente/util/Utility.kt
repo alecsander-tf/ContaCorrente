@@ -32,8 +32,7 @@ object Utility {
         }
     }
 
-    fun currencyFormat(value: String?): String {
-        if (value.isNullOrEmpty()) return ""
+    fun currencyFormat(value: String = "0"): String {
         return NumberFormat.getCurrencyInstance().apply {
             maximumFractionDigits = 2
             currency = Currency.getInstance("BRL")

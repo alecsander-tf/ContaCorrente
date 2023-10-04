@@ -36,7 +36,8 @@ class LoginViewModel(private val loginUseCase: ILoginUseCase) : BaseViewModel() 
 
                 it.doIfLoading {
                     _uiState.value = _uiState.value.copy(
-                        isLoading = true
+                        isLoading = true,
+                        isLoggedIn = false
                     )
                 }
 

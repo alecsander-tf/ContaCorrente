@@ -1,4 +1,4 @@
-package br.com.contacorrente.jetpack.menu.usecase
+package br.com.contacorrente.jetpack.menu.home.usecase
 
 import br.com.contacorrente.base.CustomState
 import br.com.contacorrente.infrastructure.repository.INetworkRepository

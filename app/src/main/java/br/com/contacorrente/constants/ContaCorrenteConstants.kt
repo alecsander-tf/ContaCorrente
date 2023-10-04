@@ -11,4 +11,8 @@ object ContaCorrenteConstants {
         const val HTTP_CLIENT = "HTTP_CLIENT"
         const val GSON_CONVERTER = "GSON_CONVERTER"
     }
+
+    object IntentExtras {
+        const val USER_EMAIL = "USER_EMAIL"
+    }
 }
