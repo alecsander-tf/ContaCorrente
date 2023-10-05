@@ -1,22 +1,19 @@
 package br.com.contacorrente.jetpack
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import br.com.contacorrente.jetpack.account.ui.AccountScreen
 import br.com.contacorrente.jetpack.menu.extract.ui.ExtractScreen
-import br.com.contacorrente.jetpack.menu.home.ui.HomeLayout
 import br.com.contacorrente.jetpack.menu.home.ui.HomeScreen
-import br.com.contacorrente.jetpack.routes.AppDestination
 import br.com.contacorrente.jetpack.menu.transference.ui.TransferenceScreen
+import br.com.contacorrente.jetpack.routes.AppDestination
+import br.com.contacorrente.jetpack.settings.ui.SettingsScreen
 
 @Composable
 fun MenuNavHost(
@@ -26,7 +23,12 @@ fun MenuNavHost(
 
     Scaffold(
         topBar = {
-            CustomTopAppBar("Olá")
+            CustomTopAppBar(
+                toolbarTitle = "Olá",
+                onIconClick = {
+                    navController.navigate(it)
+                }
+            )
         },
         content = { innerPadding ->
             NavHost(
@@ -36,7 +38,6 @@ fun MenuNavHost(
             ) {
                 composable(route = AppDestination.Home.route) {
                     HomeScreen(
-                        navController = navController,
                         userEmail = userEmail
                     )
                 }
@@ -45,6 +46,12 @@ fun MenuNavHost(
                 }
                 composable(route = AppDestination.Transference.route) {
                     TransferenceScreen()
+                }
+                composable(route = AppDestination.Settings.route) {
+                    SettingsScreen()
+                }
+                composable(route = AppDestination.Account.route) {
+                    AccountScreen()
                 }
             }
         },

@@ -56,6 +56,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import br.com.contacorrente.jetpack.routes.AppDestination
@@ -65,13 +66,21 @@ import br.com.contacorrente.jetpack.ui.ContaCorrenteMainTheme
 @Composable
 fun PreviewCustomToolbar() {
     ContaCorrenteMainTheme {
-        CustomTopAppBar("Olá Bárbara,")
+        CustomTopAppBar(
+            toolbarTitle = "Olá Bárbara",
+            onIconClick = {
+
+            }
+        )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomTopAppBar(toolbarTitle: String) {
+fun CustomTopAppBar(
+    toolbarTitle: String,
+    onIconClick: (route: String) -> Unit
+) {
 
     TopAppBar(
         title = {
@@ -81,15 +90,21 @@ fun CustomTopAppBar(toolbarTitle: String) {
             )
         },
         actions = {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(
+                onClick = {
+                    onIconClick(AppDestination.Account.route)
+                }) {
                 Icon(
-                    imageVector = Icons.Outlined.Face,
+                    imageVector = AppDestination.Account.inactiveIcon,
                     contentDescription = ""
                 )
             }
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(
+                onClick = {
+                    onIconClick(AppDestination.Settings.route)
+                }) {
                 Icon(
-                    imageVector = Icons.Outlined.Settings,
+                    imageVector = AppDestination.Settings.inactiveIcon,
                     contentDescription = ""
                 )
             }
@@ -105,7 +120,10 @@ fun CustomBottomAppBar(navController: NavHostController) {
         AppDestination.Extract,
         AppDestination.Transference
     )
-    AnimatedNavigationBar(screens = items)
+    AnimatedNavigationBar(
+        screens = items,
+        navController = navController
+    )
     /*SimpleNavigationBar(
         listOf(
             AppDestination.Home,
@@ -157,14 +175,16 @@ fun PreviewAnimatedNavigationBar() {
                 AppDestination.Home,
                 AppDestination.Extract,
                 AppDestination.Transference
-            )
+            ),
+            rememberNavController()
         )
     }
 }
 
 @Composable
 fun AnimatedNavigationBar(
-    screens: List<AppDestination>
+    screens: List<AppDestination>,
+    navController: NavHostController
 ) {
     var selectedScreen by remember { mutableIntStateOf(0) }
     Box(
@@ -197,6 +217,7 @@ fun AnimatedNavigationBar(
                             indication = null
                         ) {
                             selectedScreen = screens.indexOf(screen)
+                            navController.safeNavigation(screen.route)
                         },
                         screen = screen,
                         isSelected = isSelected
@@ -205,39 +226,6 @@ fun AnimatedNavigationBar(
             }
         }
     }
-}
-
-@Composable
-fun RowScope.CustomNavigationBarItem(
-    selected: Boolean = false,
-    route: String,
-    icon: ImageVector,
-    navHostController: NavHostController
-) {
-    NavigationBarItem(
-        selected = selected,
-        onClick = {
-            navHostController.navigate(route) {
-                // Pop up to the start destination of the graph to
-                // avoid building up a large stack of destinations
-                // on the back stack as users select items
-                popUpTo(navHostController.graph.findStartDestination().id) {
-                    saveState = true
-                }
-                // Avoid multiple copies of the same destination when
-                // reselecting the same item
-                launchSingleTop = true
-                // Restore state when reselecting a previously selected item
-                restoreState = true
-            }
-        },
-        icon = {
-            Icon(
-                imageVector = icon,
-                contentDescription = null
-            )
-        }
-    )
 }
 
 @Composable
@@ -258,7 +246,7 @@ private fun BottomNavItem(
         targetValue = if (isSelected) 1f else .5f, label = ""
     )
     val animatedIconSize by animateDpAsState(
-        targetValue = if (isSelected) 26.dp else 20.dp,
+        targetValue = 24.dp,
         animationSpec = spring(
             stiffness = Spring.StiffnessLow,
             dampingRatio = Spring.DampingRatioMediumBouncy
@@ -320,12 +308,47 @@ fun FlipIcon(
     ) {
         Icon(
             rememberVectorPainter(
-                image = if (animationRotation > 90f) activeIcon else inactiveIcon
+                image = if (animationRotation > 180f) activeIcon else inactiveIcon
             ),
             contentDescription = null,
-            tint = if (isActive) {
-                MaterialTheme.colorScheme.onSecondaryContainer
-            } else MaterialTheme.colorScheme.onSurfaceVariant
+            tint = MaterialTheme.colorScheme.onSecondaryContainer
         )
     }
+}
+
+private fun NavHostController.safeNavigation(route: String) {
+    navigate(route = route) {
+        // Pop up to the start destination of the graph to
+        // avoid building up a large stack of destinations
+        // on the back stack as users select items
+        popUpTo(graph.findStartDestination().id) {
+            saveState = true
+        }
+        // Avoid multiple copies of the same destination when
+        // reselecting the same item
+        launchSingleTop = true
+        // Restore state when reselecting a previously selected item
+        restoreState = true
+    }
+}
+
+@Composable
+fun RowScope.CustomNavigationBarItem(
+    selected: Boolean = false,
+    route: String,
+    icon: ImageVector,
+    navHostController: NavHostController
+) {
+    NavigationBarItem(
+        selected = selected,
+        onClick = {
+            navHostController.safeNavigation(route)
+        },
+        icon = {
+            Icon(
+                imageVector = icon,
+                contentDescription = null
+            )
+        }
+    )
 }

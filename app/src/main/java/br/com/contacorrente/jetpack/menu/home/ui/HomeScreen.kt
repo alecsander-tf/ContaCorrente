@@ -50,8 +50,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun HomeScreen(
     userEmail: String,
-    homeViewModel: HomeViewModel = koinViewModel(),
-    navController: NavHostController
+    homeViewModel: HomeViewModel = koinViewModel()
 ) {
 
     val homeUiState by homeViewModel.uiState.collectAsState()
@@ -61,20 +60,11 @@ fun HomeScreen(
             homeViewModel.loadInformationFromSwipe(userEmail)
         })
 
-    /*Scaffold(
-        modifier = Modifier.background(Color.Black),
-        topBar = {
-            CustomTopAppBar("Olá ${homeUiState.userName},")
-        },
-        content = { innerPadding ->*/
-            HomeLayout(homeUiState, pullRefreshState)
-        /*}
-    )*/
+    HomeLayout(homeUiState, pullRefreshState)
 
     LaunchedEffect(Unit) {
         homeViewModel.loadInformation(userEmail)
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -107,7 +97,7 @@ fun CustomCard(
                     vertical = 8.dp
                 ),
                 text = mainText,
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.SemiBold
             )
             Text(
                 modifier = Modifier.padding(

@@ -2,12 +2,16 @@ package br.com.contacorrente.jetpack.routes
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AttachMoney
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Login
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Wallet
 import androidx.compose.material.icons.outlined.AttachMoney
+import androidx.compose.material.icons.outlined.Face
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Login
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Wallet
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -38,5 +42,17 @@ sealed class AppDestination(
         route = "transference",
         activeIcon = Icons.Filled.AttachMoney,
         inactiveIcon = Icons.Outlined.AttachMoney
+    )
+
+    data object Settings : AppDestination(
+        route = "settings",
+        activeIcon = Icons.Filled.Settings,
+        inactiveIcon = Icons.Outlined.Settings
+    )
+
+    data object Account : AppDestination(
+        route = "account",
+        activeIcon = Icons.Filled.Face,
+        inactiveIcon = Icons.Outlined.Face
     )
 }

@@ -1,6 +1,5 @@
 package br.com.contacorrente.di
 
-import br.com.contacorrente.jetpack.menu.usecase.*
 import br.com.contacorrente.jetpack.login.usecase.*
 import br.com.contacorrente.jetpack.menu.home.usecase.ILoadUserInformationUseCase
 import br.com.contacorrente.jetpack.menu.home.usecase.LoadUserInformationUseCase

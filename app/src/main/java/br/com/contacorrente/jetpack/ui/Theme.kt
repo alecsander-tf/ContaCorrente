@@ -74,7 +74,7 @@ private val darkColors = darkColorScheme(
 
 @Composable
 fun ContaCorrenteMainTheme(
-  useDarkTheme: Boolean = !isSystemInDarkTheme(),
+  useDarkTheme: Boolean = isSystemInDarkTheme(),
   content: @Composable () -> Unit
 ) {
   val colors = if (!useDarkTheme) {

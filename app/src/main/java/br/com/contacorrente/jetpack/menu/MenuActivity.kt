@@ -16,6 +16,7 @@ class MenuActivity : ComponentActivity() {
                 intent.getStringExtra(ContaCorrenteConstants.IntentExtras.USER_EMAIL)?.let {
                     MenuNavHost(it)
                 }
+                MenuNavHost("")
             }
         }
     }
