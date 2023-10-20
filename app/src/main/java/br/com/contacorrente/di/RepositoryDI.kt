@@ -13,4 +13,8 @@ val repositoryDI = module {
     singleOf(::PreferencesRepositoryImpl) {
         bind<IPreferencesRepository>()
     }
+
+    singleOf(::ThemeRepositoryImpl) {
+        bind<IThemeRepository>()
+    }
 }

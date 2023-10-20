@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent
 
 @SuppressLint("CustomSplashScreen")
-class ContaCorrenteSplashScreen : ComponentActivity() {
+class ContaCorrenteSplashScreenActivity : ComponentActivity() {
 
     private var keepSplashOnScreen = true
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
@@ -45,6 +45,7 @@ class ContaCorrenteSplashScreen : ComponentActivity() {
         }
 
         startActivity(Intent(this, LoginActivity::class.java))
+        finish()
     }
 
     private fun shouldUseDarkTheme(theme: String): AppThemeOptions = when (theme) {

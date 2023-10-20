@@ -17,6 +17,7 @@ class LoginActivity : ComponentActivity() {
             ContaCorrenteMainTheme {
                 LoginScreen { userEmail ->
                     startMenuActivity(userEmail)
+                    finish()
                 }
             }
         }

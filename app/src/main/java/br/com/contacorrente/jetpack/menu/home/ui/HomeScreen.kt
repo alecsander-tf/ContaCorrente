@@ -2,11 +2,9 @@
 
 package br.com.contacorrente.jetpack.menu.home.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -25,7 +23,6 @@ import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,16 +30,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import br.com.contacorrente.jetpack.CustomBottomAppBar
 import br.com.contacorrente.jetpack.CustomTopAppBar
-import br.com.contacorrente.jetpack.ui.ContaCorrenteMainTheme
+import br.com.contacorrente.jetpack.ui.PreviewContaCorrenteMainTheme
 import br.com.contacorrente.util.Utility
 import org.koin.androidx.compose.koinViewModel
 
@@ -50,7 +44,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun HomeScreen(
     userEmail: String,
-    homeViewModel: HomeViewModel = koinViewModel()
+    homeViewModel: HomeViewModel = koinViewModel(),
+    onIconClick: (String) -> Unit
 ) {
 
     val homeUiState by homeViewModel.uiState.collectAsState()
@@ -60,7 +55,7 @@ fun HomeScreen(
             homeViewModel.loadInformationFromSwipe(userEmail)
         })
 
-    HomeLayout(homeUiState, pullRefreshState)
+    HomeLayout(homeUiState, pullRefreshState, onIconClick)
 
     LaunchedEffect(Unit) {
         homeViewModel.loadInformation(userEmail)
@@ -81,7 +76,6 @@ fun CustomCard(
         modifier = modifier,
         onClick = onClick,
         content = {
-
             Icon(
                 modifier = Modifier.padding(
                     start = 16.dp,
@@ -115,7 +109,7 @@ fun CustomCard(
 @Preview
 @Composable
 fun CardLayoutPreview() {
-    ContaCorrenteMainTheme {
+    PreviewContaCorrenteMainTheme {
         CardLayout()
     }
 }
@@ -136,7 +130,7 @@ fun CardLayout(modifier: Modifier = Modifier) {
             descriptionText = "Para alguma carteira, banco ou celular"
         )
 
-        Spacer(modifier = Modifier.padding(10.dp))
+        Spacer(modifier = Modifier.padding(8.dp))
 
         CustomCard(
             modifier = Modifier.weight(1f),
@@ -152,7 +146,8 @@ fun CardLayout(modifier: Modifier = Modifier) {
 @Composable
 fun HomeLayout(
     homeUiState: HomeUiState,
-    pullRefreshState: PullRefreshState
+    pullRefreshState: PullRefreshState,
+    onIconClick: (String) -> Unit
 ) {
 
     Box(
@@ -163,28 +158,34 @@ fun HomeLayout(
             .verticalScroll(rememberScrollState())
     ) {
 
+        Column {
 
-        Column(
-            modifier = Modifier.padding(horizontal = 16.dp)
-        ) {
-
-            Text(
-                text = Utility.currencyFormat(homeUiState.userBalance),
-                fontSize = 36.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .fillMaxWidth()
+            CustomTopAppBar(
+                toolbarTitle = "Olá ${homeUiState.userName}",
+                onIconClick = onIconClick
             )
 
-            Text(
-                modifier = Modifier.padding(top = 32.dp),
-                text = "Coisas para você fazer...",
-                fontWeight = FontWeight.Medium
-            )
+            Column(
+                modifier = Modifier.padding(horizontal = 16.dp)
+            ) {
+                Text(
+                    text = Utility.currencyFormat(homeUiState.userBalance),
+                    fontSize = 36.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
 
-            CardLayout(
-                modifier = Modifier.padding(vertical = 16.dp)
-            )
+                Text(
+                    modifier = Modifier.padding(top = 32.dp),
+                    text = "Coisas para você fazer...",
+                    fontWeight = FontWeight.Medium
+                )
+
+                CardLayout(
+                    modifier = Modifier.padding(vertical = 16.dp)
+                )
+            }
         }
 
         PullRefreshIndicator(

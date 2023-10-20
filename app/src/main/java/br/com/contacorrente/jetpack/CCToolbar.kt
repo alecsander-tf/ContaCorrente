@@ -6,28 +6,21 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Face
-import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material3.Divider
+import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -38,15 +31,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
@@ -56,16 +45,15 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import br.com.contacorrente.jetpack.routes.AppDestination
-import br.com.contacorrente.jetpack.ui.ContaCorrenteMainTheme
+import br.com.contacorrente.jetpack.ui.PreviewContaCorrenteMainTheme
 
 @Preview
 @Composable
 fun PreviewCustomToolbar() {
-    ContaCorrenteMainTheme {
+    PreviewContaCorrenteMainTheme {
         CustomTopAppBar(
             toolbarTitle = "Olá Bárbara",
             onIconClick = {
@@ -73,6 +61,20 @@ fun PreviewCustomToolbar() {
             }
         )
     }
+}
+
+@Composable
+fun CustomBackTopBar(onClick: () -> Unit) {
+    TopAppBar(title = {},
+        navigationIcon = {
+            IconButton(onClick = onClick) {
+                Icon(
+                    imageVector = Icons.Outlined.ArrowBack,
+                    contentDescription = ""
+                )
+            }
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -125,18 +127,15 @@ fun CustomBottomAppBar(navController: NavHostController) {
         navController = navController
     )
     /*SimpleNavigationBar(
-        listOf(
-            AppDestination.Home,
-            AppDestination.Extract,
-            AppDestination.Transference
-        ), navController
+        screens = items,
+        navController = navController
     )*/
 }
 
 @Preview
 @Composable
 fun PreviewSimpleNavigationBar() {
-    ContaCorrenteMainTheme(useDarkTheme = false) {
+    PreviewContaCorrenteMainTheme {
         SimpleNavigationBar(
             listOf(
                 AppDestination.Home,
@@ -147,29 +146,10 @@ fun PreviewSimpleNavigationBar() {
     }
 }
 
-@Composable
-fun SimpleNavigationBar(items: List<AppDestination>, navController: NavHostController) {
-    NavigationBar {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentDestination = navBackStackEntry?.destination
-
-        items.forEach { screen ->
-            CustomNavigationBarItem(
-                selected = currentDestination?.hierarchy?.any {
-                    it.route == screen.route
-                } == true,
-                route = screen.route,
-                icon = screen.activeIcon,
-                navHostController = navController
-            )
-        }
-    }
-}
-
 @Preview
 @Composable
 fun PreviewAnimatedNavigationBar() {
-    ContaCorrenteMainTheme(useDarkTheme = false) {
+    PreviewContaCorrenteMainTheme {
         AnimatedNavigationBar(
             listOf(
                 AppDestination.Home,
@@ -186,7 +166,11 @@ fun AnimatedNavigationBar(
     screens: List<AppDestination>,
     navController: NavHostController
 ) {
-    var selectedScreen by remember { mutableIntStateOf(0) }
+
+    var isSelected: Boolean
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
     Box(
         Modifier
             .shadow(
@@ -195,14 +179,15 @@ fun AnimatedNavigationBar(
             .background(color = MaterialTheme.colorScheme.surface)
             .height(64.dp)
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
     ) {
         Row(
             Modifier.fillMaxSize(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            for (screen in screens) {
-                val isSelected = screen == screens[selectedScreen]
+            screens.forEach { screen ->
+                isSelected = currentDestination?.hierarchy?.any {
+                    it.route == screen.route
+                } == true
                 val animatedWeight by animateFloatAsState(
                     targetValue = if (isSelected) 1.5f else 1f, label = ""
                 )
@@ -216,7 +201,6 @@ fun AnimatedNavigationBar(
                             interactionSource = interactionSource,
                             indication = null
                         ) {
-                            selectedScreen = screens.indexOf(screen)
                             navController.safeNavigation(screen.route)
                         },
                         screen = screen,
@@ -238,10 +222,6 @@ private fun BottomNavItem(
         targetValue = if (isSelected) 32.dp else 24.dp,
         label = ""
     )
-    val animatedElevation by animateDpAsState(
-        targetValue = if (isSelected) 15.dp else 0.dp,
-        label = ""
-    )
     val animatedAlpha by animateFloatAsState(
         targetValue = if (isSelected) 1f else .5f, label = ""
     )
@@ -261,10 +241,6 @@ private fun BottomNavItem(
             modifier = Modifier
                 .width(64.dp)
                 .height(animatedHeight)
-                .shadow(
-                    elevation = animatedElevation,
-                    shape = RoundedCornerShape(20.dp)
-                )
                 .background(
                     color = if (isSelected) {
                         MaterialTheme.colorScheme.secondaryContainer
@@ -329,6 +305,25 @@ private fun NavHostController.safeNavigation(route: String) {
         launchSingleTop = true
         // Restore state when reselecting a previously selected item
         restoreState = true
+    }
+}
+
+@Composable
+fun SimpleNavigationBar(screens: List<AppDestination>, navController: NavHostController) {
+    NavigationBar {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentDestination = navBackStackEntry?.destination
+
+        screens.forEach { screen ->
+            CustomNavigationBarItem(
+                selected = currentDestination?.hierarchy?.any {
+                    it.route == screen.route
+                } == true,
+                route = screen.route,
+                icon = screen.activeIcon,
+                navHostController = navController
+            )
+        }
     }
 }
 

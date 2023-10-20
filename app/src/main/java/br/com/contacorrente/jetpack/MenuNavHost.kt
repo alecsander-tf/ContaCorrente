@@ -3,10 +3,12 @@ package br.com.contacorrente.jetpack
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import br.com.contacorrente.jetpack.account.ui.AccountScreen
 import br.com.contacorrente.jetpack.menu.extract.ui.ExtractScreen
@@ -21,14 +23,15 @@ fun MenuNavHost(
     navController: NavHostController = rememberNavController()
 ) {
 
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+
     Scaffold(
         topBar = {
-            CustomTopAppBar(
-                toolbarTitle = "Olá",
-                onIconClick = {
-                    navController.navigate(it)
+            if (navBackStackEntry?.destination?.route == AppDestination.Settings.route) {
+                CustomBackTopBar {
+                    navController.popBackStack()
                 }
-            )
+            }
         },
         content = { innerPadding ->
             NavHost(
@@ -39,7 +42,9 @@ fun MenuNavHost(
                 composable(route = AppDestination.Home.route) {
                     HomeScreen(
                         userEmail = userEmail
-                    )
+                    ) {
+                        navController.navigate(it)
+                    }
                 }
                 composable(route = AppDestination.Extract.route) {
                     ExtractScreen()
@@ -56,7 +61,9 @@ fun MenuNavHost(
             }
         },
         bottomBar = {
-            CustomBottomAppBar(navController = navController)
+            if (navBackStackEntry?.destination?.route != AppDestination.Settings.route) {
+                CustomBottomAppBar(navController = navController)
+            }
         }
     )
 }

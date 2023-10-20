@@ -1,4 +1,5 @@
 package br.com.contacorrente.jetpack.settings.ui
 
-class SettingsUiState {
-}
+data class SettingsUiState(
+    val theme: String = ""
+)

@@ -23,7 +23,12 @@ class HomeViewModel(
         _uiState.value = _uiState.value.copy(
             isRefreshing = true
         )
-        loadInformation(userEmail)
+        //loadInformation(userEmail)
+        _uiState.value = _uiState.value.copy(
+            isLoading = false,
+            userBalance = "3000",
+            isRefreshing = false
+        )
     }
     fun loadInformation(userEmail: String) {
         launch {

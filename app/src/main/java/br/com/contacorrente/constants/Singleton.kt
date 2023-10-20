@@ -1,4 +1,5 @@
 package br.com.contacorrente.constants
 
-class Singleton {
+object Singleton {
+    var AppTheme = AppThemeOptions.SYSTEM_DEFAULT
 }

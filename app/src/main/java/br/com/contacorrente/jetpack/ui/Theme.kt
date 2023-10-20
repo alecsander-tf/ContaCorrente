@@ -2,10 +2,12 @@ package br.com.contacorrente.jetpack.ui
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-
+import br.com.contacorrente.constants.AppThemeOptions
+import br.com.contacorrente.constants.Singleton
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val lightColors = lightColorScheme(
     primary = md_theme_light_primary,
@@ -74,18 +76,30 @@ private val darkColors = darkColorScheme(
 
 @Composable
 fun ContaCorrenteMainTheme(
-  useDarkTheme: Boolean = isSystemInDarkTheme(),
-  content: @Composable () -> Unit
+    theme: AppThemeOptions = Singleton.AppTheme,
+    content: @Composable () -> Unit
 ) {
-  val colors = if (!useDarkTheme) {
-    lightColors
-  } else {
-    darkColors
-  }
+    val useDarkTheme = when (theme) {
+        AppThemeOptions.LIGHT -> false
+        AppThemeOptions.DARK -> true
+        AppThemeOptions.SYSTEM_DEFAULT -> isSystemInDarkTheme()
+    }
 
-  MaterialTheme(
-    colorScheme = colors,
-    content = content,
-      typography = appTypography
-  )
+    val systemUiController = rememberSystemUiController()
+
+    val colors = if (useDarkTheme) darkColors else lightColors
+
+    systemUiController.setStatusBarColor(colors.surface, !useDarkTheme)
+    systemUiController.setNavigationBarColor(colors.surface, !useDarkTheme)
+
+    MaterialTheme(
+        colorScheme = colors,
+        content = content,
+        typography = appTypography
+    )
+}
+
+@Composable
+fun PreviewContaCorrenteMainTheme(content: @Composable () -> Unit) {
+    ContaCorrenteMainTheme(AppThemeOptions.SYSTEM_DEFAULT, content)
 }
