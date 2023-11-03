@@ -1,7 +1,7 @@
 package br.com.contacorrente.constants
 
-enum class AppThemeOptions(val value: String) {
-    LIGHT("light"),
-    DARK("dark"),
-    SYSTEM_DEFAULT("system_default")
+enum class AppThemeOptions(val intValue: Int) {
+    LIGHT(0),
+    DARK(1),
+    SYSTEM_DEFAULT(-1)
 }

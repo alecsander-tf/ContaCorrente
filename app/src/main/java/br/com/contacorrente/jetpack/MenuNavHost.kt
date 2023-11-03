@@ -36,7 +36,7 @@ fun MenuNavHost(
         content = { innerPadding ->
             NavHost(
                 navController = navController,
-                startDestination = AppDestination.Home.route,
+                startDestination = AppDestination.Transference.route,
                 modifier = Modifier.padding(innerPadding)
             ) {
                 composable(route = AppDestination.Home.route) {

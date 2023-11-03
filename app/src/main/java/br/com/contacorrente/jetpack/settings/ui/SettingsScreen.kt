@@ -18,6 +18,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -29,19 +30,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import br.com.contacorrente.R
+import br.com.contacorrente.constants.AppThemeOptions
 import br.com.contacorrente.jetpack.ui.PreviewContaCorrenteMainTheme
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SettingsLayout(
     settingsUiState: SettingsUiState,
-    onConfirmListener: (String) -> Unit
+    onConfirmListener: (AppThemeOptions) -> Unit
 ) {
 
     val openDialog = remember { mutableStateOf(false) }
     if (openDialog.value) {
-        DarkModeDialog(
-            defaultOption = settingsUiState.theme,
+        AppThemeDialog(
+            defaultThemeOption = settingsUiState.theme,
             onDismissRequest = {
                 openDialog.value = false
             },
@@ -83,19 +85,19 @@ fun SettingsOption(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun DarkModeDialog(
-    defaultOption: String,
+fun AppThemeDialog(
+    defaultThemeOption: AppThemeOptions = AppThemeOptions.SYSTEM_DEFAULT,
     onDismissRequest: () -> Unit,
-    onConfirmListener: (selectedOption: String) -> Unit
+    onConfirmListener: (selectedOptionIndex: AppThemeOptions) -> Unit
 ) {
 
     val (selectedOption, setSelected) = remember {
-        mutableStateOf(defaultOption)
+        mutableStateOf(defaultThemeOption)
     }
     val radioOptions = listOf(
-        stringResource(id = R.string.light),
-        stringResource(id = R.string.dark),
-        stringResource(id = R.string.system_default),
+        Pair(AppThemeOptions.LIGHT, stringResource(id = R.string.light)),
+        Pair(AppThemeOptions.DARK, stringResource(id = R.string.dark)),
+        Pair(AppThemeOptions.SYSTEM_DEFAULT, stringResource(id = R.string.system_default)),
     )
 
     Dialog(onDismissRequest = onDismissRequest) {
@@ -139,9 +141,9 @@ fun DarkModeDialog(
 
 @Composable
 fun DarkModeRadioGroup(
-    radioOptions: List<String>,
-    selected: String,
-    setSelected: (selected: String) -> Unit,
+    radioOptions: List<Pair<AppThemeOptions, String>>,
+    selected: AppThemeOptions,
+    setSelected: (selected: AppThemeOptions) -> Unit,
 ) {
     Column {
         radioOptions.forEach { item ->
@@ -149,19 +151,19 @@ fun DarkModeRadioGroup(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        setSelected(item)
+                        setSelected(item.first)
                     }
             ) {
                 RadioButton(
-                    selected = selected == item,
+                    selected = selected == item.first,
                     onClick = {
-                        setSelected(item)
+                        setSelected(item.first)
                     }
                 )
                 Text(
                     modifier = Modifier
                         .align(Alignment.CenterVertically),
-                    text = item
+                    text = item.second
                 )
             }
         }
@@ -172,9 +174,7 @@ fun DarkModeRadioGroup(
 @Composable
 fun Preview() {
     PreviewContaCorrenteMainTheme {
-        DarkModeDialog(stringResource(id = R.string.system_default), onDismissRequest = {}, {
-
-        })
+        AppThemeDialog(onDismissRequest = { /*TODO*/ }, onConfirmListener = {})
     }
 }
 

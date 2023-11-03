@@ -124,7 +124,7 @@ fun LoginLayout(
         ) {
             Text(
                 text = stringResource(id = R.string.login),
-                fontSize = 20.sp
+                fontSize = 16.sp
             )
         }
     }

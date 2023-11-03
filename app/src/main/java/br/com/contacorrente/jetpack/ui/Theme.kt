@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import br.com.contacorrente.constants.AppThemeOptions
 import br.com.contacorrente.constants.Singleton
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -76,7 +77,7 @@ private val darkColors = darkColorScheme(
 
 @Composable
 fun ContaCorrenteMainTheme(
-    theme: AppThemeOptions = Singleton.AppTheme,
+    theme: AppThemeOptions = Singleton.AppTheme.observeAsState().value ?: AppThemeOptions.SYSTEM_DEFAULT,
     content: @Composable () -> Unit
 ) {
     val useDarkTheme = when (theme) {

@@ -28,7 +28,8 @@ import br.com.contacorrente.menu.extract.ExtractActivity;
 import br.com.contacorrente.menu.fragment.myAccount.MyAccountFragment;
 import br.com.contacorrente.menu.transference.TransferenceActivity;
 
-public class MenuActivity extends AppCompatActivity implements MenuContract.View, ParentActivityContract {
+public class
+MenuActivity extends AppCompatActivity implements MenuContract.View, ParentActivityContract {
 
     private Class<?> activity;
 

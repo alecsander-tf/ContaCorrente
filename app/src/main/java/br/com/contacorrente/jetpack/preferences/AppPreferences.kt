@@ -10,4 +10,4 @@ import androidx.datastore.preferences.preferencesDataStore
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "login")
 val LOGGED_USER = booleanPreferencesKey("logged_user")
-val THEME = stringPreferencesKey("theme")
+val THEME = intPreferencesKey("theme")

@@ -9,6 +9,7 @@ import br.com.contacorrente.base.doIfSuccess
 import br.com.contacorrente.constants.AppThemeOptions
 import br.com.contacorrente.constants.Singleton
 import br.com.contacorrente.jetpack.login.LoginActivity
+import br.com.contacorrente.jetpack.menu.MenuActivity
 import br.com.contacorrente.jetpack.settings.usecase.IReadThemeUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,20 +39,14 @@ class ContaCorrenteSplashScreenActivity : ComponentActivity() {
         scope.launch {
             readThemeUseCase.execute().collect {
                 it.doIfSuccess { theme ->
-                    Singleton.AppTheme = shouldUseDarkTheme(theme)
+                    Singleton.AppTheme.postValue(theme)
                     keepSplashOnScreen = false
                 }
             }
         }
 
-        startActivity(Intent(this, LoginActivity::class.java))
+        startActivity(Intent(this, MenuActivity::class.java))
         finish()
-    }
-
-    private fun shouldUseDarkTheme(theme: String): AppThemeOptions = when (theme) {
-        getString(R.string.light) -> AppThemeOptions.LIGHT
-        getString(R.string.dark) -> AppThemeOptions.DARK
-        else -> AppThemeOptions.SYSTEM_DEFAULT
     }
 
 }
