@@ -13,7 +13,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private RetrofitEndpoint mRetrofit;
 
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService{
                 MultipartBody.Part.createFormData("value", Double.toString(valueTransference));
 
         Call<Status> call = mRetrofit.transfer(id_user_from, id_user_to, value);
-        call.enqueue(new Callback<Status>() {
+        call.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<Status> call, @NotNull Response<Status> response) {
                 Status status = response.body();
@@ -84,10 +84,10 @@ public class UserServiceImpl implements UserService{
         MultipartBody.Part passwordAux = MultipartBody.Part.createFormData("password", password);
 
         Call<Status> call = mRetrofit.checkLogin(emailAux, passwordAux);
-        call.enqueue(new Callback<Status>() {
+        call.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<Status> call, @NotNull Response<Status> response) {
-                if (response.code() == 200){
+                if (response.code() == 200) {
                     Status status = response.body();
                     callback.onLoaded(status);
                 }
@@ -101,19 +101,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void getUserById(int userId, final UserServiceCallback<User> callback) {
+    public void getUserById(Long userId, final UserServiceCallback<User> callback) {
 
-        // Cria os dados como form-data, para serem mandados no corpo da requisição e não como parte da URI
-        MultipartBody.Part id_user = MultipartBody.Part.createFormData("id_user", Integer.toString(userId));
+        Call<User> callUser = mRetrofit.getUserById(userId);
 
-
-        Call<User> callUser = mRetrofit.getUserById(id_user);
-
-        try{
+        try {
             callUser.enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(@NotNull Call<User> call, @NotNull Response<User> response) {
-                    if (response.code() == 200){
+                    if (response.code() == 200) {
                         User user = response.body();
                         callback.onLoaded(user);
                     }
@@ -124,7 +120,7 @@ public class UserServiceImpl implements UserService{
                     callback.onError();
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -132,14 +128,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public void getUserByEmail(String userEmail, final UserServiceCallback<User> callback) {
 
-        // Cria os dados como form-data, para serem mandados no corpo da requisição e não como parte da URI
-        MultipartBody.Part email = MultipartBody.Part.createFormData("email", userEmail);
-
-        Call<User> callUser = mRetrofit.getUserByEmail(email);
+        Call<User> callUser = mRetrofit.getUserByEmail(userEmail);
         callUser.enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NotNull Call<User> call, @NotNull Response<User> response) {
-                if (response.code() == 200){
+                if (response.code() == 200) {
                     User user = response.body();
                     callback.onLoaded(user);
                 }

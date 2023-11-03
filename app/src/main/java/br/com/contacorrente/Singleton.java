@@ -2,8 +2,6 @@ package br.com.contacorrente;
 
 import android.content.SharedPreferences;
 
-import androidx.appcompat.app.AppCompatDelegate;
-
 import br.com.contacorrente.factory.UserFactory;
 import br.com.contacorrente.factory.UserLoginFactory;
 import br.com.contacorrente.model.User;

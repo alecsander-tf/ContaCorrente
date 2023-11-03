@@ -1,10 +1,12 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
-    <style name="NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="actionBarTheme">@style/CustomToolbar</item>
-        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/colorStatusBar</item>
+    <style name="ContaCorrenteSplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splashBackground</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splashscreen</item>
+        <item name="postSplashScreenTheme">@style/Theme.AppCompat.DayNight.NoActionBar</item>
     </style>
+
+    <style name="NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar"/>
 
     <style name="CustomToolbar" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="android:background">@color/colorBackground</item>

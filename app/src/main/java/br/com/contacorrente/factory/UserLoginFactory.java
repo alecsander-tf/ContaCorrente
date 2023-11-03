@@ -14,6 +14,6 @@ public class UserLoginFactory implements UserInterfaceFactory{
 
     @Override
     public User createUser() {
-        return new User(email, password);
+        return new User("", "", email, "", password, "");
     }
 }

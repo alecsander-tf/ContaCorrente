@@ -64,15 +64,16 @@ public class TransferencePresenter implements TransferenceContract.UserInteracti
     public void concludeTransference(String idTo, String idFrom, String value) {
 
         mApi.transfer(Integer.parseInt(idFrom), Integer.parseInt(idTo), Double.parseDouble(value),
-                new UserService.UserServiceCallback<Status>() {
+                new UserService.UserServiceCallback<>() {
                     @Override
                     public void onLoaded(Status status) {
-                        if (status.isStatus()){
+                        if (status.getStatus()) {
                             view.finishTransference();
-                        }else {
-                            view.showToast(status.getError());
+                        } else {
+                            view.showToast("Erro ao concluir transferência");
                         }
                     }
+
                     @Override
                     public void onError() {
                         view.showToast("Erro ao concluir transferência");

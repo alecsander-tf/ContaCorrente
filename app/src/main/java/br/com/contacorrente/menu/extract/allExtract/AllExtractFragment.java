@@ -81,8 +81,8 @@ public class AllExtractFragment extends Fragment implements ExtractContract.View
             cal.set(Calendar.ERA, cal.getActualMinimum(Calendar.ERA));
             cal.getTime();
 
-            Date date1 = Utility.convertDate(t.getData());
-            t.setData(Utility.parseDate(date1));
+            Date date1 = Utility.INSTANCE.convertDate(t.getData());
+            t.setData(Utility.INSTANCE.parseDate(date1));
             if (cal.getTime().compareTo(date1) < 0){
                 newTransference.add(t);
             }
