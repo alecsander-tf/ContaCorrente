@@ -15,6 +15,21 @@ class MockedProviderNetwork : IProviderNetwork {
         return flowOf(CustomState.Success(Status(true, "")))
     }
 
+    override fun transfer(
+        from: MultipartBody.Part,
+        to: MultipartBody.Part,
+        value: MultipartBody.Part
+    ): Flow<CustomState<Status>> {
+        return flowOf(
+            CustomState.Success(
+                Status(
+                    true,
+                    ""
+                )
+            )
+        )
+    }
+
     override fun getUser(userEmail: String): Flow<CustomState<User>> {
         return flowOf(
             CustomState.Success(

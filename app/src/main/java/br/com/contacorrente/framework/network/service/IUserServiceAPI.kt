@@ -21,4 +21,12 @@ interface IUserServiceAPI {
 
     @GET("./get-client")
     fun getClient(@Query("email") userEmail: String): Call<User>
+
+    @Multipart
+    @POST("./transfer-by")
+    fun transfer(
+        from: MultipartBody.Part,
+        to: MultipartBody.Part,
+        value: MultipartBody.Part
+    ): Call<Status>
 }

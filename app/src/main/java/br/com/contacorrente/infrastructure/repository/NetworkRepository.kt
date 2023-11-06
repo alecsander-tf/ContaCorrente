@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.map
 interface INetworkRepository {
     fun login(email: String, password: String): Flow<CustomState<Status>>
     fun getUser(userEmail: String): Flow<CustomState<User>>
+    fun transfer(from: String, to: String, value: Double): Flow<CustomState<Status>>
 }
 
 class NetworkRepositoryImpl(
@@ -31,5 +32,9 @@ class NetworkRepositoryImpl(
 
     override fun getUser(userEmail: String): Flow<CustomState<User>> {
         return providerNetwork.getUser(userEmail)
+    }
+
+    override fun transfer(from: String, to: String, value: Double): Flow<CustomState<Status>> {
+        TODO("Not yet implemented")
     }
 }

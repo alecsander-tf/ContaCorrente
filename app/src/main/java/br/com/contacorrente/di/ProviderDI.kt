@@ -10,8 +10,8 @@ import org.koin.dsl.module
 
 val providerDI = module {
     single<IProviderNetwork> {
-        //ProviderNetworkImpl(get(named(ContaCorrenteConstants.NamedHttpKoin.USER_SERVICE_API)))
-        MockedProviderNetwork()
+        ProviderNetworkImpl(get(named(ContaCorrenteConstants.NamedHttpKoin.USER_SERVICE_API)))
+        //MockedProviderNetwork()
     }
 
     singleOf(::ThemeProvider) {
