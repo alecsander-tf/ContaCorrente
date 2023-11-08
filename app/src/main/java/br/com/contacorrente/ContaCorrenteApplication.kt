@@ -1,7 +1,14 @@
 package br.com.contacorrente
 
 import android.app.Application
-import br.com.contacorrente.di.*
+import br.com.contacorrente.di.helperDI
+import br.com.contacorrente.di.httpClientDI
+import br.com.contacorrente.di.httpTransferenceDI
+import br.com.contacorrente.di.mapperDI
+import br.com.contacorrente.di.providerDI
+import br.com.contacorrente.di.repositoryDI
+import br.com.contacorrente.di.useCaseDI
+import br.com.contacorrente.di.viewModelDI
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -21,7 +28,8 @@ class ContaCorrenteApplication : Application() {
                     viewModelDI,
                     repositoryDI,
                     providerDI,
-                    httpDI,
+                    httpClientDI,
+                    httpTransferenceDI,
                     helperDI,
                     mapperDI
                 )

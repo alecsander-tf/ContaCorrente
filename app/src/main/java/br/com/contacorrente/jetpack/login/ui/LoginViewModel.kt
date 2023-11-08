@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class LoginViewModel(private val loginUseCase: ILoginUseCase) : BaseViewModel() {
 
@@ -24,12 +23,16 @@ class LoginViewModel(private val loginUseCase: ILoginUseCase) : BaseViewModel() 
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
     fun login() {
+
+        if (!validateFields()) return
+
         launch {
             loginUseCase.execute(userEmail, userPassword).collect {
                 it.doIfSuccess {
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
                         errorMessage = "",
+                        onError = false,
                         isLoggedIn = true
                     )
                 }
@@ -37,6 +40,7 @@ class LoginViewModel(private val loginUseCase: ILoginUseCase) : BaseViewModel() 
                 it.doIfLoading {
                     _uiState.value = _uiState.value.copy(
                         isLoading = true,
+                        onError = false,
                         isLoggedIn = false
                     )
                 }
@@ -44,6 +48,7 @@ class LoginViewModel(private val loginUseCase: ILoginUseCase) : BaseViewModel() 
                 it.doIfApiError { status ->
                     _uiState.value = _uiState.value.copy(
                         errorMessage = status.message,
+                        onError = true,
                         isLoggedIn = false
                     )
                 }
@@ -51,10 +56,30 @@ class LoginViewModel(private val loginUseCase: ILoginUseCase) : BaseViewModel() 
                 it.doIfError { errorMessage ->
                     _uiState.value = _uiState.value.copy(
                         errorMessage = errorMessage,
-                        isLoggedIn = false
+                        isLoggedIn = false,
+                        onError = true
                     )
                 }
             }
         }
+    }
+
+    private fun validateFields(): Boolean {
+
+        val isEmailOnError = userEmail.isEmpty()
+        val isPasswordOnError = userPassword.isEmpty()
+        var onError = uiState.value.onError
+
+        if (isEmailOnError || isPasswordOnError) {
+            onError = false
+        }
+
+        _uiState.value = _uiState.value.copy(
+            isEmailOnError = isEmailOnError,
+            isPasswordOnError = isPasswordOnError,
+            onError = onError
+        )
+
+        return !(isEmailOnError || isPasswordOnError)
     }
 }

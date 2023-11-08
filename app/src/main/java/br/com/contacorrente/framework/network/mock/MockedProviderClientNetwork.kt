@@ -1,6 +1,7 @@
-package br.com.contacorrente.framework.network
+package br.com.contacorrente.framework.network.mock
 
 import br.com.contacorrente.base.CustomState
+import br.com.contacorrente.framework.network.provider.IProviderClientNetwork
 import br.com.contacorrente.model.Status
 import br.com.contacorrente.model.User
 import kotlinx.coroutines.flow.Flow
@@ -13,21 +14,6 @@ class MockedProviderClientNetwork : IProviderClientNetwork {
         password: MultipartBody.Part
     ): Flow<CustomState<Status>> {
         return flowOf(CustomState.Success(Status(true, "")))
-    }
-
-    override fun transfer(
-        from: MultipartBody.Part,
-        to: MultipartBody.Part,
-        value: MultipartBody.Part
-    ): Flow<CustomState<Status>> {
-        return flowOf(
-            CustomState.Success(
-                Status(
-                    true,
-                    ""
-                )
-            )
-        )
     }
 
     override fun getUser(userEmail: String): Flow<CustomState<User>> {

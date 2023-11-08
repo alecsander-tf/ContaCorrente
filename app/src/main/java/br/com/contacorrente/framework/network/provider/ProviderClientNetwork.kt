@@ -1,4 +1,4 @@
-package br.com.contacorrente.framework.network
+package br.com.contacorrente.framework.network.provider
 
 import br.com.contacorrente.base.BaseServiceNetwork
 import br.com.contacorrente.base.CustomState

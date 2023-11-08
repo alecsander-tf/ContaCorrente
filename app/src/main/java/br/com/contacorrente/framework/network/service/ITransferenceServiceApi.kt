@@ -5,13 +5,14 @@ import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 
-interface ITransferServiceApi {
+interface ITransferenceServiceApi {
     @Multipart
     @POST("./transfer-by-email")
     fun transfer(
-        clientIdSender: MultipartBody.Part,
-        clientEmailReceiver: MultipartBody.Part,
-        value: MultipartBody.Part
+        @Part clientIdSender: MultipartBody.Part,
+        @Part clientEmailReceiver: MultipartBody.Part,
+        @Part value: MultipartBody.Part
     ): Call<Status>
 }

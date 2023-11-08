@@ -8,10 +8,9 @@ import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
-import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface IUserServiceAPI {
+interface IClientServiceAPI {
     @Multipart
     @POST("./check-login")
     fun checkLogin(
@@ -21,12 +20,4 @@ interface IUserServiceAPI {
 
     @GET("./get-client")
     fun getClient(@Query("email") userEmail: String): Call<User>
-
-    @Multipart
-    @POST("./transfer-by")
-    fun transfer(
-        from: MultipartBody.Part,
-        to: MultipartBody.Part,
-        value: MultipartBody.Part
-    ): Call<Status>
 }

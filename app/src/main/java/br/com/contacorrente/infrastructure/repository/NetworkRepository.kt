@@ -3,7 +3,8 @@ package br.com.contacorrente.infrastructure.repository
 import br.com.contacorrente.base.CustomState
 import br.com.contacorrente.base.collect
 import br.com.contacorrente.framework.helper.IMultipartHelper
-import br.com.contacorrente.framework.network.IProviderNetwork
+import br.com.contacorrente.framework.network.provider.IProviderClientNetwork
+import br.com.contacorrente.framework.network.provider.IProviderTransferNetwork
 import br.com.contacorrente.model.Status
 import br.com.contacorrente.model.User
 import kotlinx.coroutines.flow.Flow
@@ -12,11 +13,12 @@ import kotlinx.coroutines.flow.map
 interface INetworkRepository {
     fun login(email: String, password: String): Flow<CustomState<Status>>
     fun getUser(userEmail: String): Flow<CustomState<User>>
-    fun transfer(from: String, to: String, value: Double): Flow<CustomState<Status>>
+    fun transfer(clientIdSender: String, clientEmailReceiver: String, value: String): Flow<CustomState<Status>>
 }
 
 class NetworkRepositoryImpl(
-    private val providerNetwork: IProviderNetwork,
+    private val providerNetwork: IProviderClientNetwork,
+    private val transferenceNetwork: IProviderTransferNetwork,
     private val multipartHelper: IMultipartHelper
 ) : INetworkRepository {
     override fun login(email: String, password: String): Flow<CustomState<Status>> {
@@ -34,7 +36,15 @@ class NetworkRepositoryImpl(
         return providerNetwork.getUser(userEmail)
     }
 
-    override fun transfer(from: String, to: String, value: Double): Flow<CustomState<Status>> {
-        TODO("Not yet implemented")
+    override fun transfer(clientIdSender: String, clientEmailReceiver: String, value: String): Flow<CustomState<Status>> {
+        return transferenceNetwork.transfer(
+            multipartHelper.execute("clientIdSender", clientIdSender),
+            multipartHelper.execute("clientEmailReceiver", clientEmailReceiver),
+            multipartHelper.execute("value", value)
+        ).map {
+            it.collect { status ->
+                status
+            }
+        }
     }
 }

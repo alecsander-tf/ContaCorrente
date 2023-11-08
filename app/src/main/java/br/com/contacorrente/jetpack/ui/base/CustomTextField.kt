@@ -18,7 +18,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import br.com.contacorrente.model.TextInfo
 
 @Composable
-fun TextFieldWithIcon(
+fun CustomTextField(
     modifier: Modifier = Modifier,
     icon: ImageVector? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
@@ -29,8 +29,11 @@ fun TextFieldWithIcon(
 
     val source = remember { MutableInteractionSource() }
     var textFieldWasTyped by remember { mutableStateOf(false) }
+    var error by remember { mutableStateOf(true) }
 
-    val shouldShowError = textInfo.textValue.isEmpty() && textFieldWasTyped
+    error = textInfo.isError
+
+    val shouldShowError = (textInfo.textValue.isEmpty() && textFieldWasTyped) || error
 
     OutlinedTextField(
         modifier = modifier,
@@ -48,6 +51,7 @@ fun TextFieldWithIcon(
         },
         onValueChange = { newValue ->
             textFieldWasTyped = true
+            error = false
             textInfo.onValueChanged(newValue)
         },
         leadingIcon = if (icon != null) {

@@ -13,10 +13,9 @@ class MenuActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ContaCorrenteMainTheme {
-                intent.getStringExtra(ContaCorrenteConstants.IntentExtras.USER_EMAIL)?.let {
+                intent.extras?.getString(ContaCorrenteConstants.IntentExtras.USER_EMAIL, "")?.let {
                     MenuNavHost(it)
                 }
-                MenuNavHost("")
             }
         }
     }
