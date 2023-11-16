@@ -13,9 +13,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.VisualTransformation
-import br.com.contacorrente.model.TextInfo
+import br.com.contacorrente.model.TextFieldInfo
 
 @Composable
 fun CustomTextField(
@@ -23,7 +24,8 @@ fun CustomTextField(
     icon: ImageVector? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    textInfo: TextInfo,
+    prefix: String = "",
+    textFieldInfo: TextFieldInfo,
     placeholder: String,
 ) {
 
@@ -31,15 +33,15 @@ fun CustomTextField(
     var textFieldWasTyped by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf(true) }
 
-    error = textInfo.isError
+    error = textFieldInfo.isError
 
-    val shouldShowError = (textInfo.textValue.isEmpty() && textFieldWasTyped) || error
+    val shouldShowError = (textFieldInfo.textValue.isEmpty() && textFieldWasTyped) || error
 
     OutlinedTextField(
         modifier = modifier,
         visualTransformation = visualTransformation,
         isError = shouldShowError,
-        value = textInfo.textValue,
+        value = textFieldInfo.textValue,
         keyboardOptions = keyboardOptions,
         interactionSource = source,
         singleLine = true,
@@ -47,13 +49,23 @@ fun CustomTextField(
             Text(text = placeholder)
         },
         supportingText = {
-            if (shouldShowError) Text(text = textInfo.supportingText)
+            if (shouldShowError) Text(text = textFieldInfo.supportingText)
         },
         onValueChange = { newValue ->
             textFieldWasTyped = true
             error = false
-            textInfo.onValueChanged(newValue)
+            textFieldInfo.onValueChanged(newValue)
         },
+        prefix = if (prefix.isNotEmpty()) {
+            {
+                Text(
+                    text = prefix,
+                    color = if (shouldShowError) {
+                        MaterialTheme.colorScheme.error
+                    } else Color.Unspecified
+                )
+            }
+        } else null,
         leadingIcon = if (icon != null) {
             {
                 Icon(

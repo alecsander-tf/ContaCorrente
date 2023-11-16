@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import br.com.contacorrente.R
 import br.com.contacorrente.jetpack.ui.ContaCorrenteMainTheme
 import br.com.contacorrente.jetpack.ui.base.CustomTextField
-import br.com.contacorrente.model.TextInfo
+import br.com.contacorrente.model.TextFieldInfo
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -48,14 +48,14 @@ fun LoginScreen(
         color = MaterialTheme.colorScheme.background
     ) {
         LoginLayout(
-            emailTextInfo = TextInfo(
+            emailTextFieldInfo = TextFieldInfo(
                 loginViewModel.userEmail,
                 stringResource(id = R.string.invalid_email_text_field),
                 loginUiState.isEmailOnError
             ) {
                 loginViewModel.userEmail = it
             },
-            passwordTextInfo = TextInfo(
+            passwordTextFieldInfo = TextFieldInfo(
                 loginViewModel.userPassword,
                 stringResource(id = R.string.invalid_password_text_field),
                 loginUiState.isPasswordOnError
@@ -72,8 +72,8 @@ fun LoginScreen(
 
 @Composable
 fun LoginLayout(
-    emailTextInfo: TextInfo,
-    passwordTextInfo: TextInfo,
+    emailTextFieldInfo: TextFieldInfo,
+    passwordTextFieldInfo: TextFieldInfo,
     loginButtonClick: () -> Unit,
     loginUiState: LoginUiState,
 ) {
@@ -93,7 +93,7 @@ fun LoginLayout(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
-            textInfo = emailTextInfo,
+            textFieldInfo = emailTextFieldInfo,
             icon = Icons.Filled.Person,
             placeholder = stringResource(id = R.string.email)
         )
@@ -102,7 +102,7 @@ fun LoginLayout(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
-            textInfo = passwordTextInfo,
+            textFieldInfo = passwordTextFieldInfo,
             icon = Icons.Filled.Lock,
             placeholder = stringResource(id = R.string.password)
         )

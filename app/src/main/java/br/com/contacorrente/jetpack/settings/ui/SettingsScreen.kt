@@ -173,7 +173,7 @@ fun DarkModeRadioGroup(
 @Composable
 fun Preview() {
     PreviewContaCorrenteMainTheme {
-        AppThemeDialog(onDismissRequest = { /*TODO*/ }, onConfirmListener = {})
+        AppThemeDialog(onDismissRequest = { }, onConfirmListener = {})
     }
 }
 

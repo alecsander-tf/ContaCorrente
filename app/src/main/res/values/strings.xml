@@ -42,5 +42,6 @@
     <string name="invalid_email_text_field">Email não pode estar vazio</string>
     <string name="invalid_destination_text_field">Email não pode estar vazio</string>
     <string name="invalid_password_text_field">Senha não pode estar vazia</string>
+    <string name="confirmation">Confirmação</string>
 
 </resources>

@@ -9,8 +9,8 @@ import okhttp3.MultipartBody
 
 class MockedProviderTransferenceNetwork: IProviderTransferNetwork {
     override fun transfer(
-        from: MultipartBody.Part,
-        to: MultipartBody.Part,
+        clientIdSender: MultipartBody.Part,
+        clientEmailReceiver: MultipartBody.Part,
         value: MultipartBody.Part
     ): Flow<CustomState<Status>> {
         return flowOf(
