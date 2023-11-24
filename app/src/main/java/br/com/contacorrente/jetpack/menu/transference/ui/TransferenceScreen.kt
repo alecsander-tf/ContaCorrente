@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -23,9 +26,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,6 +40,7 @@ import br.com.contacorrente.jetpack.ui.ContaCorrenteMainTheme
 import br.com.contacorrente.jetpack.ui.base.CustomTextField
 import br.com.contacorrente.model.TextFieldInfo
 import br.com.contacorrente.util.CurrencyMaskTransformation
+import br.com.contacorrente.util.Utility
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -134,6 +140,7 @@ fun TransferenceContent(
 ) {
     Column(
         modifier = Modifier
+            .background(color = MaterialTheme.colorScheme.surface)
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.Top
@@ -187,8 +194,8 @@ fun TransferenceConfirmationContent(
 
     Column(
         modifier = Modifier
+            .padding(top = 30.dp, start = 16.dp, end = 16.dp)
             .fillMaxSize()
-            .padding(16.dp)
     ) {
         Text(
             modifier = Modifier
@@ -197,35 +204,54 @@ fun TransferenceConfirmationContent(
             fontWeight = FontWeight.Bold,
             fontSize = 36.sp
         )
-        Text(
-            modifier = Modifier.padding(top = 32.dp),
-            text = "Dados da sua transferência",
-            fontWeight = FontWeight.SemiBold,
-        )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp),
-        ) {
-            Text(
-                text = "Para"
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = destinationTextFieldInfo.textValue
-            )
-        }
 
-        Row(
-            modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)
+        Card(
+            modifier = Modifier
+                .padding(top = 32.dp)
+                .shadow(4.dp, shape = MaterialTheme.shapes.medium)
         ) {
             Text(
-                text = "Valor"
+                modifier = Modifier
+                    .padding(16.dp)
+                    .align(Alignment.CenterHorizontally),
+                text = "Dados da sua transferência",
+                fontWeight = FontWeight.SemiBold,
             )
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = valueTextFieldInfo.textValue
-            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        top = 16.dp,
+                        start = 16.dp, end = 16.dp
+                    ),
+            ) {
+                Text(
+                    text = "Para"
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Text(
+                    maxLines = 1,
+                    softWrap = false,
+                    modifier = Modifier.weight(3f, fill = false),
+                    overflow = TextOverflow.Ellipsis,
+                    text = destinationTextFieldInfo.textValue
+                )
+            }
+
+            Row(
+                modifier = Modifier.padding(
+                    top = 8.dp, bottom = 16.dp,
+                    start = 16.dp, end = 16.dp
+                )
+            ) {
+                Text(
+                    text = "Valor"
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Text(
+                    text = Utility.currencyFormat(valueTextFieldInfo.textValue)
+                )
+            }
         }
         CustomTextField(
             modifier = Modifier
@@ -267,7 +293,7 @@ fun PreviewConfirmationDialog() {
                 isError = false
             ) {},
             destinationTextFieldInfo = TextFieldInfo(
-                "123",
+                "alecsander.t.fernandes@bradesco.com.br",
                 "SupportingPreviewValue",
                 isError = false
             ) {},

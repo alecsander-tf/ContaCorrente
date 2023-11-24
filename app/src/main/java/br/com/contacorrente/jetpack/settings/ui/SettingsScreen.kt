@@ -102,18 +102,15 @@ fun AppThemeDialog(
     Dialog(onDismissRequest = onDismissRequest) {
         Card(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                .fillMaxWidth(),
             shape = RoundedCornerShape(16.dp)
         ) {
             Column(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                Text(
-                    text = "Escolha o tema desejado",
-                    fontWeight = FontWeight.SemiBold
-                )
+
                 DarkModeRadioGroup(
                     radioOptions = radioOptions,
                     selectedOption, setSelected
@@ -148,7 +145,6 @@ fun DarkModeRadioGroup(
         radioOptions.forEach { item ->
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
                     .clickable {
                         setSelected(item.first)
                     }
