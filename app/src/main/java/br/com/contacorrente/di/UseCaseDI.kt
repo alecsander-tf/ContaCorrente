@@ -1,8 +1,11 @@
 package br.com.contacorrente.di
 
-import br.com.contacorrente.jetpack.login.usecase.*
+import br.com.contacorrente.jetpack.login.usecase.ILoginUseCase
+import br.com.contacorrente.jetpack.login.usecase.LoginUseCase
 import br.com.contacorrente.jetpack.menu.home.usecase.ILoadUserInformationUseCase
 import br.com.contacorrente.jetpack.menu.home.usecase.LoadUserInformationUseCase
+import br.com.contacorrente.jetpack.menu.transference.usecase.ITransferenceUseCase
+import br.com.contacorrente.jetpack.menu.transference.usecase.TransferenceUseCase
 import br.com.contacorrente.jetpack.settings.usecase.IReadThemeUseCase
 import br.com.contacorrente.jetpack.settings.usecase.ISetThemeUseCase
 import br.com.contacorrente.jetpack.settings.usecase.ReadThemeUseCase
@@ -29,4 +32,7 @@ val useCaseDI = module {
         bind<IReadThemeUseCase>()
     }
 
+     singleOf(::TransferenceUseCase) {
+         bind<ITransferenceUseCase>()
+     }
 }

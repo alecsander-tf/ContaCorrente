@@ -1,13 +1,14 @@
-package br.com.contacorrente.framework.network
+package br.com.contacorrente.framework.network.mock
 
 import br.com.contacorrente.base.CustomState
+import br.com.contacorrente.framework.network.provider.IProviderClientNetwork
 import br.com.contacorrente.model.Status
 import br.com.contacorrente.model.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import okhttp3.MultipartBody
 
-class MockedProviderNetwork : IProviderNetwork {
+class MockedProviderClientNetwork : IProviderClientNetwork {
     override fun login(
         email: MultipartBody.Part,
         password: MultipartBody.Part

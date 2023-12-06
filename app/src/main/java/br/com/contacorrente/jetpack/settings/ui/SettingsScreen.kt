@@ -18,7 +18,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -103,18 +102,15 @@ fun AppThemeDialog(
     Dialog(onDismissRequest = onDismissRequest) {
         Card(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                .fillMaxWidth(),
             shape = RoundedCornerShape(16.dp)
         ) {
             Column(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                Text(
-                    text = "Tema",
-                    fontWeight = FontWeight.SemiBold
-                )
+
                 DarkModeRadioGroup(
                     radioOptions = radioOptions,
                     selectedOption, setSelected
@@ -149,7 +145,6 @@ fun DarkModeRadioGroup(
         radioOptions.forEach { item ->
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
                     .clickable {
                         setSelected(item.first)
                     }
@@ -174,7 +169,7 @@ fun DarkModeRadioGroup(
 @Composable
 fun Preview() {
     PreviewContaCorrenteMainTheme {
-        AppThemeDialog(onDismissRequest = { /*TODO*/ }, onConfirmListener = {})
+        AppThemeDialog(onDismissRequest = { }, onConfirmListener = {})
     }
 }
 

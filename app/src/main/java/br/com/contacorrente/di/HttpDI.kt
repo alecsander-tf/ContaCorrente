@@ -1,7 +1,8 @@
 package br.com.contacorrente.di
 
 import br.com.contacorrente.constants.ContaCorrenteConstants
-import br.com.contacorrente.framework.network.service.IUserServiceAPI
+import br.com.contacorrente.framework.network.service.IClientServiceAPI
+import br.com.contacorrente.framework.network.service.ITransferenceServiceApi
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -13,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-val httpDI = module {
+val httpClientDI = module {
 
     factory(qualifier = named(ContaCorrenteConstants.NamedHttpKoin.HTTP_CLIENT)) {
         provideOkHttpClient()
@@ -25,23 +26,48 @@ val httpDI = module {
 
     factory(qualifier = named(ContaCorrenteConstants.NamedHttpKoin.USER_SERVICE_API)) {
         provideUserServiceAPI(
-            retrofit = get(named(ContaCorrenteConstants.NamedHttpKoin.RETROFIT)),
+            retrofit = get(named(ContaCorrenteConstants.NamedHttpKoin.RETROFIT_CLIENT)),
         )
     }
 
-    factory(qualifier = named(ContaCorrenteConstants.NamedHttpKoin.RETROFIT)) {
+    factory(qualifier = named(ContaCorrenteConstants.NamedHttpKoin.RETROFIT_CLIENT)) {
         provideRetrofit(
             okHttpClient = get(named(ContaCorrenteConstants.NamedHttpKoin.HTTP_CLIENT)),
-            converterFactory = get(named(ContaCorrenteConstants.NamedHttpKoin.GSON_CONVERTER))
+            converterFactory = get(named(ContaCorrenteConstants.NamedHttpKoin.GSON_CONVERTER)),
+            endpoint = ContaCorrenteConstants.Endpoint.CLIENT
         )
     }
 }
 
-private fun provideUserServiceAPI(retrofit: Retrofit) = retrofit.create(IUserServiceAPI::class.java)
+val httpTransferenceDI = module {
 
-private fun provideRetrofit(okHttpClient: OkHttpClient, converterFactory: Converter.Factory) =
+    factory(qualifier = named(ContaCorrenteConstants.NamedHttpKoin.TRANSFER_SERVICE_API)) {
+        provideTransferServiceAPI(
+            retrofit = get(named(ContaCorrenteConstants.NamedHttpKoin.RETROFIT_TRANSFERENCE)),
+        )
+    }
+
+    factory(qualifier = named(ContaCorrenteConstants.NamedHttpKoin.RETROFIT_TRANSFERENCE)) {
+        provideRetrofit(
+            okHttpClient = get(named(ContaCorrenteConstants.NamedHttpKoin.HTTP_CLIENT)),
+            converterFactory = get(named(ContaCorrenteConstants.NamedHttpKoin.GSON_CONVERTER)),
+            endpoint = ContaCorrenteConstants.Endpoint.TRANSFERENCE
+        )
+    }
+}
+
+private fun provideTransferServiceAPI(retrofit: Retrofit) =
+    retrofit.create(ITransferenceServiceApi::class.java)
+
+private fun provideUserServiceAPI(retrofit: Retrofit): IClientServiceAPI? =
+    retrofit.create(IClientServiceAPI::class.java)
+
+private fun provideRetrofit(
+    okHttpClient: OkHttpClient, converterFactory: Converter.Factory,
+    endpoint: String
+) =
     Retrofit.Builder()
-        .baseUrl(ContaCorrenteConstants.BASE_URL)
+        .baseUrl(ContaCorrenteConstants.BASE_URL + endpoint)
         .client(okHttpClient)
         .addConverterFactory(converterFactory)
         .build()

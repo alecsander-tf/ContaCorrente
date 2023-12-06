@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class HomeViewModel(
     private val loadUserInformationUseCase: ILoadUserInformationUseCase
@@ -23,18 +22,17 @@ class HomeViewModel(
         _uiState.value = _uiState.value.copy(
             isRefreshing = true
         )
-        //loadInformation(userEmail)
+        loadInformation(userEmail)
         _uiState.value = _uiState.value.copy(
             isLoading = false,
-            userBalance = "3000",
             isRefreshing = false
         )
     }
+
     fun loadInformation(userEmail: String) {
         launch {
             loadUserInformationUseCase.execute(userEmail).collect { state ->
                 state.doIfSuccess {
-                    Timber.w("TestAlecs doIfSuccess")
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
                         userName = it.name,
@@ -43,20 +41,17 @@ class HomeViewModel(
                     )
                 }
                 state.doIfLoading {
-                    Timber.w("TestAlecs doIfLoading")
                     _uiState.value = _uiState.value.copy(
                         isLoading = true,
                     )
                 }
                 state.doIfApiError {
-                    Timber.w("TestAlecs doIfApiError")
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
                         isRefreshing = false
                     )
                 }
                 state.doIfError {
-                    Timber.w("TestAlecs doIfError")
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
                         isRefreshing = false

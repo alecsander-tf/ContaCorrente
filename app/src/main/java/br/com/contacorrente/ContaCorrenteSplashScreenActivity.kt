@@ -6,10 +6,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import br.com.contacorrente.base.doIfSuccess
-import br.com.contacorrente.constants.AppThemeOptions
 import br.com.contacorrente.constants.Singleton
 import br.com.contacorrente.jetpack.login.LoginActivity
-import br.com.contacorrente.jetpack.menu.MenuActivity
 import br.com.contacorrente.jetpack.settings.usecase.IReadThemeUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -45,7 +43,7 @@ class ContaCorrenteSplashScreenActivity : ComponentActivity() {
             }
         }
 
-        startActivity(Intent(this, MenuActivity::class.java))
+        startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
 
