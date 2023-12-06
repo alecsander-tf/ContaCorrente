@@ -48,13 +48,13 @@ public class ExtractAdapter extends RecyclerView.Adapter<ExtractViewHolder> {
             // Se o valor saiu conta, o campo de texto fica em vermelho
             if (transference.getId_from().equals(Singleton.user.getId())){
 
-                String transferenceValue = "- " + Utility.currencyFormat(transference.getValue());
+                String transferenceValue = "- " + Utility.INSTANCE.currencyFormat(transference.getValue());
 
                 holder.tvUserAmount.setTextColor(Color.parseColor("#FF0000"));
                 holder.tvUserAmount.setText(transferenceValue);
             }else {
                 holder.tvUserAmount.setTextColor(Color.parseColor("#369B5E"));
-                holder.tvUserAmount.setText(Utility.currencyFormat(transference.getValue()));
+                holder.tvUserAmount.setText(Utility.INSTANCE.currencyFormat(transference.getValue()));
             }
             holder.tvTransferenceDate.setText(transference.getData());
             holder.tvUserTransference.setText(transference.getUserRelated().getName());

@@ -29,7 +29,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" >
-            <requestFocus/>
         </ImageView>
 
         <ScrollView
@@ -52,9 +51,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#212121"
+                    android:gravity="center"
                     android:fontFamily="sans-serif-black"
                     android:text="@string/account_access"
-                    android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="24sp"
                     android:typeface="monospace"
@@ -111,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="32dp"
                     android:background="@drawable/shape_button"
-                    android:text="@string/status"
+                    android:text="@string/login"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"

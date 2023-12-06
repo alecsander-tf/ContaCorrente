@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">Conta Corrente</string>
-    <string name="status">Login</string>
+    <string name="login">Login</string>
+
     <string name="title_activity_menu">Minha Conta</string>
 
     <string name="Close">Close</string>
     <string name="Open">Open</string>
 
+    <string name="user">Usuário</string>
     <string name="password">Senha</string>
     <string name="email">Email</string>
     <string name="account_access">ACESSO A CONTA</string>
@@ -20,7 +22,6 @@
     <string name="value">Valor</string>
     <string name="next">Continuar</string>
     <string name="date">Data</string>
-    <string name="to">Para</string>
     <string name="user_to_email">Email do usuário de destino</string>
     <string name="total_value">Valor total</string>
     <string name="user_email">Email do usuário</string>
@@ -30,4 +31,17 @@
     <string name="settings">Configurações</string>
     <string name="dark_mode">Tema escuro</string>
     <string name="dark_mode_description">Diminui o brilho e melhora a visualização noturna</string>
+    <string name="light">Claro</string>
+    <string name="dark">Escuro</string>
+    <string name="system_default">Padrão do sistema</string>
+    <string name="transference_destination_placeholder">Email</string>
+    <string name="value_destination_placeholder">Valor</string>
+
+    <!-- Invalid fields -->
+    <string name="invalid_value_text_field">Valor não pode estar vazio</string>
+    <string name="invalid_email_text_field">Email não pode estar vazio</string>
+    <string name="invalid_destination_text_field">Email não pode estar vazio</string>
+    <string name="invalid_password_text_field">Senha não pode estar vazia</string>
+    <string name="confirmation">Confirmação</string>
+
 </resources>

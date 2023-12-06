@@ -21,7 +21,7 @@ public class MyAccountPresenter implements MyAccountContract.UserInteractions {
             @Override
             public void onLoaded(User user) {
                 Singleton.user = user;
-                view.showAccountDetails(user);
+                view.showAccountDetails(user.getName(), user.getBalance());
             }
             @Override
             public void onError() {

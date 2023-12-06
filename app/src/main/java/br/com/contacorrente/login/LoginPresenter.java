@@ -1,16 +1,15 @@
 package br.com.contacorrente.login;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
 import br.com.contacorrente.Singleton;
+import br.com.contacorrente.factory.UserFactory;
+import br.com.contacorrente.factory.UserLoginFactory;
 import br.com.contacorrente.menu.MenuActivity;
 import br.com.contacorrente.model.Status;
 import br.com.contacorrente.model.User;
 import br.com.contacorrente.network.UserService;
 import br.com.contacorrente.network.UserServiceImpl;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class LoginPresenter implements LoginContract.UserInteraction{
 
@@ -23,12 +22,15 @@ public class LoginPresenter implements LoginContract.UserInteraction{
     }
 
     @Override
-    public void login(final User user) {
+    public void login(String email, String password) {
+
+        final User user = UserFactory.getUser(new UserLoginFactory(email, password));
+
         view.showLogging();
         api.checkLogin(user.getEmail(), user.getPassword(), new UserService.UserServiceCallback<Status>() {
             @Override
             public void onLoaded(Status status) {
-                if (status.isStatus()){
+                if (status.getStatus()){
                     Singleton.user.setEmail(user.getEmail());
 
                     addUserLogged(user.getEmail(), user.getPassword());
